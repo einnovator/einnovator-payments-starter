@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 @ConfigurationProperties("payments")
 public class PaymentsConfiguration {
 
-	private String uri = "http://localhost:9091";
+	private String uri = "http://localhost:2060";
 	
 	@NestedConfigurationProperty
 	private ConnectionConfiguration connection = new ConnectionConfiguration();
