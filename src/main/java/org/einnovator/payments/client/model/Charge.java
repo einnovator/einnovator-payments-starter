@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Charge {
 	
 	private String id;
+	
 	private MonetaryAmount amount;
 
 	public MonetaryAmount getAmount() {

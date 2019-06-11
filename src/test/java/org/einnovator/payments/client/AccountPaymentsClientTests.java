@@ -32,18 +32,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import org.einnovator.util.MappingUtils;
 
-
+import static org.einnovator.util.UriUtils.extractId;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes= {CrudPaymentsClientTests.TestConfig.class, PaymentsClientConfig.class}, webEnvironment=WebEnvironment.MOCK)
-public class CrudPaymentsClientTests extends SsoTestHelper {
+@SpringBootTest(classes= {AccountPaymentsClientTests.TestConfig.class, PaymentsClientConfig.class}, webEnvironment=WebEnvironment.MOCK)
+public class AccountPaymentsClientTests extends SsoTestHelper {
 
 	@Autowired
 	PaymentsClient client;
 
 	public static final String TEST_SELLER = "jsimao71@gmail.com";
 	public static final String TEST_BUYER = "tdd@einnovator.org";
-	public static final String TEST_USER_FAIL = "fake@test.org";
+	public static final String TEST_USER_FAIL = "test@test.org";
 	
 	public static final String TEST_PASSWORD = "Einnovator123!!";
 	private static final String CLIENT_ID = "application";
@@ -58,8 +58,8 @@ public class CrudPaymentsClientTests extends SsoTestHelper {
 	}
 	
 	private Payment makePayment() {
-		Account buyer = client.getUser(TEST_BUYER);
-		Account seller = client.getUser(TEST_SELLER);
+		Account buyer = client.getAccount(TEST_BUYER);
+		Account seller = client.getAccount(TEST_SELLER);
 		return makePayment(buyer, seller);
 	}
 
@@ -69,7 +69,7 @@ public class CrudPaymentsClientTests extends SsoTestHelper {
 				.name("product:"+n)
 				.category("category:"+n)
 				.description("description:"+n)
-				.imgUri("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
+				.img("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
 				.build();
 
 		Payment payment = new PaymentBuilder()
@@ -91,7 +91,7 @@ public class CrudPaymentsClientTests extends SsoTestHelper {
 				.name("product:"+n)
 				.category("category:"+n)
 				.description("description:"+n)
-				.imgUri("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
+				.img("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
 				.build();
 
 		Payment payment = new PaymentBuilder()
@@ -109,15 +109,15 @@ public class CrudPaymentsClientTests extends SsoTestHelper {
 		Payment payment = makePayment();
 		System.out.println(payment);
 		URI uri = client.submitPayment(payment);
-		String id = PaymentsClient.extractId(uri);
+		String id = extractId(uri);
 		return id;
 	}
 	
 	public String paymentSiteSubmit() {
-		Payment payment = makeSitePayment(client.getUser(TEST_BUYER));
+		Payment payment = makeSitePayment(client.getAccount(TEST_BUYER));
 		System.out.println(payment);
 		URI uri = client.submitPayment(payment);
-		String id = PaymentsClient.extractId(uri);
+		String id = extractId(uri);
 		return id;
 	}
 		
@@ -142,7 +142,7 @@ public class CrudPaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void listPaymentsTest() {
 		paymentSubmit();
-		Page<Payment> payments0 = client.listPayments(new PageRequest(0, 10), null);
+		Page<Payment> payments0 = client.listPayments(null, new PageRequest(0, 10));
 		assertNotNull(payments0);
 		assertTrue(payments0.getSize() > 0);
 		
@@ -151,7 +151,7 @@ public class CrudPaymentsClientTests extends SsoTestHelper {
 			return;
 		}
 		
-		Page<Payment> payments1 = client.listPayments(new PageRequest(1, 10), null);
+		Page<Payment> payments1 = client.listPayments(null, new PageRequest(1, 10));
 		
 		assertNotNull(payments1);
 		assertTrue(payments1.getSize() > 0);

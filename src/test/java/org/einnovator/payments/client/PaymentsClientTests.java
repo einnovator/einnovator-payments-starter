@@ -1,5 +1,6 @@
 package org.einnovator.payments.client;
 
+import static org.einnovator.util.UriUtils.extractId;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -7,17 +8,15 @@ import static org.junit.Assert.fail;
 
 import java.net.URI;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.UUID;
 
-import org.einnovator.payments.client.PaymentsClient;
 import org.einnovator.payments.client.config.PaymentsClientConfig;
 import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.AccountBuilder;
-import org.einnovator.payments.client.model.Address;
-import org.einnovator.payments.client.model.AddressBuilder;
 import org.einnovator.payments.client.model.CardType;
-import org.einnovator.payments.client.model.CreditCard;
-import org.einnovator.payments.client.model.CreditCardBuilder;
+import org.einnovator.payments.client.model.Card;
+import org.einnovator.payments.client.model.CardBuilder;
 import org.einnovator.payments.client.model.Currency;
 import org.einnovator.payments.client.model.MonetaryAmount;
 import org.einnovator.payments.client.model.Payable;
@@ -25,6 +24,10 @@ import org.einnovator.payments.client.model.PayableBuilder;
 import org.einnovator.payments.client.model.Payment;
 import org.einnovator.payments.client.model.PaymentBuilder;
 import org.einnovator.sso.client.support.SsoTestHelper;
+import org.einnovator.util.UriUtils;
+import org.einnovator.util.model.Address;
+import org.einnovator.util.model.AddressBuilder;
+import org.einnovator.util.model.Phone;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,13 +37,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
-
-import org.einnovator.util.UriUtils;
-
-
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes= {PaymentsClientTests.TestConfig.class, PaymentsClientConfig.class}, webEnvironment=WebEnvironment.MOCK)
@@ -49,8 +47,8 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Autowired
 	PaymentsClient client;
 
-	public static final String GREENFENCE = "greenfence";
-	public static final String GREENFENCE_EMAIL = "greenfence@test.com";
+	public static final String TEST_ORG = "greenfence";
+	public static final String TEST_ORG_EMAIL = "greenfence@test.com";
 	public static final String AUDITONE = "auditOne";
 	public static final String AUDITONE_EMAIL = "auditOne@test.com";
 	
@@ -61,8 +59,8 @@ public class PaymentsClientTests extends SsoTestHelper {
 	public static final String TEST_USER_FAIL = "Wronguser@WromngEmail.com";
 	
 	public static final String TEST_PASSWORD = "Einnovator123!!";
-	private static final String CLIENT_ID = "greenfence";
-	private static final String CLIENT_SECRET = "greenfence$123";
+	private static final String CLIENT_ID = "application";
+	private static final String CLIENT_SECRET = "application$123";
 	
 	@Configuration
 	static class TestConfig extends SsoTestHelper.TestConfig {
@@ -83,7 +81,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.build();
 		Account account = new AccountBuilder()
 				.username(username)
-				.phone("99999999")
+				.phone(new Phone("99999999"))
 				.address(address)
 				.currency(Currency.USD)
 				.email(email)
@@ -96,8 +94,8 @@ public class PaymentsClientTests extends SsoTestHelper {
 	}
 	
 	private Payment makePayment() {
-		Account buyer = client.getUser(TEST_BUYER);
-		Account seller = client.getUser(TEST_SELLER);
+		Account buyer = client.getAccount(TEST_BUYER);
+		Account seller = client.getAccount(TEST_SELLER);
 		return makePayment(buyer, seller);
 	}
 
@@ -107,7 +105,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.name("product:"+n)
 				.category("category:"+n)
 				.description("description:"+n)
-				.imgUri("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
+				.img("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
 				.build();
 
 		Payment payment = new PaymentBuilder()
@@ -122,20 +120,14 @@ public class PaymentsClientTests extends SsoTestHelper {
 		return payment;
 	}
 	
-	//	TODO: add delete user endpoint.
 	@Test
 	public void createAndDeleteUserTest() {
-		try {
-			String username = "tdd-" + UUID.randomUUID().toString();
-			URI uri = client.createUser(makeAccount(username, username));
-			assertNotNull(uri);
-			String id = PaymentsClient.extractId(uri);
-			assertNotNull(id);
-			client.deleteUser(id);
-			fail();
-		}catch(HttpClientErrorException ex) {
-			assertEquals(HttpStatus.METHOD_NOT_ALLOWED.value(), ex.getRawStatusCode());
-		}
+		String username = "tdd-" + UUID.randomUUID().toString();
+		URI uri = client.createAccount(makeAccount(username, username));
+		assertNotNull(uri);
+		String id = extractId(uri);
+		assertNotNull(id);
+		client.deleteAccount(id);
 	}
 	
 	@Test
@@ -143,34 +135,34 @@ public class PaymentsClientTests extends SsoTestHelper {
 		Account buyer0 = makeAccount(TEST_BUYER, TEST_BUYER);
 		Account seller0 = makeAccount(TEST_SELLER, TEST_SELLER);
 		
-		Account greenfence = makeAccount(GREENFENCE, GREENFENCE_EMAIL);
+		Account greenfence = makeAccount(TEST_ORG, TEST_ORG_EMAIL);
 		Account auditOne = makeAccount(AUDITONE, AUDITONE_EMAIL);
 		
 		Account buyer1 = null, seller1 = null;
 		try {
-			buyer1 = client.getUser(buyer0.getUsername());
+			buyer1 = client.getAccount(buyer0.getName());
 		} catch (HttpClientErrorException e) {
-			client.createUser(buyer0);
-			buyer1 = client.getUser(buyer0.getUsername());
+			client.createAccount(buyer0);
+			buyer1 = client.getAccount(buyer0.getName());
 		}
 
 		try {
-			seller1 = client.getUser(seller0.getUsername());
+			seller1 = client.getAccount(seller0.getName());
 		} catch (HttpClientErrorException e) {
-			client.createUser(seller0);
-			seller1 = client.getUser(seller0.getUsername());
+			client.createAccount(seller0);
+			seller1 = client.getAccount(seller0.getName());
 		}
 		
 		try {
-			client.getUser(greenfence.getUsername());
+			client.getAccount(greenfence.getName());
 		} catch (HttpClientErrorException e) {
-			client.createUser(greenfence);			
+			client.createAccount(greenfence);			
 		}
 		
 		try {
-			client.getUser(auditOne.getUsername());
+			client.getAccount(auditOne.getName());
 		} catch (HttpClientErrorException e) {
-			client.createUser(auditOne);			
+			client.createAccount(auditOne);			
 		}
 
 		assertNotNull(buyer1);
@@ -195,7 +187,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void paymentSubmitWithBadAccountSellerTest() {
 		try {
-			Account buyer = client.getUser(TEST_BUYER);
+			Account buyer = client.getAccount(TEST_BUYER);
 			Account seller = new AccountBuilder().username(TEST_USER_FAIL).build();
 			Payment payment = makePayment(buyer, seller);
 			System.out.println(payment);
@@ -213,7 +205,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 		Payment payment = makePayment();
 		System.out.println(payment);
 		URI uri = client.submitPayment(payment);
-		String id = PaymentsClient.extractId(uri);
+		String id = extractId(uri);
 		return id;
 	}
 
@@ -227,14 +219,14 @@ public class PaymentsClientTests extends SsoTestHelper {
 
 	@Test
 	@Ignore
-	public void getUserTest() {
+	public void getAccountTest() {
 		//Account account = new AccountBuilder().username("Jorge Simao").build();
 	}
 
 	@Test
 	public void getInexistingAccountTest() {
 		try {
-			client.getUser(UUID.randomUUID().toString());
+			client.getAccount(UUID.randomUUID().toString());
 			fail();
 		} catch (HttpClientErrorException e) {
 			assertEquals(HttpStatus.NOT_FOUND.value(), e.getRawStatusCode());
@@ -244,70 +236,66 @@ public class PaymentsClientTests extends SsoTestHelper {
 
 	@Test
 	public void getExistingAccountTest() {
-		Account account = client.getUser(TEST_SELLER);
+		Account account = client.getAccount(TEST_SELLER);
 		assertNotNull(account);
-		assertEquals(TEST_SELLER, account.getUsername());
+		assertEquals(TEST_SELLER, account.getName());
 	}
 
 
 //	@Test
 //	public void updateExistingUserTest() {
 //		String username = TEST_SELLER;
-//		Account account = client.getUser(username);
+//		Account account = client.getAccount(username);
 //		assertNotNull(account);
-//		assertEquals(username, account.getUsername());
+//		assertEquals(username, account.getName());
 //		account.getAddress().setCity("City-" + UUID.randomUUID().toString());
 //		account.getAddress().setCountry("United States");
 //		account.setPhone("+35191663191" + new Random().nextInt(10));
-//		client.updateUserFullState(account);
-//		Account account2 = client.getUser(username);
+//		client.updateAccountFullState(account);
+//		Account account2 = client.getAccount(username);
 //		assertNotNull(account2);
-//		assertEquals(username, account2.getUsername());
+//		assertEquals(username, account2.getName());
 //		assertEquals(account.getAddress().getCity(), account2.getAddress().getCity());
 //	}
 
 	@Test
 	public void updateExistingUserPartialTest() {
 		String username = TEST_SELLER;
-		Account account = client.getUser(username);
+		Account account = client.getAccount(username);
 		assertNotNull(account);
-		assertEquals(username, account.getUsername());
+		assertEquals(username, account.getName());
 		Address address = new Address();		
 		address.setLine1("Street " + UUID.randomUUID().toString());
 		address.setCity("City-" + UUID.randomUUID().toString());
 		account.setAddress(address);
 		account.setWebsite("http://website.test.org");
-		account.setProfileURL("http://social.test.org");
-		client.updateUser(account);
-		Account account2 = client.getUser(username);
+		client.updateAccount(account);
+		Account account2 = client.getAccount(username);
 		assertNotNull(account2);
-		assertEquals(username, account2.getUsername());
+		assertEquals(username, account2.getName());
 		assertEquals(account.getWebsite(), account2.getWebsite());
-		assertEquals(account.getProfileURL(), account2.getProfileURL());
 		assertEquals(account.getAddress().getCity(), account2.getAddress().getCity());
 		assertEquals(account.getAddress().getLine1(), account2.getAddress().getLine1());
 
 		account.setWebsite("http://website2.test.org");
-		account.setProfileURL(null);
 		account.getAddress().setLine1(null);
 		account.getAddress().setCity("City-" + UUID.randomUUID().toString());
-		client.updateUser(account);
-		Account account3 = client.getUser(username);
+		client.updateAccount(account);
+		Account account3 = client.getAccount(username);
 		assertNotNull(account3);
-		assertEquals(username, account3.getUsername());
+		assertEquals(username, account3.getName());
 		assertEquals(account.getWebsite(), account3.getWebsite());
-		assertEquals(account2.getProfileURL(), account3.getProfileURL());
 		assertEquals(account.getAddress().getCity(), account3.getAddress().getCity());
 		assertEquals(account.getAddress().getLine1(), account3.getAddress().getLine1());
 	}
 
 //	@Test
-//	public void createOrganizationAndGetOrganizationTest() {
+//	public void createAccountAndGetAccountTest() {
 //		String username = "tdd-" + UUID.randomUUID().toString();
 //		Account account = new AccountBuilder().username(username)
 //				.phone("99999999")
 //				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build()).build();
-//		URI userURI = client.createUser(account);
+//		URI userURI = client.createAccount(account);
 //		assertNotNull(userURI);
 //		String userId = client.extractId(userURI);
 //		Account org = new AccountBuilder().username(TEST_ORG_USERNAME)
@@ -316,30 +304,30 @@ public class PaymentsClientTests extends SsoTestHelper {
 //				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
 //				.ownerId(userId)
 //				.build();
-//		URI uri = client.createOrganization(org);
+//		URI uri = client.createAccount(org);
 //		assertNotNull(uri);
-//		String id = PaymentsClient.extractId(uri);
+//		String id = extractId(uri);
 //		assertNotNull(id);
-//		Account org1 = client.getOrganization(id);
+//		Account org1 = client.getAccount(id);
 //		assertNotNull(org1);
-//		assertEquals(TEST_ORG_USERNAME, org1.getUsername());
+//		assertEquals(TEST_ORG_USERNAME, org1.getName());
 //
 //	}
 
 //	@Test
-//	public void getExistingOrganizationTest() {
+//	public void getExistingAccountTest() {
 //
-//		String orgId ="5a130467f50980288a148f97";   //// this is the demo organization created in createOrganizationTest() and using its OrgID for other tests
-//		Account org =client.getOrganization(orgId);
+//		String orgId ="5a130467f50980288a148f97";   //// this is the demo organization created in createAccountTest() and using its OrgID for other tests
+//		Account org =client.getAccount(orgId);
 //		assertNotNull(org);
-//		assertNotNull(TEST_ORG_USERNAME,org.getUsername());
+//		assertNotNull(TEST_ORG_USERNAME,org.getName());
 //	}
 
 //	@Test
-//	public void getInExistingOrganizationTest() {
+//	public void getInExistingAccountTest() {
 //		try {
 //			String orgId ="testOrg"+UUID.randomUUID().toString();
-//			Account uri = client.getOrganization(orgId);
+//			Account uri = client.getAccount(orgId);
 //			assertNull(uri);
 //			fail();
 //		}catch(HttpClientErrorException er)
@@ -351,41 +339,41 @@ public class PaymentsClientTests extends SsoTestHelper {
 //	}
 
 //	@Test
-//	public void updateExistingOrganization() {
-//		String orgId ="5a130467f50980288a148f97";   // this is the demo organization created in createOrganizationTest() and using its OrgID for other tests
+//	public void updateExistingAccount() {
+//		String orgId ="5a130467f50980288a148f97";   // this is the demo organization created in createAccountTest() and using its OrgID for other tests
 //		String userName= TEST_ORG_USERNAME;
-//		Account org = client.getOrganization(orgId);
+//		Account org = client.getAccount(orgId);
 //		assertNotNull(org);
-//		assertEquals(userName, org.getUsername());
+//		assertEquals(userName, org.getName());
 //		org.getAddress().setCity("City-" + UUID.randomUUID().toString());
 //		org.getAddress().setCountry("United States");
 //		org.setPhone("+35191663191" + new Random().nextInt(10));
-//		client.updateOrganization(org);
-//		Account org2 = client.getOrganization(orgId);
+//		client.updateAccount(org);
+//		Account org2 = client.getAccount(orgId);
 //		assertNotNull(org2);
-//		assertEquals(userName, org2.getUsername());
+//		assertEquals(userName, org2.getName());
 //		assertEquals(org.getAddress().getCity(), org2.getAddress().getCity());
 //
 //	}
 //
 //	@Test
-//	public void updatePartialOrganizationTest() {
+//	public void updatePartialAccountTest() {
 //
 //		String username = TEST_ORG_USERNAME;
-//		String orgId ="5a130467f50980288a148f97";   // this is the demo organization created in createOrganizationTest() and using its OrgID for other tests
-//		Account org = client.getOrganization(orgId);
+//		String orgId ="5a130467f50980288a148f97";   // this is the demo organization created in createAccountTest() and using its OrgID for other tests
+//		Account org = client.getAccount(orgId);
 //		assertNotNull(org);
-//		assertEquals(username, org.getUsername());
+//		assertEquals(username, org.getName());
 //		Address address = new Address();		
 //		address.setLine1("Street " + UUID.randomUUID().toString());
 //		address.setCity("City-" + UUID.randomUUID().toString());
 //		org.setAddress(address);
 //		org.setWebsite("http://website.test.org");
 //		org.setProfileURL("http://social.test.org");
-//		client.updateOrganization(org);
-//		Account org2 = client.getOrganization(orgId);
+//		client.updateAccount(org);
+//		Account org2 = client.getAccount(orgId);
 //		assertNotNull(org2);
-//		assertEquals(username, org2.getUsername());
+//		assertEquals(username, org2.getName());
 //		assertEquals(org.getWebsite(), org2.getWebsite());
 //		assertEquals(org.getProfileURL(), org2.getProfileURL());
 //		assertEquals(org.getAddress().getCity(), org2.getAddress().getCity());
@@ -395,10 +383,10 @@ public class PaymentsClientTests extends SsoTestHelper {
 //		org.setProfileURL(null);
 //		org.getAddress().setLine1(null);
 //		org.getAddress().setCity("City-" + UUID.randomUUID().toString());
-//		client.updateOrganization(org);
-//		Account org3 = client.getOrganization(orgId);
+//		client.updateAccount(org);
+//		Account org3 = client.getAccount(orgId);
 //		assertNotNull(org3);
-//		assertEquals(username, org3.getUsername());
+//		assertEquals(username, org3.getName());
 //		assertEquals(org.getWebsite(), org3.getWebsite());
 //		assertEquals(org2.getProfileURL(), org3.getProfileURL());
 //		assertEquals(org.getAddress().getCity(), org3.getAddress().getCity());
@@ -407,13 +395,13 @@ public class PaymentsClientTests extends SsoTestHelper {
 //
 //	//	FIX ME : delete User functionality is not defined in rest controller hence expected response 405
 //	@Test
-//	public void createOrganizationAndDeleteOrganizationTest() {
+//	public void createAccountAndDeleteAccountTest() {
 //		try {
 //			String username = "tdd-" + UUID.randomUUID().toString();
 //			Account account = new AccountBuilder().username(username)
 //					.phone("99999999")
 //					.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build()).build();
-//			URI userURI = client.createUser(account);
+//			URI userURI = client.createAccount(account);
 //			assertNotNull(userURI);
 //			String userId = client.extractId(userURI);
 //			Account org = new AccountBuilder().username(TEST_ORG_USERNAME)
@@ -422,13 +410,13 @@ public class PaymentsClientTests extends SsoTestHelper {
 //					.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
 //					.ownerId(userId)
 //					.build();
-//			URI uri = client.createOrganization(org);
+//			URI uri = client.createAccount(org);
 //			assertNotNull(uri);
-//			String id = PaymentsClient.extractId(uri);
+//			String id = extractId(uri);
 //			assertNotNull(id);
-//			Account org1 = client.getOrganization(id);
+//			Account org1 = client.getAccount(id);
 //			assertNotNull(org1);
-//			client.deleteOrganization(id);
+//			client.deleteAccount(id);
 //			fail();
 //		}catch(HttpClientErrorException ex) {
 //			assertEquals(HttpStatus.METHOD_NOT_ALLOWED.value(), ex.getRawStatusCode());
@@ -440,8 +428,8 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void addCard1Test()
 	{
-		Account user = client.getUser(TEST_BUYER);
-		CreditCard card = new CreditCardBuilder()
+		Account user = client.getAccount(TEST_BUYER);
+		Card card = new CardBuilder()
 				.id(UUID.randomUUID().toString())
 				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
 				.brand("visa")
@@ -455,8 +443,8 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.name("vishal")
 				.build();
 
-		URI uri = client.addUserCard(card,user.getId());
-		String id = PaymentsClient.extractId(uri);
+		URI uri = client.addAccountCard(card,user.getId());
+		String id = extractId(uri);
 		assertNotNull(id);
 
 	}
@@ -469,12 +457,12 @@ public class PaymentsClientTests extends SsoTestHelper {
 		Account account = new AccountBuilder().username(username)
 				.phone("99999999")
 				.address(new AddressBuilder().country("USA").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build()).build();
-		URI uri = client.createUser(account);
+		URI uri = client.createAccount(account);
 		assertNotNull(uri);
-		String id = PaymentsClient.extractId(uri);
+		String id = extractId(uri);
 		assertNotNull(id);
 		
-		Account user = client.getUser(username);
+		Account user = client.getAccount(username);
 		CreditCard card = new CreditCardBuilder()
 				.id(UUID.randomUUID().toString())
 				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
@@ -499,8 +487,8 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void addCard2Test()
 	{
-		Account user = client.getUser(TEST_SELLER);
-		CreditCard card = new CreditCardBuilder()
+		Account user = client.getAccount(TEST_SELLER);
+		Card card = new CardBuilder()
 				.id(UUID.randomUUID().toString())
 				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
 				.brand("visa")
@@ -514,8 +502,8 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.name("vishal")
 				.build();
 
-		URI uri = client.addUserCard(card,user.getId());
-		String id = PaymentsClient.extractId(uri);
+		URI uri = client.addAccountCard(card,user.getId());
+		String id = extractId(uri);
 		assertNotNull(id);
 
 	}
@@ -523,7 +511,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 	public void addNonExistingUserCard() {
 		try {
 			String id =UUID.randomUUID().toString();
-			CreditCard card = new CreditCardBuilder()
+			Card card = new CardBuilder()
 					.id(UUID.randomUUID().toString())
 					.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
 					.brand("visa")
@@ -536,9 +524,9 @@ public class PaymentsClientTests extends SsoTestHelper {
 					.last4("8765")
 					.name("vishal")
 					.build();
-			URI uri =client.addUserCard(card, id);
+			URI uri =client.addAccountCard(card, id);
 			assertNotNull(uri);
-			String uriid= PaymentsClient.extractId(uri);
+			String uriid= extractId(uri);
 			assertNotNull(uriid);
 			fail();
 		}catch(HttpClientErrorException ex) {
@@ -547,22 +535,12 @@ public class PaymentsClientTests extends SsoTestHelper {
 	}
 
 	
-	/*@Test 
-	public void getUserCardTest() {
-		Account user = client.getUser(TEST_USER);
-		CreditCard[] cardList= client.getCard(user.getId());
-		assertNotNull(cardList);
-
-		for(CreditCard card :cardList) {
-			assertEquals("8765", card.getLast4());
-		}
-	}*/
 
 	@Test
 	public void getNonExistUserCardTest() {
 		try {
 			String id ="tdd"+UUID.randomUUID().toString();
-			CreditCard[]  cardList =client.getUserCard(id);
+			List<Card> cardList =client.getAccountCards(id);
 			assertNull(cardList);
 			fail();
 		}catch(HttpClientErrorException ex)
@@ -574,15 +552,19 @@ public class PaymentsClientTests extends SsoTestHelper {
 	
 	@Test
 	public void deleteExistingCard() {
-		String cardId ="691b9425-5a6f-484a-bcc3-2d57f3c063cc";
-		client.deleteUserCard(cardId);
-		
+		String accountId ="tdd-"+UUID.randomUUID().toString();
+		List<Card> cards =client.getAccountCards(accountId);
+		assertNotNull(cards);
+		for (Card card: cards) {
+			client.deleteAccountCard(accountId, card.getNumber());				
+		}
 	}
+	
 	@Test
-	public void addOrganizationCard() {
+	public void addAccountCard() {
 		String id="5a130467f50980288a148f97";
 		
-		CreditCard card = new CreditCardBuilder()
+		Card card = new CardBuilder()
 				.id(UUID.randomUUID().toString())
 				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
 				.brand("visa")
@@ -596,16 +578,16 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.name("vishal-visa")
 				.build();
 
-		URI uri = client.addOrganizationCard(card,id);
-		String orgCardId = PaymentsClient.extractId(uri);
+		URI uri = client.addAccountCard(card,id);
+		String orgCardId = extractId(uri);
 		assertNotNull(orgCardId);
 	}
 	
 	@Test
-	public void addFalseOrganizationCard() {
+	public void addFalseAccountCard() {
 		try {
-		Account user = client.getUser(TEST_SELLER);
-		CreditCard card = new CreditCardBuilder()
+		Account user = client.getAccount(TEST_SELLER);
+		Card card = new CardBuilder()
 				.id(UUID.randomUUID().toString())
 				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
 				.brand("visa")
@@ -619,8 +601,8 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.name("vishal-visa")
 				.build();
 
-		URI uri = client.addOrganizationCard(card,user.getId());
-		String orgCardId = PaymentsClient.extractId(uri);
+		URI uri = client.addAccountCard(card,user.getId());
+		String orgCardId = extractId(uri);
 		assertNotNull(orgCardId);
 		fail();
 		}catch(HttpClientErrorException ex) {

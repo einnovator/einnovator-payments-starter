@@ -4,12 +4,9 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.GregorianCalendar;
 
-import org.einnovator.payments.client.PaymentsClient;
 import org.einnovator.payments.client.config.PaymentsClientConfig;
 import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.AccountBuilder;
-import org.einnovator.payments.client.model.Address;
-import org.einnovator.payments.client.model.AddressBuilder;
 import org.einnovator.payments.client.model.Currency;
 import org.einnovator.payments.client.model.MonetaryAmount;
 import org.einnovator.payments.client.model.Payable;
@@ -17,6 +14,9 @@ import org.einnovator.payments.client.model.PayableBuilder;
 import org.einnovator.payments.client.model.Payment;
 import org.einnovator.payments.client.model.PaymentBuilder;
 import org.einnovator.sso.client.support.SsoTestHelper;
+import org.einnovator.util.model.Address;
+import org.einnovator.util.model.AddressBuilder;
+import org.einnovator.util.model.Phone;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,13 +37,13 @@ public class PaymentsWithInvoicesTests extends SsoTestHelper {
 
 	public static final String TEST_SELLER = "jsimao71@gmail.com";
 	public static final String TEST_SELLER_ORG = "testorg";
-	public static final String TEST_BUYER = "valter.balegas@einnovator.org";
+	public static final String TEST_BUYER = "tdd@einnovator.org";
 	public static final String TEST_BUYER_ORG = "testorg";
-	public static final String TEST_USER_FAIL = "Wronguser@WromngEmail.com";
+	public static final String TEST_USER_FAIL = "user@test.com";
 	
 	public static final String TEST_PASSWORD = "Einnovator123!!";
-	private static final String CLIENT_ID = "greenfence";
-	private static final String CLIENT_SECRET = "greenfence$123";
+	private static final String CLIENT_ID = "application";
+	private static final String CLIENT_SECRET = "application$123";
 	
 	@Configuration
 	static class TestConfig extends SsoTestHelper.TestConfig {
@@ -64,7 +64,7 @@ public class PaymentsWithInvoicesTests extends SsoTestHelper {
 				.build();
 		Account account = new AccountBuilder()
 				.username(username)
-				.phone("99999999")
+				.phone(new Phone("99999999"))
 				.address(address)
 				.currency(Currency.USD)
 				.email(email)
@@ -77,8 +77,8 @@ public class PaymentsWithInvoicesTests extends SsoTestHelper {
 	}
 	
 	private Payment makePayment() {
-		Account buyer = client.getUser(TEST_BUYER);
-		Account seller = client.getUser(TEST_SELLER);
+		Account buyer = client.getAccount(TEST_BUYER);
+		Account seller = client.getAccount(TEST_SELLER);
 		return makePayment(buyer, seller);
 	}
 
@@ -88,7 +88,7 @@ public class PaymentsWithInvoicesTests extends SsoTestHelper {
 				.name("product:"+n)
 				.category("category:"+n)
 				.description("description:"+n)
-				.imgUri("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
+				.img("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
 				.build();
 
 		Payment payment = new PaymentBuilder()
@@ -108,17 +108,17 @@ public class PaymentsWithInvoicesTests extends SsoTestHelper {
 		Account seller0 = makeAccount(TEST_SELLER, TEST_SELLER);
 		Account buyer1 = null, seller1 = null;
 		try {
-			buyer1 = client.getUser(buyer0.getUsername());
+			buyer1 = client.getAccount(buyer0.getName());
 		} catch (HttpClientErrorException e) {
-			client.createUser(buyer0);
-			buyer1 = client.getUser(buyer0.getUsername());
+			client.createAccount(buyer0);
+			buyer1 = client.getAccount(buyer0.getName());
 		}
 
 		try {
-			seller1 = client.getUser(seller0.getUsername());
+			seller1 = client.getAccount(seller0.getName());
 		} catch (HttpClientErrorException e) {
-			client.createUser(seller0);
-			seller1 = client.getUser(seller0.getUsername());
+			client.createAccount(seller0);
+			seller1 = client.getAccount(seller0.getName());
 		}
 
 		assertNotNull(buyer1);

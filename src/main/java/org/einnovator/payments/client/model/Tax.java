@@ -2,7 +2,15 @@ package org.einnovator.payments.client.model;
 
 import java.math.BigDecimal;
 
-public class Tax {
+import org.einnovator.util.model.EntityBase;
+import org.einnovator.util.model.ToStringCreator;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Tax extends EntityBase {
 
 	private String name;
 
@@ -99,10 +107,19 @@ public class Tax {
 	}
 
 	@Override
-	public String toString() {
-		return "Tax [" + (name != null ? "name=" + name + ", " : "") + (amount != null ? "amount=" + amount + ", " : "") + (currency != null ? "currency=" + currency + ", " : "")
-				+ (comment != null ? "comment=" + comment + ", " : "") + "feeTax=" + feeTax + ", " + (sellerFeeTax != null ? "sellerFeeTax=" + sellerFeeTax + ", " : "")
-				+ (percentage != null ? "percentage=" + percentage + ", " : "") + "buyerTax=" + buyerTax + "]";
+	public ToStringCreator toString1(ToStringCreator creator) {
+		return super.toString1(creator)
+				.append("name", name)
+				.append("amount", amount)
+				.append("currency", currency)
+				.append("percentage", percentage)
+				.append("feeTax", feeTax)
+				.append("sellerFeeTax", sellerFeeTax)
+				.append("buyerTax", buyerTax)
+				.append("countryCode2", countryCode2)
+				.append("comment", comment)
+				;
 	}
 
+	
 }

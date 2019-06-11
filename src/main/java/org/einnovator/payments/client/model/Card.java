@@ -1,6 +1,8 @@
 package org.einnovator.payments.client.model;
 
-public class CreditCard {
+import org.einnovator.util.model.Address;
+
+public class Card {
 	
 	private String id;
 	private CardType cardType;
@@ -24,9 +26,9 @@ public class CreditCard {
 
 	private String brand;
 	
-	public CreditCard() {}
+	public Card() {}
 
-	public CreditCard(CardType cardType, String number, Integer expirationMonth, Integer expirationYear, String name,
+	public Card(CardType cardType, String number, Integer expirationMonth, Integer expirationYear, String name,
 			Address address, String cvc, String last4, Currency currency, String brand) {
 		this.cardType = cardType;
 		this.number = number;

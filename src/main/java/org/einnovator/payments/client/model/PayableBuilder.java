@@ -2,13 +2,18 @@ package org.einnovator.payments.client.model;
 
 public class PayableBuilder {
 
+
+	private String id;
+
+	private String uuid;
+
 	private String name;
 
 	private String category;
 
 	private String description;
 	
-	private String imgUri;
+	private String img;
 	
 	private String nameCss;
 	
@@ -20,6 +25,16 @@ public class PayableBuilder {
 
 	
 	public PayableBuilder() {
+	}
+
+	public PayableBuilder id(String id) {
+		this.id = id;
+		return this;
+	}
+	
+	public PayableBuilder uuid(String uuid) {
+		this.uuid = uuid;
+		return this;
 	}
 
 	public PayableBuilder name(String name) {
@@ -37,8 +52,8 @@ public class PayableBuilder {
 		return this;
 	}
 
-	public PayableBuilder imgUri(String imgUri) {
-		this.imgUri = imgUri;
+	public PayableBuilder img(String img) {
+		this.img = img;
 		return this;
 	}
 
@@ -67,7 +82,7 @@ public class PayableBuilder {
 		payable.setName(name);
 		payable.setCategory(category);
 		payable.setDescription(description);
-		payable.setImgUri(imgUri);
+		payable.setImg(img);
 		payable.setNameCss(nameCss);
 		payable.setCategoryCss(categoryCss);
 		payable.setDescriptionCss(descriptionCss);
@@ -80,7 +95,7 @@ public class PayableBuilder {
 		return "Payable [" + (name != null ? "name=" + name + ", " : "")
 				+ (category != null ? "category=" + category + ", " : "")
 				+ (description != null ? "description=" + description + ", " : "")
-				+ (imgUri != null ? "imgUri=" + imgUri + ", " : "")
+				+ (img != null ? "img=" + img + ", " : "")
 				+ (nameCss != null ? "nameCss=" + nameCss + ", " : "")
 				+ (categoryCss != null ? "categoryCss=" + categoryCss + ", " : "")
 				+ (imgCss != null ? "imgCss=" + imgCss + ", " : "")

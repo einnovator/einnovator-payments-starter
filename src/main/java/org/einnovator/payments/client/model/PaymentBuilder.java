@@ -2,19 +2,18 @@ package org.einnovator.payments.client.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PaymentBuilder {
-	
-	private PaymentFeeType feeType;
+
+	private String id;
+
+	private String uuid;
 
 	private PaymentStatus status;
 
 	private PaymentStatus transferStatus;
-
-	private Date createdDate;
 
 	private Date transferDate;
 
@@ -28,15 +27,11 @@ public class PaymentBuilder {
 
 	private String statementDescriptor;
 
-	private Payable payable; // Further describes the item/order being purchase/traded
+	private Payable payable; 
 
 	private Account buyer;
 
 	private Account seller;
-
-	private String transferAccountId;
-
-	private String transferId;
 
 	private Charge charge;
 
@@ -44,29 +39,26 @@ public class PaymentBuilder {
 
 	private String transferErrorMessage;
 
-	private String refId;
-	
 	private PaymentStrategy strategy;
-
-	private Map<String, Object> meta = new HashMap<>();
 
 	private List<Fee> beneficiaries;
 
-	private boolean autoInvoice;
-
 	private PaymentStatus feeStatus;
 
-	private String sourceId;
-	
 	private MonetaryAmount tax;
 
 	private Map<String, BigDecimal> feeDistribution;
 
 	public PaymentBuilder() {
 	}
-
-	public PaymentBuilder feeType(PaymentFeeType feeType) {
-		this.feeType = feeType;
+	
+	public PaymentBuilder id(String id) {
+		this.id = id;
+		return this;
+	}
+	
+	public PaymentBuilder uuid(String uuid) {
+		this.uuid = uuid;
 		return this;
 	}
 
@@ -77,11 +69,6 @@ public class PaymentBuilder {
 
 	public PaymentBuilder transferStatus(PaymentStatus transferStatus) {
 		this.transferStatus = transferStatus;
-		return this;
-	}
-
-	public PaymentBuilder createdDate(Date createdDate) {
-		this.createdDate = createdDate;
 		return this;
 	}
 
@@ -130,16 +117,6 @@ public class PaymentBuilder {
 		return this;
 	}
 
-	public PaymentBuilder transferAccountId(String transferAccountId) {
-		this.transferAccountId = transferAccountId;
-		return this;
-	}
-
-	public PaymentBuilder transferId(String transferId) {
-		this.transferId = transferId;
-		return this;
-	}
-
 	public PaymentBuilder charge(Charge charge) {
 		this.charge = charge;
 		return this;
@@ -155,33 +132,13 @@ public class PaymentBuilder {
 		return this;
 	}
 
-	public PaymentBuilder refId(String refId) {
-		this.refId = refId;
-		return this;
-	}
-
-	public PaymentBuilder meta(String key, Object value) {
-		meta.put(key, value);
-		return this;
-	}
-
 	public PaymentBuilder beneficiaries(List<Fee> beneficiaries) {
 		this.beneficiaries = beneficiaries;
 		return this;
 	}
 
-	public PaymentBuilder autoInvoice(boolean autoInvoice) {
-		this.autoInvoice = autoInvoice;
-		return this;
-	}
-
 	public PaymentBuilder feeStatus(PaymentStatus feeStatus) {
 		this.feeStatus = feeStatus;
-		return this;
-	}
-
-	public PaymentBuilder sourceId(String sourceId) {
-		this.sourceId = sourceId;
 		return this;
 	}
 	
@@ -202,32 +159,24 @@ public class PaymentBuilder {
 	
 	public Payment build() {
 		Payment payment = new Payment();
-//		payment.setFeeType(feeType);
+		payment.setId(id);
+		payment.setUuid(uuid);
 		payment.setAmount(amount);
-		payment.setAutoInvoice(autoInvoice);
 		payment.setBeneficiaries(beneficiaries);
 		payment.setBuyer(buyer);
 		payment.setCharge(charge);
-		payment.setCreatedDate(createdDate);
 		payment.setErrorMessage(errorMessage);
 		payment.setExpireDate(expireDate);
 		payment.setFeeStatus(feeStatus);
-		payment.setMeta(meta);
 		payment.setPayable(payable);
 		payment.setPaymentDate(paymentDate);
-		payment.setRefId(refId);
 		payment.setStrategy(strategy);
 		payment.setSeller(seller);
-		payment.setSourceId(sourceId);
-//		payment.setSourceNumber(sourceNumber);
-//		payment.setSourceType(sourceType);
 		payment.setStartDate(startDate);
 		payment.setStatementDescriptor(statementDescriptor);
 		payment.setStatus(status);
-		payment.setTransferAccountId(transferAccountId);
 		payment.setTransferDate(transferDate);
 		payment.setTransferErrorMessage(transferErrorMessage);
-		payment.setTransferId(transferId);
 		payment.setTransferStatus(transferStatus);
 		payment.setTax(tax);
 		payment.setFeeDistribution(feeDistribution);

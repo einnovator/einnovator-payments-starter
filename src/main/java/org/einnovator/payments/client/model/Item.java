@@ -4,10 +4,15 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.einnovator.util.model.EntityBase;
+import org.einnovator.util.model.ToStringCreator;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Item {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Item extends EntityBase {
 
 	private String name;
 
@@ -29,98 +34,231 @@ public class Item {
 	
 	private List<Fee> fees;
 	
-	private Fee refund;
+	private BigDecimal refundAmount;
 
 	public Item() {
 	}
 
+	
+	/**
+	 * Get the value of property {@code name}.
+	 *
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+
+	/**
+	 * Set the value of property {@code name}.
+	 *
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+
+	/**
+	 * Get the value of property {@code numberOfUnits}.
+	 *
+	 * @return the numberOfUnits
+	 */
 	public Integer getNumberOfUnits() {
 		return numberOfUnits;
 	}
 
+
+	/**
+	 * Set the value of property {@code numberOfUnits}.
+	 *
+	 * @param numberOfUnits the numberOfUnits to set
+	 */
 	public void setNumberOfUnits(Integer numberOfUnits) {
 		this.numberOfUnits = numberOfUnits;
 	}
 
-	public BigDecimal getAmountPerUnit() {
-		return amountPerUnit;
-	}
 
-	public void setAmountPerUnit(BigDecimal amountPerUnit) {
-		this.amountPerUnit = amountPerUnit;
-	}
-
+	/**
+	 * Get the value of property {@code numberOfUnits2}.
+	 *
+	 * @return the numberOfUnits2
+	 */
 	public Integer getNumberOfUnits2() {
 		return numberOfUnits2;
 	}
 
+
+	/**
+	 * Set the value of property {@code numberOfUnits2}.
+	 *
+	 * @param numberOfUnits2 the numberOfUnits2 to set
+	 */
 	public void setNumberOfUnits2(Integer numberOfUnits2) {
 		this.numberOfUnits2 = numberOfUnits2;
 	}
 
+
+	/**
+	 * Get the value of property {@code amountPerUnit}.
+	 *
+	 * @return the amountPerUnit
+	 */
+	public BigDecimal getAmountPerUnit() {
+		return amountPerUnit;
+	}
+
+
+	/**
+	 * Set the value of property {@code amountPerUnit}.
+	 *
+	 * @param amountPerUnit the amountPerUnit to set
+	 */
+	public void setAmountPerUnit(BigDecimal amountPerUnit) {
+		this.amountPerUnit = amountPerUnit;
+	}
+
+
+	/**
+	 * Get the value of property {@code totalAmount}.
+	 *
+	 * @return the totalAmount
+	 */
 	public BigDecimal getTotalAmount() {
 		return totalAmount;
 	}
 
+
+	/**
+	 * Set the value of property {@code totalAmount}.
+	 *
+	 * @param totalAmount the totalAmount to set
+	 */
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
+
+	/**
+	 * Get the value of property {@code comment}.
+	 *
+	 * @return the comment
+	 */
 	public String getComment() {
 		return comment;
 	}
 
+
+	/**
+	 * Set the value of property {@code comment}.
+	 *
+	 * @param comment the comment to set
+	 */
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
+
+	/**
+	 * Get the value of property {@code tag}.
+	 *
+	 * @return the tag
+	 */
 	public String getTag() {
 		return tag;
 	}
 
+
+	/**
+	 * Set the value of property {@code tag}.
+	 *
+	 * @param tag the tag to set
+	 */
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
 
+
+	/**
+	 * Get the value of property {@code tag2}.
+	 *
+	 * @return the tag2
+	 */
 	public String getTag2() {
 		return tag2;
 	}
 
+
+	/**
+	 * Set the value of property {@code tag2}.
+	 *
+	 * @param tag2 the tag2 to set
+	 */
 	public void setTag2(String tag2) {
 		this.tag2 = tag2;
 	}
 
+
+	/**
+	 * Get the value of property {@code tag2icon}.
+	 *
+	 * @return the tag2icon
+	 */
 	public String getTag2icon() {
 		return tag2icon;
 	}
 
+
+	/**
+	 * Set the value of property {@code tag2icon}.
+	 *
+	 * @param tag2icon the tag2icon to set
+	 */
 	public void setTag2icon(String tag2icon) {
 		this.tag2icon = tag2icon;
 	}
 
-	public List<Fee> getFee() {
+
+	/**
+	 * Get the value of property {@code fees}.
+	 *
+	 * @return the fees
+	 */
+	public List<Fee> getFees() {
 		return fees;
 	}
 
+
+	/**
+	 * Set the value of property {@code fees}.
+	 *
+	 * @param fees the fees to set
+	 */
 	public void setFees(List<Fee> fees) {
 		this.fees = fees;
 	}
 
-	public Fee getRefund() {
-		return refund;
+
+	/**
+	 * Get the value of property {@code refundAmount}.
+	 *
+	 * @return the refundAmount
+	 */
+	public BigDecimal getRefundAmount() {
+		return refundAmount;
 	}
 
-	public void setRefund(Fee refund) {
-		this.refund = refund;
+
+	/**
+	 * Set the value of property {@code refundAmount}.
+	 *
+	 * @param refundAmount the refundAmount to set
+	 */
+	public void setRefundAmount(BigDecimal refundAmount) {
+		this.refundAmount = refundAmount;
 	}
+
 
 	public BigDecimal update() {
 		if (amountPerUnit == null || numberOfUnits == null) {
@@ -135,12 +273,18 @@ public class Item {
 	}
 
 	@Override
-	public String toString() {
-		return "Item [" + (name != null ? "name=" + name + ", " : "") + (numberOfUnits != null ? "numberOfUnits=" + numberOfUnits + ", " : "")
-				+ (numberOfUnits2 != null ? "numberOfUnits2=" + numberOfUnits2 + ", " : "") + (amountPerUnit != null ? "amountPerUnit=" + amountPerUnit + ", " : "")
-				+ (totalAmount != null ? "totalAmount=" + totalAmount + ", " : "") + (comment != null ? "comment=" + comment + ", " : "") + (tag != null ? "tag=" + tag + ", " : "")
-				+ (tag2 != null ? "tag2=" + tag2 + ", " : "") + (tag2icon != null ? "tag2icon=" + tag2icon + ", " : "") + (fees != null ? "fees=" + fees + ", " : "")
-				+ (refund != null ? "refund=" + refund : "") + "]";
+	public ToStringCreator toString1(ToStringCreator creator) {
+		return super.toString1(creator)
+				.append("name", name)
+				.append("numberOfUnits", numberOfUnits)
+				.append("numberOfUnits2", numberOfUnits2)
+				.append("amountPerUnit", amountPerUnit)
+				.append("totalAmount", totalAmount)
+				.append("refundAmount", refundAmount)
+				.append("tag", tag)
+				.append("tag2", tag2)
+				.append("comment", comment)
+				;
 	}
 
 	public static BigDecimal add(Item... items) {

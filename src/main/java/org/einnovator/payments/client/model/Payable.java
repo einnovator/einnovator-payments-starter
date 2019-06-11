@@ -2,10 +2,16 @@ package org.einnovator.payments.client.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.einnovator.util.model.EntityBase;
+import org.einnovator.util.model.ToStringCreator;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Payable {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+
+@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Payable extends EntityBase {
 
 	private String name;
 
@@ -13,7 +19,7 @@ public class Payable {
 
 	private String description;
 	
-	private String imgUri;
+	private String img;
 	
 	private String nameCss;
 	
@@ -23,7 +29,7 @@ public class Payable {
 
 	private String descriptionCss;
 	
-	private List<Item> lineItems;
+	private List<Item> items;
 
 	
 	public Payable() {
@@ -60,13 +66,13 @@ public class Payable {
 	}
 
 
-	public String getImgUri() {
-		return imgUri;
+	public String getImg() {
+		return img;
 	}
 
 
-	public void setImgUri(String imgUri) {
-		this.imgUri = imgUri;
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 
@@ -109,13 +115,13 @@ public class Payable {
 		this.descriptionCss = descriptionCss;
 	}
 
-	public List<Item> getLineItems() {
-		return lineItems;
+	public List<Item> getItems() {
+		return items;
 	}
 
 
-	public void setLineItems(List<Item> lineItems) {
-		this.lineItems = lineItems;
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 
 
@@ -124,24 +130,29 @@ public class Payable {
 		payable.setName(name);
 		payable.setCategory(category);
 		payable.setDescription(description);
-		payable.setImgUri(imgUri);
+		payable.setImg(img);
 		payable.setNameCss(nameCss);
 		payable.setCategoryCss(categoryCss);
 		payable.setDescriptionCss(descriptionCss);
 		payable.setNameCss(nameCss);
-		payable.setLineItems(lineItems);
+		payable.setItems(items);
 		return payable;
 	}
 	
+
 	@Override
-	public String toString() {
-		return "Payable [" + (name != null ? "name=" + name + ", " : "") + (category != null ? "category=" + category + ", " : "")
-				+ (description != null ? "description=" + description + ", " : "") + (imgUri != null ? "imgUri=" + imgUri + ", " : "")
-				+ (nameCss != null ? "nameCss=" + nameCss + ", " : "") + (categoryCss != null ? "categoryCss=" + categoryCss + ", " : "")
-				+ (imgCss != null ? "imgCss=" + imgCss + ", " : "") + (descriptionCss != null ? "descriptionCss=" + descriptionCss + ", " : "")
-				+ (lineItems != null ? "lineItems=" + lineItems : "") + "]";
+	public ToStringCreator toString1(ToStringCreator creator) {
+		return super.toString1(creator)
+				.append("name", name)
+				.append("category", category)
+				.append("description", description)
+				.append("img", img)
+				.append("nameCss", nameCss)
+				.append("categoryCss", categoryCss)
+				.append("imgCss", imgCss)
+				.append("descriptionCss", descriptionCss)
+				.append("items", items)
+				;
 	}
-	
-	
 	
 }

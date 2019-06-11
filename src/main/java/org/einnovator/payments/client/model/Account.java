@@ -1,13 +1,25 @@
 package org.einnovator.payments.client.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import org.einnovator.util.model.Address;
+import org.einnovator.util.model.EntityBase;
+import org.einnovator.util.model.Phone;
+import org.einnovator.util.model.ToStringCreator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Account {
-	private String id;
+@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Account extends EntityBase {
+
+	private AccountType type;
 	
+	private String owner;
+
 	private String username;
 
 	private String email;
@@ -16,28 +28,24 @@ public class Account {
 
 	private String name;
 
-	private String logo; // biz logo or user avatar URL
-
-	private String avatarURL;
+	private String avatar;
 	
 	private String color;
 
 	private String legalName;
 
-	private String legalNameKana;
+	private String legalName2;
 
-	private String legalNameKanji;
+	private String legalName3;
 
 	private String description;
 
-	private String phone;
+	private Phone phone;
 	
-	private String mobilePhone;
+	private Phone mobilePhone;
 	
 	private String website;
 	
-	private String profileURL;
-
 	private Currency currency;
 	
 	private String taxNumber;
@@ -48,36 +56,53 @@ public class Account {
 
 	private Address address;
 
-	private Address addressKana;
+	private Address address2;
 
-	private Address addressKanji;
+	private Address address3;
 
 	private Date birthdate;
 
 	private String firstName;
 
-	private String firstNameKana;
+	private String firstName2;
 
-	private String firstNameKanji;
+	private String firstName3;
 
 	private String lastName;
 
-	private String lastNameKana;
+	private String lastName2;
 
-	private String lastNameKanji;
+	private String lastName3;
 
-	private GenderType gender;
+	private List<Card> cards = new ArrayList<>();
 
-	private String ownerId;
+	private List<BankAccount> bankAccounts = new ArrayList<>();
 
-	private AccountType type;
-	
 	public Account() {
 	}
 	
 	public Account(String id) {
-		super();
 		this.id = id;
+	}
+
+	public Account(Object obj) {
+		super(obj);
+	}
+
+	public AccountType getType() {
+		return type;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+	
+	public void setType(AccountType type) {
+		this.type = type;
 	}
 
 	public String getId() {
@@ -119,29 +144,13 @@ public class Account {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
 	
-	public String getAvatarURL() {
-		return avatarURL;
+	public String getAvatar() {
+		return avatar;
 	}
 
-	public void setAvatarURL(String avatarURL) {
-		this.avatarURL = avatarURL;
-	}
-
-	public String getProfileURL() {
-		return profileURL;
-	}
-
-	public void setProfileURL(String profileURL) {
-		this.profileURL = profileURL;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public String getColor() {
@@ -160,20 +169,20 @@ public class Account {
 		this.legalName = legalName;
 	}
 
-	public String getLegalNameKana() {
-		return legalNameKana;
+	public String getLegalName2() {
+		return legalName2;
 	}
 
-	public void setLegalNameKana(String legalNameKana) {
-		this.legalNameKana = legalNameKana;
+	public void setLegalName2(String legalName2) {
+		this.legalName2 = legalName2;
 	}
 
-	public String getLegalNameKanji() {
-		return legalNameKanji;
+	public String getLegalName3() {
+		return legalName3;
 	}
 
-	public void setLegalNameKanji(String legalNameKanji) {
-		this.legalNameKanji = legalNameKanji;
+	public void setLegalName3(String legalName3) {
+		this.legalName3 = legalName3;
 	}
 
 	public String getDescription() {
@@ -184,19 +193,19 @@ public class Account {
 		this.description = description;
 	}
 	
-	public String getPhone() {
+	public Phone getPhone() {
 		return phone;
 	}
 
-	public void setPhone(String phone) {
+	public void setPhone(Phone phone) {
 		this.phone = phone;
 	}
 	
-	public String getMobilePhone() {
+	public Phone getMobilePhone() {
 		return mobilePhone;
 	}
 
-	public void setMobilePhone(String mobilePhone) {
+	public void setMobilePhone(Phone mobilePhone) {
 		this.mobilePhone = mobilePhone;
 	}
 
@@ -248,20 +257,20 @@ public class Account {
 		this.address = address;
 	}
 
-	public Address getAddressKana() {
-		return addressKana;
+	public Address getAddress2() {
+		return address2;
 	}
 
-	public void setAddressKana(Address addressKana) {
-		this.addressKana = addressKana;
+	public void setAddress2(Address address2) {
+		this.address2 = address2;
 	}
 
-	public Address getAddressKanji() {
-		return addressKanji;
+	public Address getAddress3() {
+		return address3;
 	}
 
-	public void setAddressKanji(Address addressKanji) {
-		this.addressKanji = addressKanji;
+	public void setAddress3(Address address3) {
+		this.address3 = address3;
 	}
 
 	public Date getBirthdate() {
@@ -280,20 +289,20 @@ public class Account {
 		this.firstName = firstName;
 	}
 
-	public String getFirstNameKana() {
-		return firstNameKana;
+	public String getFirstName2() {
+		return firstName2;
 	}
 
-	public void setFirstNameKana(String firstNameKana) {
-		this.firstNameKana = firstNameKana;
+	public void setFirstName2(String firstName2) {
+		this.firstName2 = firstName2;
 	}
 
-	public String getFirstNameKanji() {
-		return firstNameKanji;
+	public String getFirstName3() {
+		return firstName3;
 	}
 
-	public void setFirstNameKanji(String firstNameKanji) {
-		this.firstNameKanji = firstNameKanji;
+	public void setFirstName3(String firstName3) {
+		this.firstName3 = firstName3;
 	}
 
 	public String getLastName() {
@@ -304,77 +313,46 @@ public class Account {
 		this.lastName = lastName;
 	}
 
-	public String getLastNameKana() {
-		return lastNameKana;
+	public String getLastName2() {
+		return lastName2;
 	}
 
-	public void setLastNameKana(String lastNameKana) {
-		this.lastNameKana = lastNameKana;
+	public void setLastName2(String lastName2) {
+		this.lastName2 = lastName2;
 	}
 
-	public String getLastNameKanji() {
-		return lastNameKanji;
+	public String getLastName3() {
+		return lastName3;
 	}
 
-	public void setLastNameKanji(String lastNameKanji) {
-		this.lastNameKanji = lastNameKanji;
-	}
-
-	public GenderType getGender() {
-		return gender;
-	}
-
-	public void setGender(GenderType gender) {
-		this.gender = gender;
-	}
-
-	public String getOwnerId() {
-		return ownerId;
-	}
-
-	public void setOwnerId(String ownerId) {
-		this.ownerId = ownerId;
-	}
-
-	public AccountType getType() {
-		return type;
-	}
-
-	public void setType(AccountType type) {
-		this.type = type;
+	public void setLastName3(String lastName3) {
+		this.lastName3 = lastName3;
 	}
 
 	@Override
-	public String toString() {
-		return "Account [" + (id != null ? "id=" + id + ", " : "")
-				+ (username != null ? "username=" + username + ", " : "")
-				+ (email != null ? "email=" + email + ", " : "")
-				+ (title != null ? "title=" + title + ", " : "")
-				+ (name != null ? "name=" + name + ", " : "")				
-				+ (logo != null ? "logo=" + logo + ", " : "") + (color != null ? "color=" + color + ", " : "")
-				+ (legalName != null ? "legalName=" + legalName + ", " : "")
-				+ (legalNameKana != null ? "legalNameKana=" + legalNameKana + ", " : "")
-				+ (legalNameKanji != null ? "legalNameKanji=" + legalNameKanji + ", " : "")
-				+ (description != null ? "description=" + description + ", " : "")
-				+ (mobilePhone != null ? "mobilePhone=" + mobilePhone + ", " : "")
-				+ (phone != null ? "phone=" + phone + ", " : "")
-				+ (website != null ? "website=" + website + ", " : "")
-				+ (currency != null ? "currency=" + currency + ", " : "")
-				+ (taxNumber != null ? "taxNumber=" + taxNumber + ", " : "")
-				+ (vatNumber != null ? "vatNumber=" + vatNumber + ", " : "")
-				+ (taxRegistrar != null ? "taxRegistrar=" + taxRegistrar + ", " : "")
-				+ (address != null ? "address=" + address + ", " : "")
-				+ (addressKana != null ? "addressKana=" + addressKana + ", " : "")
-				+ (addressKanji != null ? "addressKanji=" + addressKanji + ", " : "")
-				+ (birthdate != null ? "birthdate=" + birthdate + ", " : "") + (firstName != null ? "firstName=" + firstName + ", " : "")
-				+ (firstNameKana != null ? "firstNameKana=" + firstNameKana + ", " : "")
-				+ (firstNameKanji != null ? "firstNameKanji=" + firstNameKanji + ", " : "")
-				+ (lastName != null ? "lastName=" + lastName + ", " : "")
-				+ (lastNameKana != null ? "lastNameKana=" + lastNameKana + ", " : "")
-				+ (lastNameKanji != null ? "lastNameKanji=" + lastNameKanji + ", " : "")
-				+ (gender != null ? "gender=" + gender + ", " : "") 
-				+ (ownerId != null ? "ownerId=" + ownerId : "")
-				+ "]";
+	public ToStringCreator toString1(ToStringCreator creator) {
+		return super.toString1(creator)
+				.append("type", type)
+				.append("owner", owner)
+				.append("username", username)
+				.append("email", email)
+				.append("title", title)
+				.append("color", color)
+				.append("name", name)
+				.append("phone", phone)
+				.append("mobilePhone", mobilePhone)
+				.append("website", website)
+				.append("currency", currency)
+				.append("taxNumber", taxNumber)
+				.append("firstName", firstName)
+				.append("lastName", lastName)
+				.append("avatar", avatar)
+				.append("cards", cards)
+				.append("bankAccounts", bankAccounts)
+				.append("description", description)
+				;
 	}
+	
+
 
 }

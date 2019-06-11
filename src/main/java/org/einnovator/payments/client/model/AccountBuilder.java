@@ -2,10 +2,15 @@ package org.einnovator.payments.client.model;
 
 import java.util.Date;
 
+import org.einnovator.util.model.Address;
+import org.einnovator.util.model.Phone;
+
 public class AccountBuilder {
 
 	private String id;
-	
+
+	private String uuid;
+
 	private String username;
 
 	private String email;
@@ -14,27 +19,23 @@ public class AccountBuilder {
 
 	private String name;
 	
-	private String avatarURL;
-
-	private String logo; // biz logo or user avatar URL
+	private String avatar;
 
 	private String color;
 
 	private String legalName;
 
-	private String legalNameKana;
+	private String legalName2;
 
-	private String legalNameKanji;
+	private String legalName3;
 
 	private String description;
 
-	private String phone;
+	private Phone phone;
 	
-	private String mobilePhone;
+	private Phone mobilePhone;
 
 	private String website;
-
-	private String profileURL;
 
 	private Currency currency;
 	
@@ -46,27 +47,25 @@ public class AccountBuilder {
 
 	private Address address;
 
-	private Address addressKana;
+	private Address address2;
 
-	private Address addressKanji;
+	private Address address3;
 
 	private Date birthdate;
 
 	private String firstName;
 
-	private String firstNameKana;
+	private String firstName2;
 
-	private String firstNameKanji;
+	private String firstName3;
 
 	private String lastName;
 
-	private String lastNameKana;
+	private String lastName2;
 
-	private String lastNameKanji;
+	private String lastName3;
 
-	private GenderType gender;
-
-	private String ownerId;
+	private String owner;
 
 	private AccountType type;
 
@@ -75,6 +74,11 @@ public class AccountBuilder {
 	
 	public AccountBuilder id(String id) {
 		this.id = id;
+		return this;
+	}
+	
+	public AccountBuilder uuid(String uuid) {
+		this.uuid = uuid;
 		return this;
 	}
 
@@ -96,13 +100,8 @@ public class AccountBuilder {
 		return this;
 	}
 
-	public AccountBuilder logo(String logo) {
-		this.logo = logo;
-		return this;
-	}
-	
-	public AccountBuilder avatarURL(String avatarURL) {
-		this.avatarURL = avatarURL;
+	public AccountBuilder avatar(String avatar) {
+		this.avatar = avatar;
 		return this;
 	}
 
@@ -116,13 +115,13 @@ public class AccountBuilder {
 		return this;
 	}
 
-	public AccountBuilder legalNameKana(String legalNameKana) {
-		this.legalNameKana = legalNameKana;
+	public AccountBuilder legalName2(String legalName2) {
+		this.legalName2 = legalName2;
 		return this;
 	}
 
-	public AccountBuilder legalNameKanji(String legalNameKanji) {
-		this.legalNameKanji = legalNameKanji;
+	public AccountBuilder legalName3(String legalName3) {
+		this.legalName3 = legalName3;
 		return this;
 	}
 
@@ -131,12 +130,12 @@ public class AccountBuilder {
 		return this;
 	}
 
-	public AccountBuilder phone(String phone) {
+	public AccountBuilder phone(Phone phone) {
 		this.phone = phone;
 		return this;
 	}
 	
-	public AccountBuilder mobilePhone(String mobilePhone) {
+	public AccountBuilder mobilePhone(Phone mobilePhone) {
 		this.mobilePhone = mobilePhone;
 		return this;
 	}
@@ -146,11 +145,6 @@ public class AccountBuilder {
 		return this;
 	}
 	
-	public AccountBuilder profileURL(String profileURL) {
-		this.profileURL = profileURL;
-		return this;
-	}
-
 	public AccountBuilder currency(Currency currency) {
 		this.currency = currency;
 		return this;
@@ -176,13 +170,13 @@ public class AccountBuilder {
 		return this;
 	}
 
-	public AccountBuilder addressKana(Address addressKana) {
-		this.addressKana = addressKana;
+	public AccountBuilder address2(Address address2) {
+		this.address2 = address2;
 		return this;
 	}
 
-	public AccountBuilder addressKanji(Address addressKanji) {
-		this.addressKanji = addressKanji;
+	public AccountBuilder address3(Address address3) {
+		this.address3 = address3;
 		return this;
 	}
 
@@ -196,13 +190,13 @@ public class AccountBuilder {
 		return this;
 	}
 
-	public AccountBuilder firstNameKana(String firstNameKana) {
-		this.firstNameKana = firstNameKana;
+	public AccountBuilder firstName2(String firstName2) {
+		this.firstName2 = firstName2;
 		return this;
 	}
 
-	public AccountBuilder firstNameKanji(String firstNameKanji) {
-		this.firstNameKanji = firstNameKanji;
+	public AccountBuilder firstName3(String firstName3) {
+		this.firstName3 = firstName3;
 		return this;
 	}
 
@@ -211,24 +205,18 @@ public class AccountBuilder {
 		return this;
 	}
 
-	public AccountBuilder lastNameKana(String lastNameKana) {
-		this.lastNameKana = lastNameKana;
+	public AccountBuilder lastName2(String lastName2) {
+		this.lastName2 = lastName2;
 		return this;
 	}
 
-	public AccountBuilder lastNameKanji(String lastNameKanji) {
-		this.lastNameKanji = lastNameKanji;
+	public AccountBuilder lastName3(String lastName3) {
+		this.lastName3 = lastName3;
 		return this;
 	}
 
-	public AccountBuilder gender(GenderType gender) {
-		this.gender = gender;
-		return this;
-
-	}
-
-	public AccountBuilder ownerId(String ownerId) {
-		this.ownerId = ownerId;
+	public AccountBuilder owner(String owner) {
+		this.owner = owner;
 		return this;
 	}
 
@@ -240,38 +228,36 @@ public class AccountBuilder {
 	public Account build() {
 		Account account = new Account();
 		account.setId(id);
+		account.setType(type);
+		account.setUuid(uuid);
+		account.setOwner(owner);
 		account.setUsername(username);
 		account.setEmail(email);
 		account.setTitle(title);
 		account.setName(name);
-		account.setAvatarURL(avatarURL);
-		account.setLogo(logo);
+		account.setAvatar(avatar);
 		account.setColor(color);
 		account.setLegalName(legalName);
-		account.setLegalNameKana(legalNameKana);
-		account.setLegalNameKanji(legalNameKanji);
+		account.setLegalName2(legalName2);
+		account.setLegalName3(legalName3);
 		account.setDescription(description);
 		account.setMobilePhone(mobilePhone);
 		account.setPhone(phone);
 		account.setWebsite(website);
-		account.setProfileURL(profileURL);
 		account.setCurrency(currency);
 		account.setTaxNumber(taxNumber);
 		account.setVatNumber(vatNumber);
 		account.setTaxRegistrar(taxRegistrar);
 		account.setAddress(address);
-		account.setAddressKana(addressKana);
-		account.setAddressKanji(addressKanji);
+		account.setAddress2(address2);
+		account.setAddress3(address3);
 		account.setBirthdate(birthdate);
 		account.setFirstName(firstName);
-		account.setFirstNameKana(firstNameKana);
-		account.setFirstNameKanji(firstNameKanji);
+		account.setFirstName2(firstName2);
+		account.setFirstName3(firstName3);
 		account.setLastName(lastName);
-		account.setLastNameKana(lastNameKana);
-		account.setLastNameKanji(lastNameKanji);
-		account.setGender(gender);
-		account.setOwnerId(ownerId);
-		account.setType(type);
+		account.setLastName2(lastName2);
+		account.setLastName3(lastName3);
 		return account;
 	}
 

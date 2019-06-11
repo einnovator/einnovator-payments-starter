@@ -1,6 +1,8 @@
 package org.einnovator.payments.client.model;
 
-public class CreditCardBuilder {
+import org.einnovator.util.model.Address;
+
+public class CardBuilder {
 
 	private String id;
 	private CardType cardType;
@@ -25,56 +27,56 @@ public class CreditCardBuilder {
 	private String brand;
 
 
-	public CreditCardBuilder() {
+	public CardBuilder() {
 	}
-	public CreditCardBuilder id(String id) {
+	public CardBuilder id(String id) {
 		this.id=id;
 		return this;
 	}
-	public CreditCardBuilder cardType(CardType cardType) {
+	public CardBuilder cardType(CardType cardType) {
 		this.cardType = cardType;
 		return this;
 	}
-	public CreditCardBuilder number(String number) {
+	public CardBuilder number(String number) {
 		this.number = number;
 		return this;
 	}
-	public CreditCardBuilder expirationMonth(Integer expirationMonth) {
+	public CardBuilder expirationMonth(Integer expirationMonth) {
 		this.expirationMonth = expirationMonth;
 		return this;
 	}
-	public CreditCardBuilder expirationYear(Integer expirationYear) {
+	public CardBuilder expirationYear(Integer expirationYear) {
 		this.expirationYear = expirationYear;
 		return this;
 	}
-	public CreditCardBuilder name(String name) {
+	public CardBuilder name(String name) {
 		this.name = name;
 		return this;
 	}
-	public CreditCardBuilder address(Address address) {
+	public CardBuilder address(Address address) {
 		this.address = address;
 		return this;
 	}
-	public CreditCardBuilder cvc(String cvc) {
+	public CardBuilder cvc(String cvc) {
 		this.cvc = cvc;
 		return this;
 	}
-	public CreditCardBuilder last4(String last4) {
+	public CardBuilder last4(String last4) {
 		this.last4 = last4;
 		return this;
 	}
-	public CreditCardBuilder currency(Currency currency) {
+	public CardBuilder currency(Currency currency) {
 		this.currency = currency;
 		return this;
 	}
-	public CreditCardBuilder brand(String brand) {
+	public CardBuilder brand(String brand) {
 		this.brand = brand;
 		return this;
 	}
 
 
-	public CreditCard  build() {
-		CreditCard ccard = new CreditCard();
+	public Card  build() {
+		Card ccard = new Card();
 		ccard.setId(id);
 		ccard.setCardType(cardType);
 		ccard.setAddress(address);

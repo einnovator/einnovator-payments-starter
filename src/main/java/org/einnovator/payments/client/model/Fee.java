@@ -2,13 +2,19 @@ package org.einnovator.payments.client.model;
 
 import java.math.BigDecimal;
 
+import org.einnovator.util.model.EntityBase;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Fee {
-	private Boolean visibleToBuyer = false;
 
-	private Boolean visibleToSeller = false;
+@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Fee extends EntityBase {
+
+	private Boolean visibleToBuyer;
+
+	private Boolean visibleToSeller;
 	
 	private BigDecimal totalAmountToBuyer;
 	
@@ -24,13 +30,11 @@ public class Fee {
 	
 	private String documentId;
 	
-	private boolean noProof;
+	private Boolean noProof;
 	
 	private Currency currency;
 	
 	private String name;
-	
-//	private boolean distributable;
 	
 
 	public Fee() {
@@ -48,7 +52,6 @@ public class Fee {
 		this.beneficiary = beneficiary;
 		this.noProof = noProof;
 		this.currency = currency;
-//		this.distributable = distributable;
 	}
 
 	public Boolean getVisibleToBuyer() {
