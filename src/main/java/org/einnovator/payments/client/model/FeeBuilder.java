@@ -8,20 +8,14 @@ public class FeeBuilder {
 
 	private Boolean visibleToSeller = false;
 
-	private BigDecimal totalAmountToBuyer;
+	private BigDecimal amountToBuyer;
 
-	private BigDecimal totalAmountToSeller;
+	private BigDecimal amountToSeller;
 
 	private String beneficiary;
 
 	private PaymentStatus status;
 
-	private String refId;
-
-	private String documentId;
-	
-	private boolean noProof;
-	
 	private Currency currency;
 
 	public FeeBuilder() {
@@ -37,13 +31,13 @@ public class FeeBuilder {
 		return this;
 	}
 
-	public FeeBuilder totalAmountToBuyer(BigDecimal totalAmountToBuyer) {
-		this.totalAmountToBuyer = totalAmountToBuyer;
+	public FeeBuilder amountToBuyer(BigDecimal amountToBuyer) {
+		this.amountToBuyer = amountToBuyer;
 		return this;
 	}
 
-	public FeeBuilder totalAmountToSeller(BigDecimal totalAmountToSeller) {
-		this.totalAmountToSeller = totalAmountToSeller;
+	public FeeBuilder amountToSeller(BigDecimal amountToSeller) {
+		this.amountToSeller = amountToSeller;
 		return this;
 	}
 
@@ -57,51 +51,23 @@ public class FeeBuilder {
 		return this;
 	}
 
-	public FeeBuilder refId(String refId) {
-		this.refId = refId;
-		return this;
-	}
-
-	public FeeBuilder documentId(String documentId) {
-		this.documentId = documentId;
-		return this;
-	}
-	
-	public FeeBuilder noProof(boolean noProof) {
-		this.noProof = noProof;
-		return this;
-	}
-
 	public FeeBuilder currency(Currency currency) {
 		this.currency = currency;
 		return this;
 	}
 	
 	public Fee build() {
-		totalAmountToBuyer = totalAmountToBuyer.setScale(2, RoundingMode.HALF_UP);
-		totalAmountToSeller = totalAmountToSeller.setScale(2, RoundingMode.HALF_UP);
+		amountToBuyer = amountToBuyer.setScale(2, RoundingMode.HALF_UP);
+		amountToSeller = amountToSeller.setScale(2, RoundingMode.HALF_UP);
 		Fee fee = new Fee();
 		fee.setBeneficiary(beneficiary);
-		fee.setDocumentId(documentId);
-		fee.setRefId(refId);
 		fee.setStatus(status);
-		fee.setTotalAmountToBuyer(totalAmountToBuyer);
-		fee.setTotalAmountToSeller(totalAmountToSeller);
+		fee.setAmountToBuyer(amountToBuyer);
+		fee.setAmountToSeller(amountToSeller);
 		fee.setVisibleToBuyer(visibleToBuyer);
 		fee.setVisibleToSeller(visibleToSeller);
-		fee.setNoProof(noProof);
 		fee.setCurrency(currency);
 		return fee;
-	}
-
-	@Override
-	public String toString() {
-		return "FeeBuilder [" + (visibleToBuyer != null ? "visibleToBuyer=" + visibleToBuyer + ", " : "")
-				+ (visibleToSeller != null ? "visibleToSeller=" + visibleToSeller + ", " : "")
-				+ (totalAmountToBuyer != null ? "totalAmountToBuyer=" + totalAmountToBuyer + ", " : "")
-				+ (totalAmountToSeller != null ? "totalAmountToSeller=" + totalAmountToSeller + ", " : "") + (beneficiary != null ? "beneficiary=" + beneficiary + ", " : "")
-				+ (status != null ? "status=" + status + ", " : "") + (refId != null ? "refId=" + refId + ", " : "") + (documentId != null ? "documentId=" + documentId + ", " : "")
-				+ "noProof=" + noProof + ", " + (currency != null ? "currency=" + currency : "") + "]";
 	}
 
 }

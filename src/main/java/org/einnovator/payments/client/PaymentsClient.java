@@ -17,7 +17,7 @@ import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.Card;
 import org.einnovator.payments.client.model.Payment;
 import org.einnovator.payments.client.model.Tax;
-import org.einnovator.payments.client.modelx.PaymentsFilter;
+import org.einnovator.payments.client.modelx.PaymentFilter;
 import org.einnovator.util.MappingUtils;
 import org.einnovator.util.PageResult;
 import org.einnovator.util.PageUtil;
@@ -90,7 +90,7 @@ public class PaymentsClient {
 	}
 	
 	@SuppressWarnings({ "rawtypes"})
-	public Page<Payment> listPayments(PaymentsFilter filter, Pageable pageable) {
+	public Page<Payment> listPayments(PaymentFilter filter, Pageable pageable) {
 		URI uri = makeURI(PaymentsEndpoints.payments(config));
 		
 		Map<String, String> params = new LinkedHashMap<>();

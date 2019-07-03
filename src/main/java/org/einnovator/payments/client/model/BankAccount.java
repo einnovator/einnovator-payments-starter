@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BankAccount extends EntityBase {
 
-	private AccountType holderType;
+	private OwnerType holderType;
 	
 	private String number;
 
@@ -34,7 +34,7 @@ public class BankAccount extends EntityBase {
 	 *
 	 * @return the holderType
 	 */
-	public AccountType getHolderType() {
+	public OwnerType getHolderType() {
 		return holderType;
 	}
 
@@ -43,7 +43,7 @@ public class BankAccount extends EntityBase {
 	 *
 	 * @param holderType the holderType to set
 	 */
-	public void setHolderType(AccountType holderType) {
+	public void setHolderType(OwnerType holderType) {
 		this.holderType = holderType;
 	}
 

@@ -3,62 +3,56 @@ package org.einnovator.payments.client.model;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class PaymentBuilder {
 
-	private String id;
-
 	private String uuid;
+
+	private Currency currency;
+
+	private Payable payable;  
+
+	protected PaymentType type;
 
 	private PaymentStatus status;
 
 	private PaymentStatus transferStatus;
 
-	private Date transferDate;
+	private BigDecimal amount;
+
+	private BigDecimal discount;
+
+	private BigDecimal totalAmount;
+
+	private BigDecimal tax;
 
 	private Date paymentDate;
+
+	private Date transferDate;
 
 	private Date startDate;
 
 	private Date expireDate;
 
-	private MonetaryAmount amount;
-
-	private String statementDescriptor;
-
-	private Payable payable; 
-
+	private String statement;
+	
 	private Account buyer;
 
 	private Account seller;
 
-	private Charge charge;
+	private List<Fee> fees;
 
-	private String errorMessage;
-
-	private String transferErrorMessage;
-
-	private PaymentStrategy strategy;
-
-	private List<Fee> beneficiaries;
-
-	private PaymentStatus feeStatus;
-
-	private MonetaryAmount tax;
-
-	private Map<String, BigDecimal> feeDistribution;
 
 	public PaymentBuilder() {
 	}
-	
-	public PaymentBuilder id(String id) {
-		this.id = id;
-		return this;
-	}
-	
+
 	public PaymentBuilder uuid(String uuid) {
 		this.uuid = uuid;
+		return this;
+	}
+
+	public PaymentBuilder payable(Payable payable) {
+		this.payable = payable;
 		return this;
 	}
 
@@ -92,18 +86,34 @@ public class PaymentBuilder {
 		return this;
 	}
 
-	public PaymentBuilder amount(MonetaryAmount amount) {
+	public PaymentBuilder currency(Currency currency) {
+		this.currency = currency;
+		return this;
+	}
+
+	public PaymentBuilder amount(BigDecimal amount) {
 		this.amount = amount;
 		return this;
 	}
 
-	public PaymentBuilder statementDescriptor(String statementDescriptor) {
-		this.statementDescriptor = statementDescriptor;
+	public PaymentBuilder discount(BigDecimal discount) {
+		this.discount = discount;
 		return this;
 	}
 
-	public PaymentBuilder payable(Payable payable) {
-		this.payable = payable;
+	public PaymentBuilder totalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+		return this;
+	}
+
+	public PaymentBuilder tax(BigDecimal tax) {
+		this.tax = tax;
+		return this;
+	}
+
+
+	public PaymentBuilder statement(String statement) {
+		this.statement = statement;
 		return this;
 	}
 
@@ -117,70 +127,30 @@ public class PaymentBuilder {
 		return this;
 	}
 
-	public PaymentBuilder charge(Charge charge) {
-		this.charge = charge;
+	public PaymentBuilder fees(List<Fee> fees) {
+		this.fees = fees;
 		return this;
 	}
 
-	public PaymentBuilder errorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-		return this;
-	}
-
-	public PaymentBuilder transferErrorMessage(String transferErrorMessage) {
-		this.transferErrorMessage = transferErrorMessage;
-		return this;
-	}
-
-	public PaymentBuilder beneficiaries(List<Fee> beneficiaries) {
-		this.beneficiaries = beneficiaries;
-		return this;
-	}
-
-	public PaymentBuilder feeStatus(PaymentStatus feeStatus) {
-		this.feeStatus = feeStatus;
-		return this;
-	}
-	
-	public PaymentBuilder strategy(PaymentStrategy strategy) {
-		this.strategy = strategy;
-		return this;
-	}
-	
-	public PaymentBuilder tax(MonetaryAmount tax) {
-		this.tax = tax;
-		return this;
-	}
-	
-	public PaymentBuilder feeDistribution(Map<String, BigDecimal> feeDistribution) {
-		this.feeDistribution = feeDistribution;
-		return this;
-	}
-	
 	public Payment build() {
 		Payment payment = new Payment();
-		payment.setId(id);
 		payment.setUuid(uuid);
+		payment.setStatus(status);
+		payment.setCurrency(currency);		
 		payment.setAmount(amount);
-		payment.setBeneficiaries(beneficiaries);
+		payment.setAmount(discount);
+		payment.setTax(tax);		
+		payment.setAmount(totalAmount);
+		payment.setFees(fees);
 		payment.setBuyer(buyer);
-		payment.setCharge(charge);
-		payment.setErrorMessage(errorMessage);
 		payment.setExpireDate(expireDate);
-		payment.setFeeStatus(feeStatus);
 		payment.setPayable(payable);
 		payment.setPaymentDate(paymentDate);
-		payment.setStrategy(strategy);
 		payment.setSeller(seller);
 		payment.setStartDate(startDate);
-		payment.setStatementDescriptor(statementDescriptor);
-		payment.setStatus(status);
+		payment.setStatement(statement);
 		payment.setTransferDate(transferDate);
-		payment.setTransferErrorMessage(transferErrorMessage);
 		payment.setTransferStatus(transferStatus);
-		payment.setTax(tax);
-		payment.setFeeDistribution(feeDistribution);
-		
 		return payment;
 	}
 

@@ -3,7 +3,7 @@ package org.einnovator.payments.client.manager;
 import java.net.URI;
 
 import org.einnovator.payments.client.model.Payment;
-import org.einnovator.payments.client.modelx.PaymentsFilter;
+import org.einnovator.payments.client.modelx.PaymentFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,7 +13,7 @@ public interface PaymentManager {
 
 	Payment getPayment(String id);
 
-	Page<Payment> listPayments(PaymentsFilter filter, Pageable pageable);
+	Page<Payment> listPayments(PaymentFilter filter, Pageable pageable);
 
 	Payment updatePayment(Payment payment);
 

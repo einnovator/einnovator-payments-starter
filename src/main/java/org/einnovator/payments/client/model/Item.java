@@ -26,6 +26,8 @@ public class Item extends EntityBase {
 
 	private String comment;
 
+	private String img;
+	
 	private String tag;
 
 	private String tag2;
@@ -49,7 +51,6 @@ public class Item extends EntityBase {
 		return name;
 	}
 
-
 	/**
 	 * Set the value of property {@code name}.
 	 *
@@ -58,7 +59,6 @@ public class Item extends EntityBase {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 
 	/**
 	 * Get the value of property {@code numberOfUnits}.
@@ -69,7 +69,6 @@ public class Item extends EntityBase {
 		return numberOfUnits;
 	}
 
-
 	/**
 	 * Set the value of property {@code numberOfUnits}.
 	 *
@@ -78,7 +77,6 @@ public class Item extends EntityBase {
 	public void setNumberOfUnits(Integer numberOfUnits) {
 		this.numberOfUnits = numberOfUnits;
 	}
-
 
 	/**
 	 * Get the value of property {@code numberOfUnits2}.
@@ -89,7 +87,6 @@ public class Item extends EntityBase {
 		return numberOfUnits2;
 	}
 
-
 	/**
 	 * Set the value of property {@code numberOfUnits2}.
 	 *
@@ -98,7 +95,6 @@ public class Item extends EntityBase {
 	public void setNumberOfUnits2(Integer numberOfUnits2) {
 		this.numberOfUnits2 = numberOfUnits2;
 	}
-
 
 	/**
 	 * Get the value of property {@code amountPerUnit}.
@@ -109,7 +105,6 @@ public class Item extends EntityBase {
 		return amountPerUnit;
 	}
 
-
 	/**
 	 * Set the value of property {@code amountPerUnit}.
 	 *
@@ -118,7 +113,6 @@ public class Item extends EntityBase {
 	public void setAmountPerUnit(BigDecimal amountPerUnit) {
 		this.amountPerUnit = amountPerUnit;
 	}
-
 
 	/**
 	 * Get the value of property {@code totalAmount}.
@@ -129,7 +123,6 @@ public class Item extends EntityBase {
 		return totalAmount;
 	}
 
-
 	/**
 	 * Set the value of property {@code totalAmount}.
 	 *
@@ -138,7 +131,6 @@ public class Item extends EntityBase {
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-
 
 	/**
 	 * Get the value of property {@code comment}.
@@ -149,7 +141,6 @@ public class Item extends EntityBase {
 		return comment;
 	}
 
-
 	/**
 	 * Set the value of property {@code comment}.
 	 *
@@ -159,6 +150,23 @@ public class Item extends EntityBase {
 		this.comment = comment;
 	}
 
+	/**
+	 * Get the value of property {@code img}.
+	 *
+	 * @return the img
+	 */
+	public String getImg() {
+		return img;
+	}
+
+	/**
+	 * Set the value of property {@code img}.
+	 *
+	 * @param img the img to set
+	 */
+	public void setImg(String img) {
+		this.img = img;
+	}
 
 	/**
 	 * Get the value of property {@code tag}.
@@ -169,7 +177,6 @@ public class Item extends EntityBase {
 		return tag;
 	}
 
-
 	/**
 	 * Set the value of property {@code tag}.
 	 *
@@ -178,7 +185,6 @@ public class Item extends EntityBase {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-
 
 	/**
 	 * Get the value of property {@code tag2}.
@@ -189,7 +195,6 @@ public class Item extends EntityBase {
 		return tag2;
 	}
 
-
 	/**
 	 * Set the value of property {@code tag2}.
 	 *
@@ -198,7 +203,6 @@ public class Item extends EntityBase {
 	public void setTag2(String tag2) {
 		this.tag2 = tag2;
 	}
-
 
 	/**
 	 * Get the value of property {@code tag2icon}.
@@ -209,7 +213,6 @@ public class Item extends EntityBase {
 		return tag2icon;
 	}
 
-
 	/**
 	 * Set the value of property {@code tag2icon}.
 	 *
@@ -218,7 +221,6 @@ public class Item extends EntityBase {
 	public void setTag2icon(String tag2icon) {
 		this.tag2icon = tag2icon;
 	}
-
 
 	/**
 	 * Get the value of property {@code fees}.
@@ -229,7 +231,6 @@ public class Item extends EntityBase {
 		return fees;
 	}
 
-
 	/**
 	 * Set the value of property {@code fees}.
 	 *
@@ -238,7 +239,6 @@ public class Item extends EntityBase {
 	public void setFees(List<Fee> fees) {
 		this.fees = fees;
 	}
-
 
 	/**
 	 * Get the value of property {@code refundAmount}.
@@ -249,7 +249,6 @@ public class Item extends EntityBase {
 		return refundAmount;
 	}
 
-
 	/**
 	 * Set the value of property {@code refundAmount}.
 	 *
@@ -258,7 +257,6 @@ public class Item extends EntityBase {
 	public void setRefundAmount(BigDecimal refundAmount) {
 		this.refundAmount = refundAmount;
 	}
-
 
 	public BigDecimal update() {
 		if (amountPerUnit == null || numberOfUnits == null) {
@@ -281,6 +279,7 @@ public class Item extends EntityBase {
 				.append("amountPerUnit", amountPerUnit)
 				.append("totalAmount", totalAmount)
 				.append("refundAmount", refundAmount)
+				.append("img", img)				
 				.append("tag", tag)
 				.append("tag2", tag2)
 				.append("comment", comment)

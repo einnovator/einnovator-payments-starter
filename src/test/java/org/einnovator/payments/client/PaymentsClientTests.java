@@ -6,8 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import java.math.BigDecimal;
 import java.net.URI;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +18,6 @@ import org.einnovator.payments.client.model.CardType;
 import org.einnovator.payments.client.model.Card;
 import org.einnovator.payments.client.model.CardBuilder;
 import org.einnovator.payments.client.model.Currency;
-import org.einnovator.payments.client.model.MonetaryAmount;
 import org.einnovator.payments.client.model.Payable;
 import org.einnovator.payments.client.model.PayableBuilder;
 import org.einnovator.payments.client.model.Payment;
@@ -28,7 +27,6 @@ import org.einnovator.util.UriUtils;
 import org.einnovator.util.model.Address;
 import org.einnovator.util.model.AddressBuilder;
 import org.einnovator.util.model.Phone;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,16 +45,14 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Autowired
 	PaymentsClient client;
 
-	public static final String TEST_ORG = "greenfence";
-	public static final String TEST_ORG_EMAIL = "greenfence@test.com";
-	public static final String AUDITONE = "auditOne";
-	public static final String AUDITONE_EMAIL = "auditOne@test.com";
+	public static final String TEST_ORG = "EInnovator";
+	public static final String TEST_ORG_EMAIL = "tdd@einnovator.org";
 	
-	public static final String TEST_SELLER = "jsimao71@gmail.com";
-	public static final String TEST_SELLER_ORG = "testorg";
-	public static final String TEST_BUYER = "valter.balegas@einnovator.org";
-	public static final String TEST_BUYER_ORG = "testorg";
-	public static final String TEST_USER_FAIL = "Wronguser@WromngEmail.com";
+	public static final String TEST_SELLER = "tdd@einnovator.org";
+	public static final String TEST_SELLER_ORG = "testseller";
+	public static final String TEST_BUYER = "tdd@einnovator.org";
+	public static final String TEST_BUYER_ORG = "test";
+	public static final String TEST_USER_FAIL = "test@test.org";
 	
 	public static final String TEST_PASSWORD = "Einnovator123!!";
 	private static final String CLIENT_ID = "application";
@@ -109,13 +105,12 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.build();
 
 		Payment payment = new PaymentBuilder()
-				.amount(new MonetaryAmount(100.0 + n, Currency.USD))
+				.amount(BigDecimal.TEN)
+				.currency(Currency.USD)
 				.buyer(buyer)
 				.seller(seller)
 				.payable(payable)
-				.statementDescriptor("descriptor text:" + n)
-//				.endDate(new GregorianCalendar(2020, 12, 31).getTime())
-				.startDate(GregorianCalendar.getInstance().getTime())
+				.statement(payable.getName())
 				.build();
 		return payment;
 	}
@@ -135,8 +130,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 		Account buyer0 = makeAccount(TEST_BUYER, TEST_BUYER);
 		Account seller0 = makeAccount(TEST_SELLER, TEST_SELLER);
 		
-		Account greenfence = makeAccount(TEST_ORG, TEST_ORG_EMAIL);
-		Account auditOne = makeAccount(AUDITONE, AUDITONE_EMAIL);
+		Account account = makeAccount(TEST_ORG, TEST_ORG_EMAIL);
 		
 		Account buyer1 = null, seller1 = null;
 		try {
@@ -154,15 +148,9 @@ public class PaymentsClientTests extends SsoTestHelper {
 		}
 		
 		try {
-			client.getAccount(greenfence.getName());
+			client.getAccount(account.getName());
 		} catch (HttpClientErrorException e) {
-			client.createAccount(greenfence);			
-		}
-		
-		try {
-			client.getAccount(auditOne.getName());
-		} catch (HttpClientErrorException e) {
-			client.createAccount(auditOne);			
+			client.createAccount(account);			
 		}
 
 		assertNotNull(buyer1);
@@ -193,7 +181,6 @@ public class PaymentsClientTests extends SsoTestHelper {
 			System.out.println(payment);
 			client.submitPayment(payment);
 			fail();
-			//		assertNotNull(uri);
 		}catch(HttpClientErrorException e)
 		{
 			assertEquals(HttpStatus.NOT_FOUND.value(), e.getRawStatusCode());
@@ -217,11 +204,6 @@ public class PaymentsClientTests extends SsoTestHelper {
 		assertEquals(id, payment.getId());
 	}
 
-	@Test
-	@Ignore
-	public void getAccountTest() {
-		//Account account = new AccountBuilder().username("Jorge Simao").build();
-	}
 
 	@Test
 	public void getInexistingAccountTest() {
@@ -240,23 +222,6 @@ public class PaymentsClientTests extends SsoTestHelper {
 		assertNotNull(account);
 		assertEquals(TEST_SELLER, account.getName());
 	}
-
-
-//	@Test
-//	public void updateExistingUserTest() {
-//		String username = TEST_SELLER;
-//		Account account = client.getAccount(username);
-//		assertNotNull(account);
-//		assertEquals(username, account.getName());
-//		account.getAddress().setCity("City-" + UUID.randomUUID().toString());
-//		account.getAddress().setCountry("United States");
-//		account.setPhone("+35191663191" + new Random().nextInt(10));
-//		client.updateAccountFullState(account);
-//		Account account2 = client.getAccount(username);
-//		assertNotNull(account2);
-//		assertEquals(username, account2.getName());
-//		assertEquals(account.getAddress().getCity(), account2.getAddress().getCity());
-//	}
 
 	@Test
 	public void updateExistingUserPartialTest() {
@@ -288,140 +253,6 @@ public class PaymentsClientTests extends SsoTestHelper {
 		assertEquals(account.getAddress().getCity(), account3.getAddress().getCity());
 		assertEquals(account.getAddress().getLine1(), account3.getAddress().getLine1());
 	}
-
-//	@Test
-//	public void createAccountAndGetAccountTest() {
-//		String username = "tdd-" + UUID.randomUUID().toString();
-//		Account account = new AccountBuilder().username(username)
-//				.phone("99999999")
-//				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build()).build();
-//		URI userURI = client.createAccount(account);
-//		assertNotNull(userURI);
-//		String userId = client.extractId(userURI);
-//		Account org = new AccountBuilder().username(TEST_ORG_USERNAME)
-//				.name(UUID.randomUUID().toString())
-//				.phone("99999999")
-//				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
-//				.ownerId(userId)
-//				.build();
-//		URI uri = client.createAccount(org);
-//		assertNotNull(uri);
-//		String id = extractId(uri);
-//		assertNotNull(id);
-//		Account org1 = client.getAccount(id);
-//		assertNotNull(org1);
-//		assertEquals(TEST_ORG_USERNAME, org1.getName());
-//
-//	}
-
-//	@Test
-//	public void getExistingAccountTest() {
-//
-//		String orgId ="5a130467f50980288a148f97";   //// this is the demo organization created in createAccountTest() and using its OrgID for other tests
-//		Account org =client.getAccount(orgId);
-//		assertNotNull(org);
-//		assertNotNull(TEST_ORG_USERNAME,org.getName());
-//	}
-
-//	@Test
-//	public void getInExistingAccountTest() {
-//		try {
-//			String orgId ="testOrg"+UUID.randomUUID().toString();
-//			Account uri = client.getAccount(orgId);
-//			assertNull(uri);
-//			fail();
-//		}catch(HttpClientErrorException er)
-//		{
-//			assertEquals(HttpStatus.NOT_FOUND.value(), er.getRawStatusCode());
-//
-//		}
-//
-//	}
-
-//	@Test
-//	public void updateExistingAccount() {
-//		String orgId ="5a130467f50980288a148f97";   // this is the demo organization created in createAccountTest() and using its OrgID for other tests
-//		String userName= TEST_ORG_USERNAME;
-//		Account org = client.getAccount(orgId);
-//		assertNotNull(org);
-//		assertEquals(userName, org.getName());
-//		org.getAddress().setCity("City-" + UUID.randomUUID().toString());
-//		org.getAddress().setCountry("United States");
-//		org.setPhone("+35191663191" + new Random().nextInt(10));
-//		client.updateAccount(org);
-//		Account org2 = client.getAccount(orgId);
-//		assertNotNull(org2);
-//		assertEquals(userName, org2.getName());
-//		assertEquals(org.getAddress().getCity(), org2.getAddress().getCity());
-//
-//	}
-//
-//	@Test
-//	public void updatePartialAccountTest() {
-//
-//		String username = TEST_ORG_USERNAME;
-//		String orgId ="5a130467f50980288a148f97";   // this is the demo organization created in createAccountTest() and using its OrgID for other tests
-//		Account org = client.getAccount(orgId);
-//		assertNotNull(org);
-//		assertEquals(username, org.getName());
-//		Address address = new Address();		
-//		address.setLine1("Street " + UUID.randomUUID().toString());
-//		address.setCity("City-" + UUID.randomUUID().toString());
-//		org.setAddress(address);
-//		org.setWebsite("http://website.test.org");
-//		org.setProfileURL("http://social.test.org");
-//		client.updateAccount(org);
-//		Account org2 = client.getAccount(orgId);
-//		assertNotNull(org2);
-//		assertEquals(username, org2.getName());
-//		assertEquals(org.getWebsite(), org2.getWebsite());
-//		assertEquals(org.getProfileURL(), org2.getProfileURL());
-//		assertEquals(org.getAddress().getCity(), org2.getAddress().getCity());
-//		assertEquals(org.getAddress().getLine1(), org2.getAddress().getLine1());
-//
-//		org.setWebsite("http://website2.test.org");
-//		org.setProfileURL(null);
-//		org.getAddress().setLine1(null);
-//		org.getAddress().setCity("City-" + UUID.randomUUID().toString());
-//		client.updateAccount(org);
-//		Account org3 = client.getAccount(orgId);
-//		assertNotNull(org3);
-//		assertEquals(username, org3.getName());
-//		assertEquals(org.getWebsite(), org3.getWebsite());
-//		assertEquals(org2.getProfileURL(), org3.getProfileURL());
-//		assertEquals(org.getAddress().getCity(), org3.getAddress().getCity());
-//		assertEquals(org.getAddress().getLine1(), org3.getAddress().getLine1());
-//	}
-//
-//	//	FIX ME : delete User functionality is not defined in rest controller hence expected response 405
-//	@Test
-//	public void createAccountAndDeleteAccountTest() {
-//		try {
-//			String username = "tdd-" + UUID.randomUUID().toString();
-//			Account account = new AccountBuilder().username(username)
-//					.phone("99999999")
-//					.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build()).build();
-//			URI userURI = client.createAccount(account);
-//			assertNotNull(userURI);
-//			String userId = client.extractId(userURI);
-//			Account org = new AccountBuilder().username(TEST_ORG_USERNAME)
-//					.name(UUID.randomUUID().toString())
-//					.phone("99999999")
-//					.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
-//					.ownerId(userId)
-//					.build();
-//			URI uri = client.createAccount(org);
-//			assertNotNull(uri);
-//			String id = extractId(uri);
-//			assertNotNull(id);
-//			Account org1 = client.getAccount(id);
-//			assertNotNull(org1);
-//			client.deleteAccount(id);
-//			fail();
-//		}catch(HttpClientErrorException ex) {
-//			assertEquals(HttpStatus.METHOD_NOT_ALLOWED.value(), ex.getRawStatusCode());
-//		}
-//	}
 
 	//	cards test cases
 	

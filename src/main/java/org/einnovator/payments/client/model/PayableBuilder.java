@@ -1,9 +1,10 @@
 package org.einnovator.payments.client.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class PayableBuilder {
-
-
-	private String id;
 
 	private String uuid;
 
@@ -23,15 +24,11 @@ public class PayableBuilder {
 
 	private String descriptionCss;
 
-	
+	private List<Item> items;
+
 	public PayableBuilder() {
 	}
 
-	public PayableBuilder id(String id) {
-		this.id = id;
-		return this;
-	}
-	
 	public PayableBuilder uuid(String uuid) {
 		this.uuid = uuid;
 		return this;
@@ -76,32 +73,37 @@ public class PayableBuilder {
 		this.descriptionCss = descriptionCss;
 		return this;
 	}
+	
+	public PayableBuilder items(List<Item> items) {
+		this.items = items;
+		return this;
+	}
+	
+	public PayableBuilder items(Item... items) {
+		if (this.items==null) {
+			this.items = new ArrayList<>();
+		}
+		this.items.addAll(Arrays.asList(items));
+		return this;
+	}
 
 	public Payable build() {
 		Payable payable = new Payable();
+		payable.setUuid(uuid);		
 		payable.setName(name);
 		payable.setCategory(category);
 		payable.setDescription(description);
 		payable.setImg(img);
+		payable.setImgCss(imgCss);
 		payable.setNameCss(nameCss);
 		payable.setCategoryCss(categoryCss);
 		payable.setDescriptionCss(descriptionCss);
 		payable.setNameCss(nameCss);
+		payable.setItems(items);
 		return payable;
 	}
 	
-	@Override
-	public String toString() {
-		return "Payable [" + (name != null ? "name=" + name + ", " : "")
-				+ (category != null ? "category=" + category + ", " : "")
-				+ (description != null ? "description=" + description + ", " : "")
-				+ (img != null ? "img=" + img + ", " : "")
-				+ (nameCss != null ? "nameCss=" + nameCss + ", " : "")
-				+ (categoryCss != null ? "categoryCss=" + categoryCss + ", " : "")
-				+ (imgCss != null ? "imgCss=" + imgCss + ", " : "")
-				+ (descriptionCss != null ? "descriptionCss=" + descriptionCss : "") + "]";
-	}
-	
+
 	
 	
 }

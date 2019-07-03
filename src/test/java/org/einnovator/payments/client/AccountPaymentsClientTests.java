@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.GregorianCalendar;
 
@@ -12,12 +13,10 @@ import org.einnovator.payments.client.PaymentsClient;
 import org.einnovator.payments.client.config.PaymentsClientConfig;
 import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.Currency;
-import org.einnovator.payments.client.model.MonetaryAmount;
 import org.einnovator.payments.client.model.Payable;
 import org.einnovator.payments.client.model.PayableBuilder;
 import org.einnovator.payments.client.model.Payment;
 import org.einnovator.payments.client.model.PaymentBuilder;
-import org.einnovator.payments.client.model.PaymentStrategy;
 import org.einnovator.sso.client.support.SsoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,14 +72,12 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 				.build();
 
 		Payment payment = new PaymentBuilder()
-				.amount(new MonetaryAmount(100.0 + n, Currency.USD))
+				.amount(BigDecimal.TEN)
+				.currency(Currency.USD)
 				.buyer(buyer)
 				.seller(seller)
 				.payable(payable)
-				.strategy(PaymentStrategy.DIRECT)
-				.statementDescriptor("descriptor text:" + n)
-//				.endDate(new GregorianCalendar(2020, 12, 31).getTime())
-				.startDate(GregorianCalendar.getInstance().getTime())
+				.statement(payable.getName())
 				.build();
 		return payment;
 	}
@@ -95,11 +92,11 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 				.build();
 
 		Payment payment = new PaymentBuilder()
-				.amount(new MonetaryAmount(100.0 + n, Currency.USD))
+				.amount(BigDecimal.TEN)
+				.currency(Currency.USD)
 				.buyer(buyer)
 				.payable(payable)
-				.strategy(PaymentStrategy.SITE)
-				.statementDescriptor("descriptor text:" + n)
+				.statement(payable.getName())
 				.startDate(GregorianCalendar.getInstance().getTime())
 				.build();
 		return payment;

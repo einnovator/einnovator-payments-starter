@@ -47,7 +47,7 @@ public class AccountBuilder {
 
 	private Address address;
 
-	private Address address2;
+	private Address personalAddress;
 
 	private Address address3;
 
@@ -67,7 +67,7 @@ public class AccountBuilder {
 
 	private String owner;
 
-	private AccountType type;
+	private OwnerType type;
 
 	public AccountBuilder() {
 	}
@@ -170,8 +170,8 @@ public class AccountBuilder {
 		return this;
 	}
 
-	public AccountBuilder address2(Address address2) {
-		this.address2 = address2;
+	public AccountBuilder personalAddress(Address personalAddress) {
+		this.personalAddress = personalAddress;
 		return this;
 	}
 
@@ -220,7 +220,7 @@ public class AccountBuilder {
 		return this;
 	}
 
-	public AccountBuilder type(AccountType type) {
+	public AccountBuilder type(OwnerType type) {
 		this.type = type;
 		return this;
 	}
@@ -249,7 +249,7 @@ public class AccountBuilder {
 		account.setVatNumber(vatNumber);
 		account.setTaxRegistrar(taxRegistrar);
 		account.setAddress(address);
-		account.setAddress2(address2);
+		account.setPersonalAddress(personalAddress);
 		account.setAddress3(address3);
 		account.setBirthdate(birthdate);
 		account.setFirstName(firstName);

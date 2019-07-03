@@ -5,7 +5,7 @@ import java.net.URI;
 import org.apache.log4j.Logger;
 import org.einnovator.payments.client.PaymentsClient;
 import org.einnovator.payments.client.model.Payment;
-import org.einnovator.payments.client.modelx.PaymentsFilter;
+import org.einnovator.payments.client.modelx.PaymentFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,7 +52,7 @@ public class PaymentManagerImpl implements PaymentManager {
 	}
 
 	@Override
-	public Page<Payment> listPayments(PaymentsFilter filter, Pageable pageable) {
+	public Page<Payment> listPayments(PaymentFilter filter, Pageable pageable) {
 		try {
 			Page<Payment> payments = paymentsClient.listPayments(filter, pageable);		
 			if (payments==null) {

@@ -25,12 +25,21 @@ public enum PaymentStatus {
 		return displayName;
 	}
 
-	public boolean containsOne(PaymentStatus... status) {
+	public boolean containsAny(PaymentStatus... status) {
 		for (PaymentStatus s : status) {
 			if (this == s) {
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	public boolean isSuccess() {
+		switch (this) {
+		case COMPLETED: case CANCELED: case CANCELED_BY_SITE:
+			return false;
+		default:
+			return true;
+		}
 	}
 }

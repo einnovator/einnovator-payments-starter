@@ -16,13 +16,13 @@ public class ItemBuilder {
 
 	private String comment;
 
+	private String img;
+
 	private String tag;
 
 	private String tag2;
 
 	private String tag2icon;
-	
-	private BigDecimal feeAmount;
 	
 	private BigDecimal refundAmount;
 
@@ -59,6 +59,11 @@ public class ItemBuilder {
 		return this;
 	}
 
+	public ItemBuilder img(String img) {
+		this.img = img;
+		return this;
+	}
+	
 	public ItemBuilder tag(String tag) {
 		this.tag = tag;
 		return this;
@@ -74,23 +79,25 @@ public class ItemBuilder {
 		return this;
 	}
 
-	public ItemBuilder feeAmount(BigDecimal feeAmount) {
-		this.feeAmount = feeAmount;
-		return this;
-	}
-
 	public ItemBuilder refundAmount(BigDecimal refundAmount) {
 		this.refundAmount = refundAmount;
 		return this;
 	}
 
-	@Override
-	public String toString() {
-		return "Item [" + (name != null ? "name=" + name + ", " : "") + (numberOfUnits != null ? "numberOfUnits=" + numberOfUnits + ", " : "")
-				+ (numberOfUnits2 != null ? "numberOfUnits2=" + numberOfUnits2 + ", " : "") + (amountPerUnit != null ? "amountPerUnit=" + amountPerUnit + ", " : "")
-				+ (totalAmount != null ? "totalAmount=" + totalAmount + ", " : "") + (comment != null ? "comment=" + comment + ", " : "") + (tag != null ? "tag=" + tag + ", " : "")
-				+ (tag2 != null ? "tag2=" + tag2 + ", " : "") + (tag2icon != null ? "tag2icon=" + tag2icon + ", " : "") + (feeAmount != null ? "feeAmount=" + feeAmount + ", " : "")
-				+ (refundAmount != null ? "refundAmount=" + refundAmount : "") + "]";
+	public Item build() {
+		Item item = new Item();
+		item.setName(name);
+		item.setNumberOfUnits(numberOfUnits);
+		item.setNumberOfUnits2(numberOfUnits2);
+		item.setAmountPerUnit(amountPerUnit);
+		item.setTotalAmount(totalAmount);
+		item.setComment(comment);
+		item.setImg(img);
+		item.setTag(tag);
+		item.setTag(tag2);
+		item.setTag(tag2icon);
+		item.setRefundAmount(refundAmount);
+		return item;
 	}
 
 }
