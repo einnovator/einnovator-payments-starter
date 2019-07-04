@@ -13,7 +13,11 @@ public class PaymentsEndpoints {
 	public static String payment(String id, PaymentsConfiguration config) {
 		return payments(config) + "/" + id;
 	}
-	
+
+	public static String pay(String id, PaymentsConfiguration config) {
+		return  config.getServer() + "/payment/" + id + "/pay";
+	}
+
 	public static String userAccount(PaymentsConfiguration config) {
 		return config.getServer() + "/api/account/user";
 	}
@@ -42,10 +46,14 @@ public class PaymentsEndpoints {
 		return bankAccounts(accountId, config) + bankAccountId;
 	}
 
-	public static String getTaxForCountry(String countryCode, PaymentsConfiguration config) {
-		return config.getServer() + "/api/tax/" + countryCode;
+	public static String taxes(PaymentsConfiguration config) {
+		return config.getServer() + "/api/tax";
 	}
-	
+
+	public static String tax(String id, PaymentsConfiguration config) {
+		return taxes(config) + "/" + id;
+	}
+
 	public static String getTaxForCountries(String country, Collection<String> countryCodes, PaymentsConfiguration config) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString((config.getServer() + "/api/payment/tax/{country}")).queryParam("countries", String.join(",", countryCodes));
 		return  builder.buildAndExpand(country).toUriString();

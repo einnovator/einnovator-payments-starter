@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.einnovator.payments.client.PaymentsClient;
 import org.einnovator.payments.client.model.Payment;
 import org.einnovator.payments.client.modelx.PaymentFilter;
+import org.einnovator.util.UriUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +26,9 @@ public class PaymentManagerImpl implements PaymentManager {
 	@Override
 	public URI submitPayment(Payment payment) {
 		try {
-			return paymentsClient.submitPayment(payment);	
+			URI uri = paymentsClient.submitPayment(payment);
+			payment.setUuid(UriUtils.extractId(uri));
+			return uri;
 		} catch (RuntimeException e) {
 			logger.error("submitPayment:" + e + " " + payment);
 			return null;

@@ -1,19 +1,17 @@
 package org.einnovator.payments.client.model;
 
 public enum PaymentStatus {
-	PENDING("Pending"),
-	
 	SUBMITTED("Submitted"),
-	
-	COMPLETED("Completed"),
-	
-	CANCELED("Canceled"),
-	
-	CANCELED_BY_SITE("Canceled by Site"),
+
+	PENDING("Pending"),
 	
 	FAILED("Failed"), 
 	
-	CHARGED("Charged");
+	CHARGED("Charged"),
+
+	COMPLETED("Completed"),
+	
+	CANCELED("Canceled");	
 	
 	private final String displayName;
 
@@ -34,12 +32,12 @@ public enum PaymentStatus {
 		return false;
 	}
 	
-	public boolean isSuccess() {
+	public boolean isPaid() {
 		switch (this) {
-		case COMPLETED: case CANCELED: case CANCELED_BY_SITE:
-			return false;
-		default:
+		case COMPLETED: case CHARGED: case CANCELED:
 			return true;
+		default:
+			return false;
 		}
 	}
 }

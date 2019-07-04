@@ -1,12 +1,13 @@
 package org.einnovator.payments.client;
 
-import static org.einnovator.util.UriUtils.makeURI;
 import static org.einnovator.util.UriUtils.appendQueryParameters;
+import static org.einnovator.util.UriUtils.makeURI;
+import static org.einnovator.util.UriUtils.encode;
+import static org.einnovator.util.UriUtils.encodeId;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.einnovator.payments.client.model.Card;
 import org.einnovator.payments.client.model.Payment;
 import org.einnovator.payments.client.model.Tax;
 import org.einnovator.payments.client.modelx.PaymentFilter;
+import org.einnovator.payments.client.modelx.TaxFilter;
 import org.einnovator.util.MappingUtils;
 import org.einnovator.util.PageResult;
 import org.einnovator.util.PageUtil;
@@ -151,7 +153,7 @@ public class PaymentsClient {
 	//
 
 	public Account getAccount(String id) {
-		URI uri = makeURI(PaymentsEndpoints.account(id, config));
+		URI uri = makeURI(PaymentsEndpoints.account(encodeId(id), config));
 		RequestEntity<Void> request = RequestEntity.get(uri).build();
 		ResponseEntity<Account> response = exchange(request, Account.class);
 		return response.getBody();
@@ -210,10 +212,52 @@ public class PaymentsClient {
 	// Taxes
 	//
 
-	public List<Tax> listTaxForCountries(String countryCode, Collection<String> otherCountryCodes) {
-		URI uri = makeURI(PaymentsEndpoints.getTaxForCountries(countryCode, otherCountryCodes, config));
+	@SuppressWarnings({ "rawtypes"})
+	public Page<Tax> listTaxes(TaxFilter filter, Pageable pageable) {
+		URI uri = makeURI(PaymentsEndpoints.taxes(config));
+		
+		Map<String, String> params = new LinkedHashMap<>();
+		if (pageable != null || filter != null) {
+			if (pageable!=null) {
+				params.putAll(MappingUtils.toMapFormatted(pageable));
+			}
+			if (filter!=null) {
+				params.putAll(MappingUtils.toMapFormatted(filter));				
+			}
+		}
+		
+		uri = appendQueryParameters(uri, params);
 		RequestEntity<Void> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
-		return Arrays.asList(exchange(request, Tax[].class).getBody());
+		ResponseEntity<PageResult> result = exchange(request, PageResult.class);
+		return PageUtil.create2(result.getBody(), Tax.class);
 	}
 
+
+	public Tax getTax(String id) {
+		URI uri = makeURI(PaymentsEndpoints.tax(id, config));
+		RequestEntity<Void> request = RequestEntity.get(uri).build();
+		ResponseEntity<Tax> response = exchange(request, Tax.class);
+		return response.getBody();
+	}
+
+	public URI createTax(Tax tax) {
+		URI uri = makeURI(PaymentsEndpoints.taxes(config));
+		RequestEntity<Tax> request = RequestEntity.post(uri).body(tax);
+		ResponseEntity<Void> response = exchange(request, Void.class);
+		return response.getHeaders().getLocation();
+	}
+
+	public void updateTax(Tax user) {
+		URI uri = makeURI(PaymentsEndpoints.tax(user.getId(), config));
+		RequestEntity<Tax> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).body(user);
+
+		exchange(request, Tax.class);
+	}
+
+	public void deleteTax(String id) {
+		URI uri = makeURI(PaymentsEndpoints.tax(id, config));
+		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
+
+		exchange(request, Void.class);
+	}
 }

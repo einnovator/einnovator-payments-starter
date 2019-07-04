@@ -458,7 +458,7 @@ public class Payment extends EntityBase {
 	}
 
 	public boolean isPaid() {
-		if (status != null && status.containsAny(PaymentStatus.CHARGED, PaymentStatus.COMPLETED)) {
+		if (status != null && status.isPaid()) {
 			return true;
 		}
 		return false;

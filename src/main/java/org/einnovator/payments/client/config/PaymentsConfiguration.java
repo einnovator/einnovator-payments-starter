@@ -1,7 +1,9 @@
 package org.einnovator.payments.client.config;
 
+import org.einnovator.util.UriUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import org.springframework.util.StringUtils;
 
 @ConfigurationProperties("payments")
 public class PaymentsConfiguration {
@@ -50,4 +52,24 @@ public class PaymentsConfiguration {
 		this.connection = connection;
 	}
 	
+	public String payEnpoint(String paymentId, String redirectUri, String state) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(PaymentsEndpoints.pay(paymentId, this));
+		if (StringUtils.hasText(redirectUri)) {
+			sb.append("?");
+			sb.append("redirect_uri=");
+			sb.append(redirectUri);
+			if (StringUtils.hasText(state)) {
+				sb.append("&");
+				sb.append("state=");
+				sb.append(state);
+			}
+		}
+		return sb.toString();
+	}
+	
+	public String payEnpoint(String paymentId, String redirectUri) {
+		return payEnpoint(paymentId, redirectUri, null);
+	}
+
 }

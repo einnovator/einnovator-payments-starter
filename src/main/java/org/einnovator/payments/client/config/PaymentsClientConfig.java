@@ -1,6 +1,8 @@
 package org.einnovator.payments.client.config;
 
 import org.einnovator.payments.client.PaymentsClient;
+import org.einnovator.payments.client.manager.AccountManager;
+import org.einnovator.payments.client.manager.AccountManagerImpl;
 import org.einnovator.payments.client.manager.PaymentManager;
 import org.einnovator.payments.client.manager.PaymentManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +67,10 @@ public class PaymentsClientConfig {
 	@Bean
 	public PaymentManager paymentManager() {
 		return new PaymentManagerImpl();
+	}
+	
+	@Bean
+	public AccountManager accountManager() {
+		return new AccountManagerImpl();
 	}
 }

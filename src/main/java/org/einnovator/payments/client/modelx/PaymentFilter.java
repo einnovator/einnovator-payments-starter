@@ -10,6 +10,10 @@ import org.einnovator.util.model.ToStringCreator;
 
 public class PaymentFilter extends PaymentOptions {
 
+	public static final List<PaymentStatus> STATUS_ACTIVE = Arrays.asList(PaymentStatus.SUBMITTED, PaymentStatus.FAILED, PaymentStatus.PENDING);
+	
+	public static final List<PaymentStatus> STATUS_HISTORY = Arrays.asList(PaymentStatus.CHARGED, PaymentStatus.COMPLETED, PaymentStatus.CANCELED);
+
 	private PaymentType type;
 	
 	private List<PaymentStatus> status;
@@ -263,7 +267,7 @@ public class PaymentFilter extends PaymentOptions {
 	/**
 	 * Set the value of property {@code type}.
 	 *
-	 * @param type the type to with
+	 * @param type the type to set
 	 */
 	public PaymentFilter withType(PaymentType type) {
 		this.type = type;
@@ -273,18 +277,27 @@ public class PaymentFilter extends PaymentOptions {
 	/**
 	 * Set the value of property {@code status}.
 	 *
-	 * @param status the status to with
+	 * @param status the status to set
 	 */
 	public PaymentFilter withStatus(PaymentStatus... status) {
 		this.status = new ArrayList<>(Arrays.asList(status));
 		return this;
 	}
 
+	/**
+	 * Set the value of property {@code status}.
+	 *
+	 * @param status the status to set
+	 */
+	public PaymentFilter withStatus(List<PaymentStatus> status) {
+		this.status = status;
+		return this;
+	}
 
 	/**
 	 * Set the value of property {@code transferStatus}.
 	 *
-	 * @param transferStatus the transferStatus to with
+	 * @param transferStatus the transferStatus to set
 	 */
 	public PaymentFilter withTransferStatus(PaymentStatus... transferStatus) {
 		this.transferStatus = new ArrayList<>(Arrays.asList(transferStatus));
@@ -295,7 +308,7 @@ public class PaymentFilter extends PaymentOptions {
 	/**
 	 * Set the value of property {@code buyers}.
 	 *
-	 * @param buyers the buyers to with
+	 * @param buyers the buyers to set
 	 */
 	public PaymentFilter withBuyers(List<String> buyers) {
 		this.buyers = buyers;
@@ -303,19 +316,45 @@ public class PaymentFilter extends PaymentOptions {
 	}
 
 	/**
+	 * Set the value of property {@code buyers}.
+	 *
+	 * @param buyers the buyers to set
+	 */
+	public PaymentFilter withBuyers(String... buyers) {
+		if (this.buyers==null) {
+			this.buyers = new ArrayList<>();
+		}
+		this.buyers.addAll(Arrays.asList(buyers));
+		return this;
+	}
+
+	/**
 	 * Set the value of property {@code sellers}.
 	 *
-	 * @param sellers the sellers to with
+	 * @param sellers the sellers to set
 	 */
 	public PaymentFilter withSellers(List<String> sellers) {
 		this.sellers = sellers;
+		return this;
+	}
+	
+	/**
+	 * Set the value of property {@code sellers}.
+	 *
+	 * @param sellers the sellers to set
+	 */
+	public PaymentFilter withSellers(String... sellers) {
+		if (this.sellers==null) {
+			this.sellers = new ArrayList<>();
+		}
+		this.sellers.addAll(Arrays.asList(sellers));
 		return this;
 	}
 
 	/**
 	 * Set the value of property {@code isBuyer}.
 	 *
-	 * @param isBuyer the isBuyer to with
+	 * @param isBuyer the isBuyer to set
 	 */
 	public PaymentFilter withBuyer(Boolean buyer) {
 		this.buyer = buyer;
@@ -325,7 +364,7 @@ public class PaymentFilter extends PaymentOptions {
 	/**
 	 * Set the value of property {@code isSeller}.
 	 *
-	 * @param isSeller the isSeller to with
+	 * @param isSeller the isSeller to set
 	 */
 	public PaymentFilter withSeller(Boolean seller) {
 		this.seller = seller;
@@ -335,7 +374,7 @@ public class PaymentFilter extends PaymentOptions {
 	/**
 	 * Set the value of property {@code q}.
 	 *
-	 * @param q the q to with
+	 * @param q the q to set
 	 */
 	public PaymentFilter withQ(String q) {
 		this.q = q;
@@ -346,7 +385,7 @@ public class PaymentFilter extends PaymentOptions {
 	/**
 	 * Set the value of property {@code fromCreationDate}.
 	 *
-	 * @param fromCreationDate the fromCreationDate to with
+	 * @param fromCreationDate the fromCreationDate to set
 	 */
 	public PaymentFilter withFromCreationDate(Long fromCreationDate) {
 		this.fromCreationDate = fromCreationDate;
@@ -356,7 +395,7 @@ public class PaymentFilter extends PaymentOptions {
 	/**
 	 * Set the value of property {@code toCreationDate}.
 	 *
-	 * @param toCreationDate the toCreationDate to with
+	 * @param toCreationDate the toCreationDate to set
 	 */
 	public PaymentFilter withToCreationDate(Long toCreationDate) {
 		this.toCreationDate = toCreationDate;
@@ -367,7 +406,7 @@ public class PaymentFilter extends PaymentOptions {
 	/**
 	 * Set the value of property {@code fromPaymentDate}.
 	 *
-	 * @param fromPaymentDate the fromPaymentDate to with
+	 * @param fromPaymentDate the fromPaymentDate to set
 	 */
 	public PaymentFilter withFromPaymentDate(Long fromPaymentDate) {
 		this.fromPaymentDate = fromPaymentDate;
@@ -377,7 +416,7 @@ public class PaymentFilter extends PaymentOptions {
 	/**
 	 * Set the value of property {@code toPaymentDate}.
 	 *
-	 * @param toPaymentDate the toPaymentDate to with
+	 * @param toPaymentDate the toPaymentDate to set
 	 */
 	public PaymentFilter withToPaymentDate(Long toPaymentDate) {
 		this.toPaymentDate = toPaymentDate;

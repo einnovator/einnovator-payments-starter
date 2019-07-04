@@ -138,9 +138,9 @@ public class PaymentBuilder {
 		payment.setStatus(status);
 		payment.setCurrency(currency);		
 		payment.setAmount(amount);
-		payment.setAmount(discount);
+		payment.setDiscount(discount);
 		payment.setTax(tax);		
-		payment.setAmount(totalAmount);
+		payment.setTotalAmount(totalAmount);
 		payment.setFees(fees);
 		payment.setBuyer(buyer);
 		payment.setExpireDate(expireDate);
