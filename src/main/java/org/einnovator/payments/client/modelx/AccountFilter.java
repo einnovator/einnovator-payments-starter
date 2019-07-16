@@ -123,7 +123,8 @@ public class AccountFilter extends AccountOptions {
 	/**
 	 * Set the value of property {@code type}.
 	 *
-	 * @param type the type to with
+	 * @param type the type
+	 * @return this
 	 */
 	public AccountFilter withType(OwnerType type) {
 		this.type = type;
@@ -134,7 +135,8 @@ public class AccountFilter extends AccountOptions {
 	/**
 	 * Set the value of property {@code q}.
 	 *
-	 * @param q the q to with
+	 * @param q the q
+	 * @return this
 	 */
 	public AccountFilter withQ(String q) {
 		this.q = q;
@@ -145,7 +147,8 @@ public class AccountFilter extends AccountOptions {
 	/**
 	 * Set the value of property {@code seller}.
 	 *
-	 * @param seller the seller to with
+	 * @param seller the seller
+	 * @return this
 	 */
 	public AccountFilter withSeller(Boolean seller) {
 		this.seller = seller;
@@ -157,6 +160,7 @@ public class AccountFilter extends AccountOptions {
 	 * Set the value of property {@code runAs}.
 	 *
 	 * @param runAs the runAs to set
+	 * @return this
 	 */
 	public AccountFilter withRunAs(String runAs) {
 		setRunAs(runAs);
@@ -167,6 +171,7 @@ public class AccountFilter extends AccountOptions {
 	 * Set the value of property {@code admin}.
 	 *
 	 * @param admin the admin to set
+	 * @return this
 	 */
 	public AccountFilter withAdmin(Boolean admin) {
 		setAdmin(admin);
