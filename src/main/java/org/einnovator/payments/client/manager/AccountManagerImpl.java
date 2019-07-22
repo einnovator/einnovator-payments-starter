@@ -3,7 +3,8 @@ package org.einnovator.payments.client.manager;
 import java.net.URI;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.einnovator.payments.client.PaymentsClient;
 import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.Card;
@@ -13,7 +14,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 
 public class AccountManagerImpl implements AccountManager {
 
-	private Logger logger = Logger.getLogger(this.getClass());
+	private final Log logger = LogFactory.getLog(getClass());
 
 	@Autowired
 	private PaymentsClient paymentsClient;
