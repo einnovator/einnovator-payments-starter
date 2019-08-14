@@ -3,6 +3,7 @@ package org.einnovator.payments.client.model;
 import java.util.Date;
 
 import org.einnovator.util.model.Address;
+import org.einnovator.util.model.OwnerType;
 import org.einnovator.util.model.Phone;
 
 public class AccountBuilder {

@@ -3,7 +3,7 @@ package org.einnovator.payments.client.modelx;
 
 import java.util.List;
 
-import org.einnovator.payments.client.model.OwnerType;
+import org.einnovator.util.model.OwnerType;
 import org.einnovator.util.model.ToStringCreator;
 
 public class AccountFilter extends AccountOptions {

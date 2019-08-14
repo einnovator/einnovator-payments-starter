@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.einnovator.util.model.Address;
 import org.einnovator.util.model.EntityBase;
+import org.einnovator.util.model.OwnerType;
 import org.einnovator.util.model.Phone;
 import org.einnovator.util.model.ToStringCreator;
 
