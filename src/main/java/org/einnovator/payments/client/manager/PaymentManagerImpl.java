@@ -14,7 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpStatusCodeException;
 
-public class PaymentManagerImpl implements PaymentManager {
+public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 
 	private final Log logger = LogFactory.getLog(getClass());
 

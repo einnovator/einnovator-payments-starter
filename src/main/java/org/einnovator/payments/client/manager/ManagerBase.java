@@ -1,6 +1,8 @@
 package org.einnovator.payments.client.manager;
 
-public class ManagerBase {
+import org.einnovator.util.cache.CachingManagerBase;
+
+public class ManagerBase extends CachingManagerBase {
 	
 
 }

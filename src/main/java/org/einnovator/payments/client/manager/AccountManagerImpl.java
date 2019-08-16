@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpStatusCodeException;
 
-public class AccountManagerImpl implements AccountManager {
+public class AccountManagerImpl extends ManagerBase implements AccountManager {
 
 	private final Log logger = LogFactory.getLog(getClass());
 

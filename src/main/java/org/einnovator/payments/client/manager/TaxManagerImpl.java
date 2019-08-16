@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpStatusCodeException;
 
-public class TaxManagerImpl implements TaxManager {
+public class TaxManagerImpl extends ManagerBase implements TaxManager {
 
 	private final Log logger = LogFactory.getLog(getClass());
 
