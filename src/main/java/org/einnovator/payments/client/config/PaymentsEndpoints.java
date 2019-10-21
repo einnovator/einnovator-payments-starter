@@ -14,6 +14,10 @@ public class PaymentsEndpoints {
 		return payments(config) + "/" + id;
 	}
 
+	public static String charge(String id, PaymentsConfiguration config) {
+		return payments(config) + "/" + id + "/charge";
+	}
+
 	public static String pay(String id, PaymentsConfiguration config) {
 		return  config.getServer() + "/payment/" + id + "/pay";
 	}

@@ -118,6 +118,11 @@ public class PaymentsClient {
 		exchange(request, Payment.class);
 	}
 
+	public void chargePayment(Payment payment) {
+		URI uri = makeURI(PaymentsEndpoints.charge(payment.getId(), config));
+		RequestEntity<Void> request = RequestEntity.post(uri).accept(MediaType.APPLICATION_JSON).build();
+		exchange(request, Payment.class);
+	}
 	public void deletePayment(String id) {
 		URI uri = makeURI(PaymentsEndpoints.payment(id, config));
 		RequestEntity<Void> request = RequestEntity.delete(uri).build();

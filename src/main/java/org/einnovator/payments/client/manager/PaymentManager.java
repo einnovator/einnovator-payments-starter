@@ -11,6 +11,8 @@ public interface PaymentManager {
 
 	URI submitPayment(Payment payment);
 
+	Payment chargePayment(Payment payment);
+
 	Payment getPayment(String id);
 
 	Page<Payment> listPayments(PaymentFilter filter, Pageable pageable);

@@ -36,6 +36,18 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 		}
 	}
 
+
+	@Override
+	public Payment chargePayment(Payment payment) {
+		try {
+			paymentsClient.chargePayment(payment);	
+			return payment;
+		} catch (RuntimeException e) {
+			logger.error("chargePayment:" + e + " " + payment);
+			return null;
+		}
+	}
+	
 	@Override
 	public Payment getPayment(String id) {
 		try {

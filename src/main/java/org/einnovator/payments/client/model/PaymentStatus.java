@@ -1,16 +1,12 @@
 package org.einnovator.payments.client.model;
 
 public enum PaymentStatus {
+	SCHEDULED("Scheduled"),
 	SUBMITTED("Submitted"),
-
 	PENDING("Pending"),
-	
 	FAILED("Failed"), 
-	
 	CHARGED("Charged"),
-
 	COMPLETED("Completed"),
-	
 	CANCELED("Canceled");	
 	
 	private final String displayName;
