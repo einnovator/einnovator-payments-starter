@@ -1,6 +1,6 @@
 package org.einnovator.payments.client.config;
 
-import org.einnovator.util.UriUtils;
+import org.einnovator.util.config.ConnectionConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.util.StringUtils;
@@ -12,6 +12,7 @@ public class PaymentsConfiguration {
 	
 	@NestedConfigurationProperty
 	private ConnectionConfiguration connection = new ConnectionConfiguration();
+	
 	
 	public PaymentsConfiguration() {
 	}

@@ -12,6 +12,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.einnovator.payments.client.config.PaymentsConfiguration;
 import org.einnovator.payments.client.config.PaymentsEndpoints;
 import org.einnovator.payments.client.model.Account;
@@ -23,6 +25,7 @@ import org.einnovator.payments.client.modelx.TaxFilter;
 import org.einnovator.util.MappingUtils;
 import org.einnovator.util.PageResult;
 import org.einnovator.util.PageUtil;
+import org.einnovator.util.web.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -30,7 +33,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
+import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 import org.springframework.web.client.RestClientException;
 
 public class PaymentsClient {
@@ -42,6 +50,13 @@ public class PaymentsClient {
 	@Qualifier("paymentsRestTemplate")
 	private OAuth2RestTemplate restTemplate;
 
+	private OAuth2ClientContext oauth2ClientContext0 = new DefaultOAuth2ClientContext();
+
+	private OAuth2RestTemplate restTemplate0;
+
+	@Autowired(required = false)
+	private ClientHttpRequestFactory clientHttpRequestFactory;
+	
 	@Autowired
 	public PaymentsClient() {
 	}
@@ -56,22 +71,134 @@ public class PaymentsClient {
 		this.config = config;
 	}
 
+	
+	
+	/**
+	 * Get the value of property {@code config}.
+	 *
+	 * @return the config
+	 */
 	public PaymentsConfiguration getConfig() {
 		return config;
 	}
 
+
+	/**
+	 * Set the value of property {@code config}.
+	 *
+	 * @param config the value of property config
+	 */
 	public void setConfig(PaymentsConfiguration config) {
 		this.config = config;
 	}
-	
+
+
+	/**
+	 * Get the value of property {@code restTemplate}.
+	 *
+	 * @return the restTemplate
+	 */
 	public OAuth2RestTemplate getRestTemplate() {
 		return restTemplate;
 	}
 
+
+	/**
+	 * Set the value of property {@code restTemplate}.
+	 *
+	 * @param restTemplate the value of property restTemplate
+	 */
 	public void setRestTemplate(OAuth2RestTemplate restTemplate) {
 		this.restTemplate = restTemplate;
 	}
 
+
+	/**
+	 * Get the value of property {@code clientHttpRequestFactory}.
+	 *
+	 * @return the clientHttpRequestFactory
+	 */
+	public ClientHttpRequestFactory getClientHttpRequestFactory() {
+		return clientHttpRequestFactory;
+	}
+
+
+	/**
+	 * Set the value of property {@code clientHttpRequestFactory}.
+	 *
+	 * @param clientHttpRequestFactory the value of property clientHttpRequestFactory
+	 */
+	public void setClientHttpRequestFactory(ClientHttpRequestFactory clientHttpRequestFactory) {
+		this.clientHttpRequestFactory = clientHttpRequestFactory;
+	}
+
+
+	/**
+	 * Get the value of property {@code oauth2ClientContext0}.
+	 *
+	 * @return the oauth2ClientContext0
+	 */
+	public OAuth2ClientContext getOauth2ClientContext0() {
+		return oauth2ClientContext0;
+	}
+
+
+	/**
+	 * Set the value of property {@code oauth2ClientContext0}.
+	 *
+	 * @param oauth2ClientContext0 the value of property oauth2ClientContext0
+	 */
+	public void setOauth2ClientContext0(OAuth2ClientContext oauth2ClientContext0) {
+		this.oauth2ClientContext0 = oauth2ClientContext0;
+	}
+
+
+	/**
+	 * Get the value of property {@code restTemplate0}.
+	 *
+	 * @return the restTemplate0
+	 */
+	public OAuth2RestTemplate getRestTemplate0() {
+		return restTemplate0;
+	}
+
+
+	/**
+	 * Set the value of property {@code restTemplate0}.
+	 *
+	 * @param restTemplate0 the value of property restTemplate0
+	 */
+	public void setRestTemplate0(OAuth2RestTemplate restTemplate0) {
+		this.restTemplate0 = restTemplate0;
+	}
+
+
+	@PostConstruct
+	public void init() {
+		if (clientHttpRequestFactory==null) {
+			clientHttpRequestFactory = config.getConnection().makeClientHttpRequestFactory();
+		}
+	}
+	
+	public OAuth2RestTemplate makeOAuth2RestTemplate(OAuth2ProtectedResourceDetails resource, OAuth2ClientContext oauth2ClientContext) {
+		OAuth2RestTemplate template = new OAuth2RestTemplate(resource, oauth2ClientContext);			
+		template.setRequestFactory(clientHttpRequestFactory);
+		return template;
+	}
+	
+	public OAuth2RestTemplate makeOAuth2RestTemplate(OAuth2ClientContext oauth2ClientContext, ClientCredentialsResourceDetails resource) {
+		OAuth2RestTemplate template = new OAuth2RestTemplate(resource, oauth2ClientContext);			
+		template.setRequestFactory(clientHttpRequestFactory);
+		return template;
+	}
+	
+	public OAuth2RestTemplate setupClientOAuth2RestTemplate(ClientCredentialsResourceDetails resource) {
+		if (restTemplate0==null) {
+			restTemplate0 = makeOAuth2RestTemplate(oauth2ClientContext0, resource);
+		}
+		return restTemplate0;
+	}
+	
 
 	//
 	// Payments
@@ -113,13 +240,13 @@ public class PaymentsClient {
 
 
 	public void updatePayment(Payment payment) {
-		URI uri = makeURI(PaymentsEndpoints.payment(payment.getId(), config));
+		URI uri = makeURI(PaymentsEndpoints.payment(payment.getUuid(), config));
 		RequestEntity<Void> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).build();
 		exchange(request, Payment.class);
 	}
 
 	public void chargePayment(Payment payment) {
-		URI uri = makeURI(PaymentsEndpoints.charge(payment.getId(), config));
+		URI uri = makeURI(PaymentsEndpoints.charge(payment.getUuid(), config));
 		RequestEntity<Void> request = RequestEntity.post(uri).accept(MediaType.APPLICATION_JSON).build();
 		exchange(request, Payment.class);
 	}
@@ -210,6 +337,14 @@ public class PaymentsClient {
 	}
 
 	protected <T> ResponseEntity<T> exchange(RequestEntity<?> request, Class<T> responseType) throws RestClientException {
+		OAuth2RestTemplate restTemplate = this.restTemplate;
+		if (WebUtil.getHttpServletRequest()==null && this.restTemplate0!=null) {
+			restTemplate = this.restTemplate0;
+		}
+		return exchange(restTemplate, request, responseType);
+	}
+
+	protected <T> ResponseEntity<T> exchange(OAuth2RestTemplate restTemplate, RequestEntity<?> request, Class<T> responseType) throws RestClientException {
 		return restTemplate.exchange(request, responseType);
 	}
 
