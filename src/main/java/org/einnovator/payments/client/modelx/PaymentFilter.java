@@ -20,6 +20,10 @@ public class PaymentFilter extends PaymentOptions {
 	
 	private List<PaymentStatus> transferStatus;
 
+	private String owner;
+	
+	private String account;
+		
 	private Boolean buyer;
 	
 	private Boolean seller;
@@ -98,6 +102,44 @@ public class PaymentFilter extends PaymentOptions {
 	public void setType(PaymentType type) {
 		this.type = type;
 	}
+	
+	
+	/**
+	 * Get the value of property {@code owner}.
+	 *
+	 * @return the owner
+	 */
+	public String getOwner() {
+		return owner;
+	}
+
+	/**
+	 * Set the value of property {@code owner}.
+	 *
+	 * @param owner the value of property owner
+	 */
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	/**
+	 * Get the value of property {@code account}.
+	 *
+	 * @return the account
+	 */
+	public String getAccount() {
+		return account;
+	}
+
+	/**
+	 * Set the value of property {@code account}.
+	 *
+	 * @param account the value of property account
+	 */
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
 	/**
 	 * Get the value of property {@code buyer}.
 	 *
@@ -394,6 +436,28 @@ public class PaymentFilter extends PaymentOptions {
 
 
 	/**
+	 * Set the value of property {@code owner}.
+	 *
+	 * @param owner the owner 
+	 * @return this
+	 */
+	public PaymentFilter withOwner(String owner) {
+		this.owner = owner;
+		return this;		
+	}
+
+	/**
+	 * Set the value of property {@code account}.
+	 *
+	 * @param account the account to with
+	 * @return this
+	 */
+	public PaymentFilter withAccount(String account) {
+		this.account = account;
+		return this;		
+	}
+	
+	/**
 	 * Set the value of property {@code fromCreationDate}.
 	 *
 	 * @param fromCreationDate the fromCreationDate 
@@ -445,10 +509,12 @@ public class PaymentFilter extends PaymentOptions {
 				.append("status", status)
 				.append("transferStatus", transferStatus)
 				.append("q", q)
-				.append("buyers", buyers)
-				.append("sellers", sellers)
+				.append("owner", owner)
+				.append("account", account)
 				.append("buyer", buyer)
 				.append("seller", seller)
+				.append("buyers", buyers)
+				.append("sellers", sellers)
 				.append("fromCreationDate", fromCreationDate)
 				.append("toCreationDate", toCreationDate)
 				.append("fromPaymentDate", fromPaymentDate)
