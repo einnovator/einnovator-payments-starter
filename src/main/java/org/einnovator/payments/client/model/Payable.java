@@ -197,18 +197,110 @@ public class Payable extends EntityBase {
 		this.items = items;
 	}
 
+	// With
+	
+	/**
+	 * Set the value of property {@code name}.
+	 *
+	 * @param name the value of property name
+	 */
+	public Payable withName(String name) {
+		this.name = name;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code category}.
+	 *
+	 * @param category the value of property category
+	 */
+	public Payable withCategory(String category) {
+		this.category = category;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code description}.
+	 *
+	 * @param description the value of property description
+	 */
+	public Payable withDescription(String description) {
+		this.description = description;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code img}.
+	 *
+	 * @param img the value of property img
+	 */
+	public Payable withImg(String img) {
+		this.img = img;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code nameCss}.
+	 *
+	 * @param nameCss the value of property nameCss
+	 */
+	public Payable withNameCss(String nameCss) {
+		this.nameCss = nameCss;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code categoryCss}.
+	 *
+	 * @param categoryCss the value of property categoryCss
+	 */
+	public Payable withCategoryCss(String categoryCss) {
+		this.categoryCss = categoryCss;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code imgCss}.
+	 *
+	 * @param imgCss the value of property imgCss
+	 */
+	public Payable withImgCss(String imgCss) {
+		this.imgCss = imgCss;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code descriptionCss}.
+	 *
+	 * @param descriptionCss the value of property descriptionCss
+	 */
+	public Payable withDescriptionCss(String descriptionCss) {
+		this.descriptionCss = descriptionCss;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code items}.
+	 *
+	 * @param items the value of property items
+	 */
+	public Payable withItems(List<Item> items) {
+		this.items = items;
+		return this;
+	}
+
 	public Payable toPayable() {
 		Payable payable = new Payable();
-		payable.setUuid(uuid);
-		payable.setName(name);
-		payable.setCategory(category);
-		payable.setDescription(description);
-		payable.setImg(img);
-		payable.setNameCss(nameCss);
-		payable.setCategoryCss(categoryCss);
-		payable.setDescriptionCss(descriptionCss);
-		payable.setNameCss(nameCss);
-		payable.setItems(items);
+		payable.withUuid(uuid);
+		payable.withName(name);
+		payable.withCategory(category);
+		payable.withDescription(description);
+		payable.withImg(img);
+		payable.withNameCss(nameCss);
+		payable.withCategoryCss(categoryCss);
+		payable.withDescriptionCss(descriptionCss);
+		payable.withNameCss(nameCss);
+		payable.withItems(items);
 		return payable;
 	}
 	

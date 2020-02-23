@@ -14,9 +14,7 @@ import org.einnovator.payments.client.config.PaymentsClientConfig;
 import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.Currency;
 import org.einnovator.payments.client.model.Payable;
-import org.einnovator.payments.client.model.PayableBuilder;
 import org.einnovator.payments.client.model.Payment;
-import org.einnovator.payments.client.model.PaymentBuilder;
 import org.einnovator.sso.client.support.SsoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,41 +62,41 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 
 	private Payment makePayment(Account buyer, Account seller) {
 		long n = Math.round(Math.random()*100);
-		Payable payable = new PayableBuilder()
-				.name("product:"+n)
-				.category("category:"+n)
-				.description("description:"+n)
-				.img("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
-				.build();
+		Payable payable = new Payable()
+				.withName("product:"+n)
+				.withCategory("category:"+n)
+				.withDescription("description:"+n)
+				.withImg("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
+				;
 
-		Payment payment = new PaymentBuilder()
-				.amount(BigDecimal.TEN)
-				.currency(Currency.USD)
-				.buyer(buyer)
-				.seller(seller)
-				.payable(payable)
-				.statement(payable.getName())
-				.build();
+		Payment payment = new Payment()
+				.withAmount(BigDecimal.TEN)
+				.withCurrency(Currency.USD)
+				.withBuyer(buyer)
+				.withSeller(seller)
+				.withPayable(payable)
+				.withStatement(payable.getName())
+				;
 		return payment;
 	}
 	
 	private Payment makeSitePayment(Account buyer) {
 		long n = Math.round(Math.random()*100);
-		Payable payable = new PayableBuilder()
-				.name("product:"+n)
-				.category("category:"+n)
-				.description("description:"+n)
-				.img("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
-				.build();
+		Payable payable = new Payable()
+				.withName("product:"+n)
+				.withCategory("category:"+n)
+				.withDescription("description:"+n)
+				.withImg("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
+				;
 
-		Payment payment = new PaymentBuilder()
-				.amount(BigDecimal.TEN)
-				.currency(Currency.USD)
-				.buyer(buyer)
-				.payable(payable)
-				.statement(payable.getName())
-				.startDate(GregorianCalendar.getInstance().getTime())
-				.build();
+		Payment payment = new Payment()
+				.withAmount(BigDecimal.TEN)
+				.withCurrency(Currency.USD)
+				.withBuyer(buyer)
+				.withPayable(payable)
+				.withStatement(payable.getName())
+				.withStartDate(GregorianCalendar.getInstance().getTime())
+				;
 		return payment;
 	}
 	

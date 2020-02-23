@@ -60,7 +60,6 @@ public class Payment extends EntityBase {
 
 	public Payment() {
 	}
-
 	/**
 	 * Get the value of property {@code payable}.
 	 *
@@ -455,6 +454,228 @@ public class Payment extends EntityBase {
 	 */
 	public void setFees(List<Fee> fees) {
 		this.fees = fees;
+	}
+	
+	// With
+	
+	/**
+	 * Set the value of property {@code type}.
+	 *
+	 * @param type the value of property type
+	 */
+	public Payment withType(PaymentType type) {
+		this.type = type;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code status}.
+	 *
+	 * @param status the value of property status
+	 */
+	public Payment withStatus(PaymentStatus status) {
+		this.status = status;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code payable}.
+	 *
+	 * @param payable the value of property payable
+	 */
+	public Payment withPayable(Payable payable) {
+		this.payable = payable;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code currency}.
+	 *
+	 * @param currency the value of property currency
+	 */
+	public Payment withCurrency(Currency currency) {
+		this.currency = currency;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code amount}.
+	 *
+	 * @param amount the value of property amount
+	 */
+	public Payment withAmount(BigDecimal amount) {
+		this.amount = amount;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code discount}.
+	 *
+	 * @param discount the value of property discount
+	 */
+	public Payment withDiscount(BigDecimal discount) {
+		this.discount = discount;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code totalAmount}.
+	 *
+	 * @param totalAmount the value of property totalAmount
+	 */
+	public Payment withTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code chargedAmount}.
+	 *
+	 * @param chargedAmount the value of property chargedAmount
+	 */
+	public Payment withChargedAmount(BigDecimal chargedAmount) {
+		this.chargedAmount = chargedAmount;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code tax}.
+	 *
+	 * @param tax the value of property tax
+	 */
+	public Payment withTax(BigDecimal tax) {
+		this.tax = tax;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code paymentDate}.
+	 *
+	 * @param paymentDate the value of property paymentDate
+	 */
+	public Payment withPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code lastTryDate}.
+	 *
+	 * @param lastTryDate the value of property lastTryDate
+	 */
+	public Payment withLastTryDate(Date lastTryDate) {
+		this.lastTryDate = lastTryDate;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code transferDate}.
+	 *
+	 * @param transferDate the value of property transferDate
+	 */
+	public Payment withTransferDate(Date transferDate) {
+		this.transferDate = transferDate;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code startDate}.
+	 *
+	 * @param startDate the value of property startDate
+	 */
+	public Payment withStartDate(Date startDate) {
+		this.startDate = startDate;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code expireDate}.
+	 *
+	 * @param expireDate the value of property expireDate
+	 */
+	public Payment withExpireDate(Date expireDate) {
+		this.expireDate = expireDate;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code statement}.
+	 *
+	 * @param statement the value of property statement
+	 */
+	public Payment withStatement(String statement) {
+		this.statement = statement;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code buyer}.
+	 *
+	 * @param buyer the value of property buyer
+	 */
+	public Payment withBuyer(Account buyer) {
+		this.buyer = buyer;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code documentURI}.
+	 *
+	 * @param documentURI the value of property documentURI
+	 */
+	public Payment withDocumentURI(String documentURI) {
+		this.documentURI = documentURI;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code errorMessage}.
+	 *
+	 * @param errorMessage the value of property errorMessage
+	 */
+	public Payment withErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code seller}.
+	 *
+	 * @param seller the value of property seller
+	 */
+	public Payment withSeller(Account seller) {
+		this.seller = seller;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code transferStatus}.
+	 *
+	 * @param transferStatus the value of property transferStatus
+	 */
+	public Payment withTransferStatus(PaymentStatus transferStatus) {
+		this.transferStatus = transferStatus;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code transferErrorMessage}.
+	 *
+	 * @param transferErrorMessage the value of property transferErrorMessage
+	 */
+	public Payment withTransferErrorMessage(String transferErrorMessage) {
+		this.transferErrorMessage = transferErrorMessage;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code fees}.
+	 *
+	 * @param fees the value of property fees
+	 */
+	public Payment withFees(List<Fee> fees) {
+		this.fees = fees;
+		return this;
 	}
 
 	public boolean isPaid() {

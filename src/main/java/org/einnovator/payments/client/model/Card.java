@@ -37,7 +37,6 @@ public class Card extends EntityBase {
 		
 	}
 
-	
 	/**
 	 * Get the value of property {@code cardType}.
 	 *
@@ -50,7 +49,7 @@ public class Card extends EntityBase {
 	/**
 	 * Set the value of property {@code cardType}.
 	 *
-	 * @param cardType the cardType to set
+	 * @param cardType the value of property cardType
 	 */
 	public void setCardType(CardType cardType) {
 		this.cardType = cardType;
@@ -65,10 +64,11 @@ public class Card extends EntityBase {
 		return number;
 	}
 
+
 	/**
 	 * Set the value of property {@code number}.
 	 *
-	 * @param number the number to set
+	 * @param number the value of property number
 	 */
 	public void setNumber(String number) {
 		this.number = number;
@@ -83,10 +83,11 @@ public class Card extends EntityBase {
 		return expirationMonth;
 	}
 
+
 	/**
 	 * Set the value of property {@code expirationMonth}.
 	 *
-	 * @param expirationMonth the expirationMonth to set
+	 * @param expirationMonth the value of property expirationMonth
 	 */
 	public void setExpirationMonth(Integer expirationMonth) {
 		this.expirationMonth = expirationMonth;
@@ -104,11 +105,12 @@ public class Card extends EntityBase {
 	/**
 	 * Set the value of property {@code expirationYear}.
 	 *
-	 * @param expirationYear the expirationYear to set
+	 * @param expirationYear the value of property expirationYear
 	 */
 	public void setExpirationYear(Integer expirationYear) {
 		this.expirationYear = expirationYear;
 	}
+
 
 	/**
 	 * Get the value of property {@code name}.
@@ -122,7 +124,7 @@ public class Card extends EntityBase {
 	/**
 	 * Set the value of property {@code name}.
 	 *
-	 * @param name the name to set
+	 * @param name the value of property name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -140,7 +142,7 @@ public class Card extends EntityBase {
 	/**
 	 * Set the value of property {@code address}.
 	 *
-	 * @param address the address to set
+	 * @param address the value of property address
 	 */
 	public void setAddress(Address address) {
 		this.address = address;
@@ -155,14 +157,16 @@ public class Card extends EntityBase {
 		return cvc;
 	}
 
+
 	/**
 	 * Set the value of property {@code cvc}.
 	 *
-	 * @param cvc the cvc to set
+	 * @param cvc the value of property cvc
 	 */
 	public void setCvc(String cvc) {
 		this.cvc = cvc;
 	}
+
 
 	/**
 	 * Get the value of property {@code last4}.
@@ -173,14 +177,16 @@ public class Card extends EntityBase {
 		return last4;
 	}
 
+
 	/**
 	 * Set the value of property {@code last4}.
 	 *
-	 * @param last4 the last4 to set
+	 * @param last4 the value of property last4
 	 */
 	public void setLast4(String last4) {
 		this.last4 = last4;
 	}
+
 
 	/**
 	 * Get the value of property {@code currency}.
@@ -191,14 +197,16 @@ public class Card extends EntityBase {
 		return currency;
 	}
 
+
 	/**
 	 * Set the value of property {@code currency}.
 	 *
-	 * @param currency the currency to set
+	 * @param currency the value of property currency
 	 */
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
 	}
+
 
 	/**
 	 * Get the value of property {@code brand}.
@@ -209,17 +217,19 @@ public class Card extends EntityBase {
 		return brand;
 	}
 
+
 	/**
 	 * Set the value of property {@code brand}.
 	 *
-	 * @param brand the brand to set
+	 * @param brand the value of property brand
 	 */
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
 
+
 	/**
-	 * Get the value of property {@code Default}.
+	 * Get the value of property {@code _default}.
 	 *
 	 * @return the _default
 	 */
@@ -227,15 +237,128 @@ public class Card extends EntityBase {
 		return _default;
 	}
 
+
 	/**
-	 * Set the value of property {@code Default}.
+	 * Set the value of property {@code _default}.
 	 *
-	 * @param _default the _default to set
+	 * @param _default the value of property _default
 	 */
 	public void setDefault(Boolean _default) {
 		this._default = _default;
 	}
-	
+
+
+	/**
+	 * Set the value of property {@code cardType}.
+	 *
+	 * @param cardType the value of property cardType
+	 */
+	public Card withCardType(CardType cardType) {
+		this.cardType = cardType;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code number}.
+	 *
+	 * @param number the value of property number
+	 */
+	public Card withNumber(String number) {
+		this.number = number;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code expirationMonth}.
+	 *
+	 * @param expirationMonth the value of property expirationMonth
+	 */
+	public Card withExpirationMonth(Integer expirationMonth) {
+		this.expirationMonth = expirationMonth;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code expirationYear}.
+	 *
+	 * @param expirationYear the value of property expirationYear
+	 */
+	public Card withExpirationYear(Integer expirationYear) {
+		this.expirationYear = expirationYear;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code name}.
+	 *
+	 * @param name the value of property name
+	 */
+	public Card withName(String name) {
+		this.name = name;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code address}.
+	 *
+	 * @param address the value of property address
+	 */
+	public Card withAddress(Address address) {
+		this.address = address;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code cvc}.
+	 *
+	 * @param cvc the value of property cvc
+	 */
+	public Card withCvc(String cvc) {
+		this.cvc = cvc;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code last4}.
+	 *
+	 * @param last4 the value of property last4
+	 */
+	public Card withLast4(String last4) {
+		this.last4 = last4;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code currency}.
+	 *
+	 * @param currency the value of property currency
+	 */
+	public Card withCurrency(Currency currency) {
+		this.currency = currency;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code brand}.
+	 *
+	 * @param brand the value of property brand
+	 */
+	public Card withBrand(String brand) {
+		this.brand = brand;
+		return this;
+	}
+
+
+	/**
+	 * Set the value of property {@code _default}.
+	 *
+	 * @param _default the value of property _default
+	 */
+	public Card withDefault(Boolean _default) {
+		this._default = _default;
+		return this;
+	}
+
 
 	@Override
 	public ToStringCreator toString1(ToStringCreator creator) {

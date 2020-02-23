@@ -1,9 +1,8 @@
 package org.einnovator.payments.client;
 
 import static org.einnovator.util.UriUtils.appendQueryParameters;
-import static org.einnovator.util.UriUtils.makeURI;
-import static org.einnovator.util.UriUtils.encode;
 import static org.einnovator.util.UriUtils.encodeId;
+import static org.einnovator.util.UriUtils.makeURI;
 
 import java.net.URI;
 import java.util.ArrayList;

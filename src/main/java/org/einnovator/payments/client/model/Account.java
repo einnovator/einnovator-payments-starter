@@ -749,6 +749,368 @@ public class Account extends EntityBase {
 		this.transferEnabled = transferEnabled;
 	}
 
+	// With
+	
+	/**
+	 * Set the value of property {@code type}.
+	 *
+	 * @param type the value of property type
+	 */
+	public Account withType(OwnerType type) {
+		this.type = type;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code owner}.
+	 *
+	 * @param owner the value of property owner
+	 */
+	public Account withOwner(String owner) {
+		this.owner = owner;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code username}.
+	 *
+	 * @param username the value of property username
+	 */
+	public Account withUsername(String username) {
+		this.username = username;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code name}.
+	 *
+	 * @param name the value of property name
+	 */
+	public Account withName(String name) {
+		this.name = name;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code email}.
+	 *
+	 * @param email the value of property email
+	 */
+	public Account withEmail(String email) {
+		this.email = email;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code title}.
+	 *
+	 * @param title the value of property title
+	 */
+	public Account withTitle(String title) {
+		this.title = title;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code avatar}.
+	 *
+	 * @param avatar the value of property avatar
+	 */
+	public Account withAvatar(String avatar) {
+		this.avatar = avatar;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code color}.
+	 *
+	 * @param color the value of property color
+	 */
+	public Account withColor(String color) {
+		this.color = color;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code legalName}.
+	 *
+	 * @param legalName the value of property legalName
+	 */
+	public Account withLegalName(String legalName) {
+		this.legalName = legalName;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code legalName2}.
+	 *
+	 * @param legalName2 the value of property legalName2
+	 */
+	public Account withLegalName2(String legalName2) {
+		this.legalName2 = legalName2;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code legalName3}.
+	 *
+	 * @param legalName3 the value of property legalName3
+	 */
+	public Account withLegalName3(String legalName3) {
+		this.legalName3 = legalName3;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code description}.
+	 *
+	 * @param description the value of property description
+	 */
+	public Account withDescription(String description) {
+		this.description = description;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code phone}.
+	 *
+	 * @param phone the value of property phone
+	 */
+	public Account withPhone(Phone phone) {
+		this.phone = phone;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code mobilePhone}.
+	 *
+	 * @param mobilePhone the value of property mobilePhone
+	 */
+	public Account withMobilePhone(Phone mobilePhone) {
+		this.mobilePhone = mobilePhone;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code website}.
+	 *
+	 * @param website the value of property website
+	 */
+	public Account withWebsite(String website) {
+		this.website = website;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code currency}.
+	 *
+	 * @param currency the value of property currency
+	 */
+	public Account withCurrency(Currency currency) {
+		this.currency = currency;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code taxNumber}.
+	 *
+	 * @param taxNumber the value of property taxNumber
+	 */
+	public Account withTaxNumber(String taxNumber) {
+		this.taxNumber = taxNumber;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code ssn}.
+	 *
+	 * @param ssn the value of property ssn
+	 */
+	public Account withSsn(String ssn) {
+		this.ssn = ssn;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code personalIdNumber}.
+	 *
+	 * @param personalIdNumber the value of property personalIdNumber
+	 */
+	public Account withPersonalIdNumber(String personalIdNumber) {
+		this.personalIdNumber = personalIdNumber;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code document}.
+	 *
+	 * @param document the value of property document
+	 */
+	public Account withDocument(String document) {
+		this.document = document;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code vatNumber}.
+	 *
+	 * @param vatNumber the value of property vatNumber
+	 */
+	public Account withVatNumber(String vatNumber) {
+		this.vatNumber = vatNumber;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code taxRegistrar}.
+	 *
+	 * @param taxRegistrar the value of property taxRegistrar
+	 */
+	public Account withTaxRegistrar(String taxRegistrar) {
+		this.taxRegistrar = taxRegistrar;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code address}.
+	 *
+	 * @param address the value of property address
+	 */
+	public Account withAddress(Address address) {
+		this.address = address;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code personalAddress}.
+	 *
+	 * @param personalAddress the value of property personalAddress
+	 */
+	public Account withPersonalAddress(Address personalAddress) {
+		this.personalAddress = personalAddress;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code address3}.
+	 *
+	 * @param address3 the value of property address3
+	 */
+	public Account withAddress3(Address address3) {
+		this.address3 = address3;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code birthdate}.
+	 *
+	 * @param birthdate the value of property birthdate
+	 */
+	public Account withBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code firstName}.
+	 *
+	 * @param firstName the value of property firstName
+	 */
+	public Account withFirstName(String firstName) {
+		this.firstName = firstName;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code firstName2}.
+	 *
+	 * @param firstName2 the value of property firstName2
+	 */
+	public Account withFirstName2(String firstName2) {
+		this.firstName2 = firstName2;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code firstName3}.
+	 *
+	 * @param firstName3 the value of property firstName3
+	 */
+	public Account withFirstName3(String firstName3) {
+		this.firstName3 = firstName3;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code lastName}.
+	 *
+	 * @param lastName the value of property lastName
+	 */
+	public Account withLastName(String lastName) {
+		this.lastName = lastName;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code lastName2}.
+	 *
+	 * @param lastName2 the value of property lastName2
+	 */
+	public Account withLastName2(String lastName2) {
+		this.lastName2 = lastName2;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code lastName3}.
+	 *
+	 * @param lastName3 the value of property lastName3
+	 */
+	public Account withLastName3(String lastName3) {
+		this.lastName3 = lastName3;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code cards}.
+	 *
+	 * @param cards the value of property cards
+	 */
+	public Account withCards(List<Card> cards) {
+		this.cards = cards;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code bankAccounts}.
+	 *
+	 * @param bankAccounts the value of property bankAccounts
+	 */
+	public Account withBankAccounts(List<BankAccount> bankAccounts) {
+		this.bankAccounts = bankAccounts;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code seller}.
+	 *
+	 * @param seller the value of property seller
+	 */
+	public Account withSeller(Boolean seller) {
+		this.seller = seller;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code transferEnabled}.
+	 *
+	 * @param transferEnabled the value of property transferEnabled
+	 */
+	public Account withTransferEnabled(Boolean transferEnabled) {
+		this.transferEnabled = transferEnabled;
+		return this;
+	}
+
 	@Override
 	public ToStringCreator toString1(ToStringCreator creator) {
 		return super.toString1(creator)

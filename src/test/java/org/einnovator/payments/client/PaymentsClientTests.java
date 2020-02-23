@@ -13,19 +13,14 @@ import java.util.UUID;
 
 import org.einnovator.payments.client.config.PaymentsClientConfig;
 import org.einnovator.payments.client.model.Account;
-import org.einnovator.payments.client.model.AccountBuilder;
-import org.einnovator.payments.client.model.CardType;
 import org.einnovator.payments.client.model.Card;
-import org.einnovator.payments.client.model.CardBuilder;
+import org.einnovator.payments.client.model.CardType;
 import org.einnovator.payments.client.model.Currency;
 import org.einnovator.payments.client.model.Payable;
-import org.einnovator.payments.client.model.PayableBuilder;
 import org.einnovator.payments.client.model.Payment;
-import org.einnovator.payments.client.model.PaymentBuilder;
 import org.einnovator.sso.client.support.SsoTestHelper;
 import org.einnovator.util.UriUtils;
 import org.einnovator.util.model.Address;
-import org.einnovator.util.model.AddressBuilder;
 import org.einnovator.util.model.Phone;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,7 +49,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 	public static final String TEST_BUYER_ORG = "test";
 	public static final String TEST_USER_FAIL = "test@test.org";
 	
-	public static final String TEST_PASSWORD = "Einnovator123!!";
+	public static final String TEST_PASSWORD = "Einnovator123!";
 	private static final String CLIENT_ID = "application";
 	private static final String CLIENT_SECRET = "application$123";
 	
@@ -67,23 +62,17 @@ public class PaymentsClientTests extends SsoTestHelper {
 	}
 	
 	private Account makeAccount(String username, String email) {
-		Address address = new AddressBuilder()
-				.country("PT")
-				.city("Lisbon")
-				.line1("Line1")
-				.line2("line2")
-				.state("Lisbon")
-				.postalCode("2815")
-				.build();
-		Account account = new AccountBuilder()
-				.username(username)
-				.phone(new Phone("99999999"))
-				.address(address)
-				.currency(Currency.USD)
-				.email(email)
-//				.vatNumber("12345678")
-//				.taxNumber("12345678")
-				.build();
+		Address address = new Address()
+				.withCountry("PT").withCity("Lisbon").withLine1("Line1").withLine2("line2").withState("Lisbon").withPostalCode("2815");
+		Account account = new Account()
+				.withUsername(username)
+				.withPhone(new Phone("99999999"))
+				.withAddress(address)
+				.withCurrency(Currency.USD)
+				.withEmail(email)
+//				.withVatNumber("12345678")
+//				.withTaxNumber("12345678")
+				;
 		
 		return account;
 		
@@ -97,21 +86,21 @@ public class PaymentsClientTests extends SsoTestHelper {
 
 	private Payment makePayment(Account buyer, Account seller) {
 		long n = Math.round(Math.random()*100);
-		Payable payable = new PayableBuilder()
-				.name("product:"+n)
-				.category("category:"+n)
-				.description("description:"+n)
-				.img("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
-				.build();
+		Payable payable = new Payable()
+				.withName("product:"+n)
+				.withCategory("category:"+n)
+				.withDescription("description:"+n)
+				.withImg("https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/book_green.png")
+				;
 
-		Payment payment = new PaymentBuilder()
-				.amount(BigDecimal.TEN)
-				.currency(Currency.USD)
-				.buyer(buyer)
-				.seller(seller)
-				.payable(payable)
-				.statement(payable.getName())
-				.build();
+		Payment payment = new Payment()
+				.withAmount(BigDecimal.TEN)
+				.withCurrency(Currency.USD)
+				.withBuyer(buyer)
+				.withSeller(seller)
+				.withPayable(payable)
+				.withStatement(payable.getName())
+				;
 		return payment;
 	}
 	
@@ -176,7 +165,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 	public void paymentSubmitWithBadAccountSellerTest() {
 		try {
 			Account buyer = client.getAccount(TEST_BUYER);
-			Account seller = new AccountBuilder().username(TEST_USER_FAIL).build();
+			Account seller = new Account().withUsername(TEST_USER_FAIL);
 			Payment payment = makePayment(buyer, seller);
 			System.out.println(payment);
 			client.submitPayment(payment);
@@ -260,19 +249,19 @@ public class PaymentsClientTests extends SsoTestHelper {
 	public void addCard1Test()
 	{
 		Account user = client.getAccount(TEST_BUYER);
-		Card card = new CardBuilder()
-				.id(UUID.randomUUID().toString())
-				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
-				.brand("visa")
-				.cardType(CardType.VISA)
-				.currency(Currency.USD)
-				.cvc("123")
-				.number("4242424242424242")
-				.expirationMonth(11)
-				.expirationYear(2017)
-				.last4("8765")
-				.name("vishal")
-				.build();
+		Card card = (Card)new Card()
+				.withAddress(new Address().withCountry("USA").withCity("NY").withState("NY").withPostalCode("12345").withLine1("Line1").withLine2("line2"))
+				.withBrand("visa")
+				.withCardType(CardType.VISA)
+				.withCurrency(Currency.USD)
+				.withCvc("123")
+				.withNumber("4242424242424242")
+				.withExpirationMonth(11)
+				.withExpirationYear(2017)
+				.withLast4("8765")
+				.withName("name")
+				.withUuid(UUID.randomUUID().toString());
+
 
 		URI uri = client.addAccountCard(card,user.getId());
 		String id = extractId(uri);
@@ -285,18 +274,18 @@ public class PaymentsClientTests extends SsoTestHelper {
 	public void addCard1Test()
 	{
 		String username = "tdd-" + UUID.randomUUID().toString();
-		Account account = new AccountBuilder().username(username)
+		Account account = new Account().username(username)
 				.phone("99999999")
-				.address(new AddressBuilder().country("USA").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build()).build();
+				.address(new Address().country("USA").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815"));
 		URI uri = client.createAccount(account);
 		assertNotNull(uri);
 		String id = extractId(uri);
 		assertNotNull(id);
 		
 		Account user = client.getAccount(username);
-		CreditCard card = new CreditCardBuilder()
+		CreditCard card = new CreditCard()
 				.id(UUID.randomUUID().toString())
-				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
+				.address(new Address().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815"))
 				.brand("visa")
 				.cardType(CardType.VISA_DEBIT)
 				.currency(Currency.USD)
@@ -306,7 +295,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.expirationYear(2017)
 				.last4("5556")
 				.name("visa-"+UUID.randomUUID().toString())
-				.build();
+				;
 
 		URI uriCard = client.addCard(card,user.getId());
 		String cardId = client.extractId(uriCard);
@@ -319,19 +308,18 @@ public class PaymentsClientTests extends SsoTestHelper {
 	public void addCard2Test()
 	{
 		Account user = client.getAccount(TEST_SELLER);
-		Card card = new CardBuilder()
-				.id(UUID.randomUUID().toString())
-				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
-				.brand("visa")
-				.cardType(CardType.MASTERCARD)
-				.currency(Currency.USD)
-				.cvc("123")
-				.number("5555555555554444")
-				.expirationMonth(11)
-				.expirationYear(2017)
-				.last4("4444")
-				.name("vishal")
-				.build();
+		Card card = (Card)new Card()
+				.withAddress(new Address().withCountry("USA").withCity("NY").withState("NY").withPostalCode("12345").withLine1("Line1").withLine2("line2"))
+				.withBrand("visa")
+				.withCardType(CardType.MASTERCARD)
+				.withCurrency(Currency.USD)
+				.withCvc("123")
+				.withNumber("5555555555554444")
+				.withExpirationMonth(11)
+				.withExpirationYear(2017)
+				.withLast4("4444")
+				.withName("name")
+				.withUuid(UUID.randomUUID().toString());
 
 		URI uri = client.addAccountCard(card,user.getId());
 		String id = extractId(uri);
@@ -342,19 +330,19 @@ public class PaymentsClientTests extends SsoTestHelper {
 	public void addNonExistingUserCard() {
 		try {
 			String id =UUID.randomUUID().toString();
-			Card card = new CardBuilder()
-					.id(UUID.randomUUID().toString())
-					.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
-					.brand("visa")
-					.cardType(CardType.VISA)
-					.currency(Currency.USD)
-					.cvc("123")
-					.number("4242424242424242")
-					.expirationMonth(11)
-					.expirationYear(2017)
-					.last4("8765")
-					.name("vishal")
-					.build();
+			Card card = (Card)new Card()
+					.withAddress(new Address().withCountry("USA").withCity("NY").withState("NY").withPostalCode("12345").withLine1("Line1").withLine2("line2"))
+					.withBrand("visa")
+					.withCardType(CardType.VISA)
+					.withCurrency(Currency.USD)
+					.withCvc("123")
+					.withNumber("4242424242424242")
+					.withExpirationMonth(11)
+					.withExpirationYear(2017)
+					.withLast4("8765")
+					.withName("name")
+					.withUuid(UUID.randomUUID().toString());
+
 			URI uri =client.addAccountCard(card, id);
 			assertNotNull(uri);
 			String uriid= extractId(uri);
@@ -393,23 +381,19 @@ public class PaymentsClientTests extends SsoTestHelper {
 	
 	@Test
 	public void addAccountCard() {
-		String id="5a130467f50980288a148f97";
-		
-		Card card = new CardBuilder()
-				.id(UUID.randomUUID().toString())
-				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
-				.brand("visa")
-				.cardType(CardType.VISA_DEBIT)
-				.currency(Currency.USD)
-				.cvc("123")
-				.number("4000056655665556")
-				.expirationMonth(11)
-				.expirationYear(2017)
-				.last4("4444")
-				.name("vishal-visa")
-				.build();
-
-		URI uri = client.addAccountCard(card,id);
+		Card card = (Card)new Card()
+				.withAddress(new Address().withCountry("USA").withCity("NY").withState("NY").withPostalCode("12345").withLine1("Line1").withLine2("line2"))
+				.withBrand("visa")
+				.withCardType(CardType.VISA_DEBIT)
+				.withCurrency(Currency.USD)
+				.withCvc("123")
+				.withNumber("4000056655665556")
+				.withExpirationMonth(11)
+				.withExpirationYear(2017)
+				.withLast4("4444")
+				.withName("name")
+				.withUuid(UUID.randomUUID().toString());
+		URI uri = client.addAccountCard(card, card.getUuid());
 		String orgCardId = extractId(uri);
 		assertNotNull(orgCardId);
 	}
@@ -417,20 +401,21 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void addFalseAccountCard() {
 		try {
+			
 		Account user = client.getAccount(TEST_SELLER);
-		Card card = new CardBuilder()
-				.id(UUID.randomUUID().toString())
-				.address(new AddressBuilder().country("US").city("NY").line1("Line1").line2("line2").state("NY").postalCode("2815").build())
-				.brand("visa")
-				.cardType(CardType.VISA_DEBIT)
-				.currency(Currency.USD)
-				.cvc("123")
-				.number("4000056655665556")
-				.expirationMonth(11)
-				.expirationYear(2017)
-				.last4("4444")
-				.name("vishal-visa")
-				.build();
+		Card card = (Card)new Card()
+				.withAddress(new Address().withCountry("USA").withCity("NY").withState("NY").withPostalCode("12345").withLine1("Line1").withLine2("line2"))
+				.withBrand("visa")
+				.withCardType(CardType.VISA_DEBIT)
+				.withCurrency(Currency.USD)
+				.withCvc("123")
+				.withNumber("4000056655665556")
+				.withExpirationMonth(11)
+				.withExpirationYear(2017)
+				.withLast4("4444")
+				.withName("name")
+				.withUuid(UUID.randomUUID().toString());
+
 
 		URI uri = client.addAccountCard(card,user.getId());
 		String orgCardId = extractId(uri);
