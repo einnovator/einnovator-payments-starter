@@ -40,8 +40,6 @@ public class Item extends EntityBase {
 
 	public Item() {
 	}
-
-	
 	/**
 	 * Get the value of property {@code name}.
 	 *
@@ -256,6 +254,128 @@ public class Item extends EntityBase {
 	 */
 	public void setRefundAmount(BigDecimal refundAmount) {
 		this.refundAmount = refundAmount;
+	}
+	
+	// With
+	
+	/**
+	 * Set the value of property {@code name}.
+	 *
+	 * @param name the value of property name
+	 */
+	public Item withName(String name) {
+		this.name = name;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code numberOfUnits}.
+	 *
+	 * @param numberOfUnits the value of property numberOfUnits
+	 */
+	public Item withNumberOfUnits(Integer numberOfUnits) {
+		this.numberOfUnits = numberOfUnits;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code numberOfUnits2}.
+	 *
+	 * @param numberOfUnits2 the value of property numberOfUnits2
+	 */
+	public Item withNumberOfUnits2(Integer numberOfUnits2) {
+		this.numberOfUnits2 = numberOfUnits2;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code amountPerUnit}.
+	 *
+	 * @param amountPerUnit the value of property amountPerUnit
+	 */
+	public Item withAmountPerUnit(BigDecimal amountPerUnit) {
+		this.amountPerUnit = amountPerUnit;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code totalAmount}.
+	 *
+	 * @param totalAmount the value of property totalAmount
+	 */
+	public Item withTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code comment}.
+	 *
+	 * @param comment the value of property comment
+	 */
+	public Item withComment(String comment) {
+		this.comment = comment;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code img}.
+	 *
+	 * @param img the value of property img
+	 */
+	public Item withImg(String img) {
+		this.img = img;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code tag}.
+	 *
+	 * @param tag the value of property tag
+	 */
+	public Item withTag(String tag) {
+		this.tag = tag;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code tag2}.
+	 *
+	 * @param tag2 the value of property tag2
+	 */
+	public Item withTag2(String tag2) {
+		this.tag2 = tag2;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code tag2icon}.
+	 *
+	 * @param tag2icon the value of property tag2icon
+	 */
+	public Item withTag2icon(String tag2icon) {
+		this.tag2icon = tag2icon;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code fees}.
+	 *
+	 * @param fees the value of property fees
+	 */
+	public Item withFees(List<Fee> fees) {
+		this.fees = fees;
+		return this;
+	}
+
+	/**
+	 * Set the value of property {@code refundAmount}.
+	 *
+	 * @param refundAmount the value of property refundAmount
+	 */
+	public Item withRefundAmount(BigDecimal refundAmount) {
+		this.refundAmount = refundAmount;
+		return this;
 	}
 
 	public BigDecimal update() {
