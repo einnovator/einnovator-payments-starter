@@ -5,6 +5,7 @@ import java.net.URI;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.einnovator.payments.client.PaymentsClient;
+import org.einnovator.payments.client.config.PaymentsClientContext;
 import org.einnovator.payments.client.model.Tax;
 import org.einnovator.payments.client.modelx.TaxFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,9 @@ public class TaxManagerImpl extends ManagerBase implements TaxManager {
 	}
 	
 	@Override
-	public Page<Tax> listTaxes(TaxFilter filter, Pageable pageable) {
+	public Page<Tax> listTaxes(TaxFilter filter, Pageable pageable, PaymentsClientContext context) {
 		try {
-			Page<Tax> taxs = paymentsClient.listTaxes(filter, pageable);		
+			Page<Tax> taxs = paymentsClient.listTaxes(filter, pageable, context);		
 			if (taxs==null) {
 				logger.error("listTaxes:" + filter + " " + pageable);
 			}
@@ -43,9 +44,9 @@ public class TaxManagerImpl extends ManagerBase implements TaxManager {
 	}
 
 	@Override
-	public Tax getTax(String id) {
+	public Tax getTax(String id, PaymentsClientContext context) {
 		try {
-			Tax tax = paymentsClient.getTax(id);		
+			Tax tax = paymentsClient.getTax(id, context);		
 			if (tax==null) {
 				logger.error("getTax:" + id);
 			}
@@ -62,9 +63,9 @@ public class TaxManagerImpl extends ManagerBase implements TaxManager {
 	}
 
 	@Override
-	public URI createTax(Tax tax) {
+	public URI createTax(Tax tax, PaymentsClientContext context) {
 		try {
-			return paymentsClient.createTax(tax);	
+			return paymentsClient.createTax(tax, context);	
 		} catch (RuntimeException e) {
 			logger.error("createTax:" + e + " " + tax);
 			return null;
@@ -72,9 +73,9 @@ public class TaxManagerImpl extends ManagerBase implements TaxManager {
 	}
 
 	@Override
-	public Tax updateTax(Tax tax) {
+	public Tax updateTax(Tax tax, PaymentsClientContext context) {
 		try {
-			paymentsClient.updateTax(tax);	
+			paymentsClient.updateTax(tax, context);	
 			return tax;
 		} catch (RuntimeException e) {
 			logger.error("updateTax:" + e + " " + tax);
@@ -83,9 +84,9 @@ public class TaxManagerImpl extends ManagerBase implements TaxManager {
 	}
 
 	@Override
-	public boolean deleteTax(String id) {
+	public boolean deleteTax(String id, PaymentsClientContext context) {
 		try {
-			paymentsClient.deleteTax(id);		
+			paymentsClient.deleteTax(id, context);		
 			return true;
 		}  catch (RuntimeException e) {
 			logger.error("deleteTax:" + id);

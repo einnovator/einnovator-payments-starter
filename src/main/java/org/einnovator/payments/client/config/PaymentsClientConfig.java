@@ -14,11 +14,11 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 
 @Configuration
-@EnableConfigurationProperties(PaymentsConfiguration.class)
+@EnableConfigurationProperties(PaymentsClientConfiguration.class)
 public class PaymentsClientConfig {
 	
 	@Autowired
-	private PaymentsConfiguration config;
+	private PaymentsClientConfiguration config;
 
 	@Autowired
 	private OAuth2ClientContext oauth2ClientContext;
@@ -30,7 +30,7 @@ public class PaymentsClientConfig {
 	public PaymentsClientConfig() {
 	}
 
-	public PaymentsClientConfig(PaymentsConfiguration config) {
+	public PaymentsClientConfig(PaymentsClientConfiguration config) {
 		this.config = config;
 	}
 

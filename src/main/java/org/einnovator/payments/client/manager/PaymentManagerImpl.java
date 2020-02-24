@@ -5,6 +5,7 @@ import java.net.URI;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.einnovator.payments.client.PaymentsClient;
+import org.einnovator.payments.client.config.PaymentsClientContext;
 import org.einnovator.payments.client.model.Payment;
 import org.einnovator.payments.client.modelx.PaymentFilter;
 import org.einnovator.util.UriUtils;
@@ -25,9 +26,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 	}
 	
 	@Override
-	public URI submitPayment(Payment payment) {
+	public URI submitPayment(Payment payment, PaymentsClientContext context) {
 		try {
-			URI uri = paymentsClient.submitPayment(payment);
+			URI uri = paymentsClient.submitPayment(payment, context);
 			payment.setUuid(UriUtils.extractId(uri));
 			return uri;
 		} catch (RuntimeException e) {
@@ -38,9 +39,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 
 
 	@Override
-	public Payment chargePayment(Payment payment) {
+	public Payment chargePayment(Payment payment, PaymentsClientContext context) {
 		try {
-			paymentsClient.chargePayment(payment);	
+			paymentsClient.chargePayment(payment, context);	
 			return payment;
 		} catch (RuntimeException e) {
 			logger.error("chargePayment:" + e + " " + payment);
@@ -49,9 +50,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 	}
 	
 	@Override
-	public Payment getPayment(String id) {
+	public Payment getPayment(String id, PaymentsClientContext context) {
 		try {
-			Payment payment = paymentsClient.getPayment(id);		
+			Payment payment = paymentsClient.getPayment(id, context);		
 			if (payment==null) {
 				logger.error("getPayment:" + id);
 			}
@@ -68,9 +69,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 	}
 
 	@Override
-	public Page<Payment> listPayments(PaymentFilter filter, Pageable pageable) {
+	public Page<Payment> listPayments(PaymentFilter filter, Pageable pageable, PaymentsClientContext context) {
 		try {
-			Page<Payment> payments = paymentsClient.listPayments(filter, pageable);		
+			Page<Payment> payments = paymentsClient.listPayments(filter, pageable, context);		
 			if (payments==null) {
 				logger.error("listPayments:" + filter + " " + pageable);
 			}
@@ -87,9 +88,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 	}
 
 	@Override
-	public Payment updatePayment(Payment payment) {
+	public Payment updatePayment(Payment payment, PaymentsClientContext context) {
 		try {
-			paymentsClient.updatePayment(payment);	
+			paymentsClient.updatePayment(payment, context);	
 			return payment;
 		} catch (RuntimeException e) {
 			logger.error("updatePayment:" + e + " " + payment);
@@ -99,9 +100,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 
 
 	@Override
-	public boolean deletePayment(String id) {
+	public boolean deletePayment(String id, PaymentsClientContext context) {
 		try {
-			paymentsClient.deletePayment(id);		
+			paymentsClient.deletePayment(id, context);		
 			return true;
 		} catch (RuntimeException e) {
 			logger.error("deletePayment:" + id + "  " + e);

@@ -13,7 +13,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.einnovator.payments.client.config.PaymentsConfiguration;
+import org.einnovator.payments.client.config.PaymentsClientConfiguration;
+import org.einnovator.payments.client.config.PaymentsClientContext;
 import org.einnovator.payments.client.config.PaymentsEndpoints;
 import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.Card;
@@ -43,7 +44,7 @@ import org.springframework.web.client.RestClientException;
 public class PaymentsClient {
 
 	@Autowired
-	private PaymentsConfiguration config;
+	private PaymentsClientConfiguration config;
 
 	@Autowired
 	@Qualifier("paymentsRestTemplate")
@@ -61,11 +62,11 @@ public class PaymentsClient {
 	}
 	
 
-	public PaymentsClient(PaymentsConfiguration config) {
+	public PaymentsClient(PaymentsClientConfiguration config) {
 		this.config = config;
 	}
 
-	public PaymentsClient(OAuth2RestTemplate restTemplate, PaymentsConfiguration config) {
+	public PaymentsClient(OAuth2RestTemplate restTemplate, PaymentsClientConfiguration config) {
 		this.restTemplate = restTemplate;
 		this.config = config;
 	}
@@ -77,7 +78,7 @@ public class PaymentsClient {
 	 *
 	 * @return the config
 	 */
-	public PaymentsConfiguration getConfig() {
+	public PaymentsClientConfiguration getConfig() {
 		return config;
 	}
 
@@ -87,7 +88,7 @@ public class PaymentsClient {
 	 *
 	 * @param config the value of property config
 	 */
-	public void setConfig(PaymentsConfiguration config) {
+	public void setConfig(PaymentsClientConfiguration config) {
 		this.config = config;
 	}
 
@@ -179,6 +180,220 @@ public class PaymentsClient {
 		}
 	}
 	
+	//
+	// Payments
+	//
+
+	public URI submitPayment(Payment payment, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.payments(config));
+		RequestEntity<Payment> request = RequestEntity.post(uri).body(payment);
+		ResponseEntity<Void> response = exchange(request, Void.class, context);
+		return response.getHeaders().getLocation();
+	}
+
+	public Payment getPayment(String id, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.payment(id, config));
+		RequestEntity<Void> request = RequestEntity.get(uri).build();
+		ResponseEntity<Payment> response = exchange(request, Payment.class, context);
+		return response.getBody();
+	}
+	
+	@SuppressWarnings({ "rawtypes"})
+	public Page<Payment> listPayments(PaymentFilter filter, Pageable pageable, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.payments(config));
+		
+		Map<String, String> params = new LinkedHashMap<>();
+		if (pageable != null || filter != null) {
+			if (pageable!=null) {
+				params.putAll(MappingUtils.toMapFormatted(pageable));
+			}
+			if (filter!=null) {
+				params.putAll(MappingUtils.toMapFormatted(filter));				
+			}
+		}
+		
+		uri = appendQueryParameters(uri, params);
+		RequestEntity<Void> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
+		ResponseEntity<PageResult> result = exchange(request, PageResult.class, context);
+		return PageUtil.create2(result.getBody(), Payment.class);
+	}
+
+
+	public void updatePayment(Payment payment, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.payment(payment.getUuid(), config));
+		RequestEntity<Void> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).build();
+		exchange(request, Payment.class, context);
+	}
+
+	public void chargePayment(Payment payment, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.charge(payment.getUuid(), config));
+		RequestEntity<Void> request = RequestEntity.post(uri).accept(MediaType.APPLICATION_JSON).build();
+		exchange(request, Payment.class, context);
+	}
+	public void deletePayment(String id, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.payment(id, config));
+		RequestEntity<Void> request = RequestEntity.delete(uri).build();
+		exchange(request, Void.class, context);
+	}
+
+	//
+	// User Account
+	//
+	
+	public URI createUserAccount(Account account, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.userAccount(config));
+		RequestEntity<Account> request = RequestEntity.post(uri).body(account);
+		ResponseEntity<Void> response = exchange(request, Void.class, context);
+		return response.getHeaders().getLocation();
+	}
+
+	public Account getUserAccount(PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.userAccount(config));
+		RequestEntity<Void> request = RequestEntity.get(uri).build();
+		ResponseEntity<Account> response = exchange(request, Account.class, context);
+		return response.getBody();
+	}
+
+	public void updateUserAccount(Account user, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.userAccount(config));
+		RequestEntity<Account> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).body(user);
+		exchange(request, Account.class, context);
+	}
+
+	//
+	// Account
+	//
+
+	public Account getAccount(String id, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.account(encodeId(id), config));
+		RequestEntity<Void> request = RequestEntity.get(uri).build();
+		ResponseEntity<Account> response = exchange(request, Account.class, context);
+		return response.getBody();
+	}
+
+	public URI createAccount(Account account, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.accounts(config));
+		RequestEntity<Account> request = RequestEntity.post(uri).body(account);
+		ResponseEntity<Void> response = exchange(request, Void.class, context);
+		return response.getHeaders().getLocation();
+	}
+
+	public void updateAccount(Account user, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.account(user.getId(), config));
+		RequestEntity<Account> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).body(user);
+
+		exchange(request, Account.class, context);
+	}
+
+	public void deleteAccount(String id, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.account(id, config));
+		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
+
+		exchange(request, Void.class, context);
+	}
+
+	//
+	// Cards
+	//
+
+	public URI addAccountCard(Card card, String accountId, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.cards(accountId, config));
+		RequestEntity<Card> request = RequestEntity.post(uri).body(card);
+		ResponseEntity<Void> response = exchange(request, Void.class, context);
+		return response.getHeaders().getLocation();
+	}
+
+	public List<Card> getAccountCards(String accountId, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.cards(accountId, config));
+		RequestEntity<Void> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
+		ResponseEntity<Card[]> response = exchange(request, Card[].class, context);
+		return new ArrayList<>(Arrays.asList(response.getBody()));
+	}
+
+	public void deleteAccountCard(String accountId, String cardId, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.card(accountId, cardId, config));
+		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
+		exchange(request, Void.class, context);
+	}
+
+
+	//
+	// Taxes
+	//
+
+	@SuppressWarnings({ "rawtypes"})
+	public Page<Tax> listTaxes(TaxFilter filter, Pageable pageable, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.taxes(config));
+		
+		Map<String, String> params = new LinkedHashMap<>();
+		if (pageable != null || filter != null) {
+			if (pageable!=null) {
+				params.putAll(MappingUtils.toMapFormatted(pageable));
+			}
+			if (filter!=null) {
+				params.putAll(MappingUtils.toMapFormatted(filter));				
+			}
+		}
+		
+		uri = appendQueryParameters(uri, params);
+		RequestEntity<Void> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
+		ResponseEntity<PageResult> result = exchange(request, PageResult.class, context);
+		return PageUtil.create2(result.getBody(), Tax.class);
+	}
+
+
+	public Tax getTax(String id, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.tax(id, config));
+		RequestEntity<Void> request = RequestEntity.get(uri).build();
+		ResponseEntity<Tax> response = exchange(request, Tax.class, context);
+		return response.getBody();
+	}
+
+	public URI createTax(Tax tax, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.taxes(config));
+		RequestEntity<Tax> request = RequestEntity.post(uri).body(tax);
+		ResponseEntity<Void> response = exchange(request, Void.class, context);
+		return response.getHeaders().getLocation();
+	}
+
+	public void updateTax(Tax user, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.tax(user.getId(), config));
+		RequestEntity<Tax> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).body(user);
+
+		exchange(request, Tax.class, context);
+	}
+
+	public void deleteTax(String id, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.tax(id, config));
+		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
+
+		exchange(request, Void.class, context);
+	}
+	
+	//
+	// HTTP transport
+	//
+	
+	protected <T> ResponseEntity<T> exchange(RequestEntity<?> request, Class<T> responseType, PaymentsClientContext context) throws RestClientException {
+		OAuth2RestTemplate restTemplate = this.restTemplate;
+		if (context!=null && context.getRestTemplate()!=null) {
+			restTemplate = context.getRestTemplate();
+		} else {
+			if (WebUtil.getHttpServletRequest()==null && this.restTemplate0!=null) {
+				restTemplate = this.restTemplate0;
+			}			
+		}
+		return exchange(restTemplate, request, responseType);
+	}
+
+	protected <T> ResponseEntity<T> exchange(OAuth2RestTemplate restTemplate, RequestEntity<?> request, Class<T> responseType) throws RestClientException {
+		return restTemplate.exchange(request, responseType);
+	}
+	
+	//
+	// RestTemplate util factory methods
+	//
+
 	public OAuth2RestTemplate makeOAuth2RestTemplate(OAuth2ProtectedResourceDetails resource, OAuth2ClientContext oauth2ClientContext) {
 		OAuth2RestTemplate template = new OAuth2RestTemplate(resource, oauth2ClientContext);			
 		template.setRequestFactory(clientHttpRequestFactory);
@@ -199,204 +414,5 @@ public class PaymentsClient {
 	}
 	
 
-	//
-	// Payments
-	//
 
-	public URI submitPayment(Payment payment) {
-		URI uri = makeURI(PaymentsEndpoints.payments(config));
-		RequestEntity<Payment> request = RequestEntity.post(uri).body(payment);
-		ResponseEntity<Void> response = exchange(request, Void.class);
-		return response.getHeaders().getLocation();
-	}
-
-	public Payment getPayment(String id) {
-		URI uri = makeURI(PaymentsEndpoints.payment(id, config));
-		RequestEntity<Void> request = RequestEntity.get(uri).build();
-		ResponseEntity<Payment> response = exchange(request, Payment.class);
-		return response.getBody();
-	}
-	
-	@SuppressWarnings({ "rawtypes"})
-	public Page<Payment> listPayments(PaymentFilter filter, Pageable pageable) {
-		URI uri = makeURI(PaymentsEndpoints.payments(config));
-		
-		Map<String, String> params = new LinkedHashMap<>();
-		if (pageable != null || filter != null) {
-			if (pageable!=null) {
-				params.putAll(MappingUtils.toMapFormatted(pageable));
-			}
-			if (filter!=null) {
-				params.putAll(MappingUtils.toMapFormatted(filter));				
-			}
-		}
-		
-		uri = appendQueryParameters(uri, params);
-		RequestEntity<Void> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
-		ResponseEntity<PageResult> result = exchange(request, PageResult.class);
-		return PageUtil.create2(result.getBody(), Payment.class);
-	}
-
-
-	public void updatePayment(Payment payment) {
-		URI uri = makeURI(PaymentsEndpoints.payment(payment.getUuid(), config));
-		RequestEntity<Void> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).build();
-		exchange(request, Payment.class);
-	}
-
-	public void chargePayment(Payment payment) {
-		URI uri = makeURI(PaymentsEndpoints.charge(payment.getUuid(), config));
-		RequestEntity<Void> request = RequestEntity.post(uri).accept(MediaType.APPLICATION_JSON).build();
-		exchange(request, Payment.class);
-	}
-	public void deletePayment(String id) {
-		URI uri = makeURI(PaymentsEndpoints.payment(id, config));
-		RequestEntity<Void> request = RequestEntity.delete(uri).build();
-		exchange(request, Void.class);
-	}
-
-	//
-	// User Account
-	//
-	
-	public URI createUserAccount(Account account) {
-		URI uri = makeURI(PaymentsEndpoints.userAccount(config));
-		RequestEntity<Account> request = RequestEntity.post(uri).body(account);
-		ResponseEntity<Void> response = exchange(request, Void.class);
-		return response.getHeaders().getLocation();
-	}
-
-	public Account getUserAccount() {
-		URI uri = makeURI(PaymentsEndpoints.userAccount(config));
-		RequestEntity<Void> request = RequestEntity.get(uri).build();
-		ResponseEntity<Account> response = exchange(request, Account.class);
-		return response.getBody();
-	}
-
-	public void updateUserAccount(Account user) {
-		URI uri = makeURI(PaymentsEndpoints.userAccount(config));
-		RequestEntity<Account> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).body(user);
-		exchange(request, Account.class);
-	}
-
-	//
-	// Account
-	//
-
-	public Account getAccount(String id) {
-		URI uri = makeURI(PaymentsEndpoints.account(encodeId(id), config));
-		RequestEntity<Void> request = RequestEntity.get(uri).build();
-		ResponseEntity<Account> response = exchange(request, Account.class);
-		return response.getBody();
-	}
-
-	public URI createAccount(Account account) {
-		URI uri = makeURI(PaymentsEndpoints.accounts(config));
-		RequestEntity<Account> request = RequestEntity.post(uri).body(account);
-		ResponseEntity<Void> response = exchange(request, Void.class);
-		return response.getHeaders().getLocation();
-	}
-
-	public void updateAccount(Account user) {
-		URI uri = makeURI(PaymentsEndpoints.account(user.getId(), config));
-		RequestEntity<Account> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).body(user);
-
-		exchange(request, Account.class);
-	}
-
-	public void deleteAccount(String id) {
-		URI uri = makeURI(PaymentsEndpoints.account(id, config));
-		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
-
-		exchange(request, Void.class);
-	}
-
-	//
-	// Cards
-	//
-
-	public URI addAccountCard(Card card, String accountId) {
-		URI uri = makeURI(PaymentsEndpoints.cards(accountId, config));
-		RequestEntity<Card> request = RequestEntity.post(uri).body(card);
-		ResponseEntity<Void> response = exchange(request, Void.class);
-		return response.getHeaders().getLocation();
-	}
-
-	public List<Card> getAccountCards(String accountId) {
-		URI uri = makeURI(PaymentsEndpoints.cards(accountId, config));
-		RequestEntity<Void> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
-		ResponseEntity<Card[]> response = exchange(request, Card[].class);
-		return new ArrayList<>(Arrays.asList(response.getBody()));
-	}
-
-	public void deleteAccountCard(String accountId, String cardId) {
-		URI uri = makeURI(PaymentsEndpoints.card(accountId, cardId, config));
-		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
-		exchange(request, Void.class);
-	}
-
-	protected <T> ResponseEntity<T> exchange(RequestEntity<?> request, Class<T> responseType) throws RestClientException {
-		OAuth2RestTemplate restTemplate = this.restTemplate;
-		if (WebUtil.getHttpServletRequest()==null && this.restTemplate0!=null) {
-			restTemplate = this.restTemplate0;
-		}
-		return exchange(restTemplate, request, responseType);
-	}
-
-	protected <T> ResponseEntity<T> exchange(OAuth2RestTemplate restTemplate, RequestEntity<?> request, Class<T> responseType) throws RestClientException {
-		return restTemplate.exchange(request, responseType);
-	}
-
-	//
-	// Taxes
-	//
-
-	@SuppressWarnings({ "rawtypes"})
-	public Page<Tax> listTaxes(TaxFilter filter, Pageable pageable) {
-		URI uri = makeURI(PaymentsEndpoints.taxes(config));
-		
-		Map<String, String> params = new LinkedHashMap<>();
-		if (pageable != null || filter != null) {
-			if (pageable!=null) {
-				params.putAll(MappingUtils.toMapFormatted(pageable));
-			}
-			if (filter!=null) {
-				params.putAll(MappingUtils.toMapFormatted(filter));				
-			}
-		}
-		
-		uri = appendQueryParameters(uri, params);
-		RequestEntity<Void> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
-		ResponseEntity<PageResult> result = exchange(request, PageResult.class);
-		return PageUtil.create2(result.getBody(), Tax.class);
-	}
-
-
-	public Tax getTax(String id) {
-		URI uri = makeURI(PaymentsEndpoints.tax(id, config));
-		RequestEntity<Void> request = RequestEntity.get(uri).build();
-		ResponseEntity<Tax> response = exchange(request, Tax.class);
-		return response.getBody();
-	}
-
-	public URI createTax(Tax tax) {
-		URI uri = makeURI(PaymentsEndpoints.taxes(config));
-		RequestEntity<Tax> request = RequestEntity.post(uri).body(tax);
-		ResponseEntity<Void> response = exchange(request, Void.class);
-		return response.getHeaders().getLocation();
-	}
-
-	public void updateTax(Tax user) {
-		URI uri = makeURI(PaymentsEndpoints.tax(user.getId(), config));
-		RequestEntity<Tax> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).body(user);
-
-		exchange(request, Tax.class);
-	}
-
-	public void deleteTax(String id) {
-		URI uri = makeURI(PaymentsEndpoints.tax(id, config));
-		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
-
-		exchange(request, Void.class);
-	}
 }

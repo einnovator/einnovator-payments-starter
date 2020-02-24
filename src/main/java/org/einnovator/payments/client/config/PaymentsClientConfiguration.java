@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.util.StringUtils;
 
 @ConfigurationProperties("payments")
-public class PaymentsConfiguration {
+public class PaymentsClientConfiguration {
 
 	private String server = "http://localhost:2060";
 	
@@ -14,7 +14,7 @@ public class PaymentsConfiguration {
 	private ConnectionConfiguration connection = new ConnectionConfiguration();
 	
 	
-	public PaymentsConfiguration() {
+	public PaymentsClientConfiguration() {
 	}
 
 	/**

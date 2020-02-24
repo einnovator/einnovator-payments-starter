@@ -3,29 +3,30 @@ package org.einnovator.payments.client.manager;
 import java.net.URI;
 import java.util.List;
 
+import org.einnovator.payments.client.config.PaymentsClientContext;
 import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.Card;
 
 public interface AccountManager {
 
-	Account getUserAccount();
+	Account getUserAccount(PaymentsClientContext context);
 	
-	URI createUserAccount(Account account);
+	URI createUserAccount(Account account, PaymentsClientContext context);
 
-	Account updateUserAccount(Account user);
+	Account updateUserAccount(Account account, PaymentsClientContext context);
 	
-	Account getAccount(String id);
+	Account getAccount(String id, PaymentsClientContext context);
 	
-	URI createAccount(Account account);
+	URI createAccount(Account account, PaymentsClientContext context);
 	
-	Account updateAccount(Account user);
+	Account updateAccount(Account user, PaymentsClientContext context);
 	
-	boolean deleteAccount(String id);
+	boolean deleteAccount(String id, PaymentsClientContext context);
 
-	List<Card> getAccountCards(String accountId);
+	List<Card> getAccountCards(String accountId, PaymentsClientContext context);
 
-	URI addAccountCard(Card card, String accountId);
+	URI addAccountCard(Card card, String accountId, PaymentsClientContext context);
 	
-	boolean deleteAccountCard(String accountId, String cardId);
+	boolean deleteAccountCard(String accountId, String cardId, PaymentsClientContext context);
 	
 }
