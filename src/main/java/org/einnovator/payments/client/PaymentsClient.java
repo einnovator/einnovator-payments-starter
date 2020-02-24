@@ -54,7 +54,6 @@ public class PaymentsClient {
 
 	private OAuth2RestTemplate restTemplate0;
 
-	@Autowired(required = false)
 	private ClientHttpRequestFactory clientHttpRequestFactory;
 	
 	@Autowired
@@ -92,7 +91,6 @@ public class PaymentsClient {
 		this.config = config;
 	}
 
-
 	/**
 	 * Get the value of property {@code restTemplate}.
 	 *
@@ -101,7 +99,6 @@ public class PaymentsClient {
 	public OAuth2RestTemplate getRestTemplate() {
 		return restTemplate;
 	}
-
 
 	/**
 	 * Set the value of property {@code restTemplate}.
@@ -112,7 +109,6 @@ public class PaymentsClient {
 		this.restTemplate = restTemplate;
 	}
 
-
 	/**
 	 * Get the value of property {@code clientHttpRequestFactory}.
 	 *
@@ -121,7 +117,6 @@ public class PaymentsClient {
 	public ClientHttpRequestFactory getClientHttpRequestFactory() {
 		return clientHttpRequestFactory;
 	}
-
 
 	/**
 	 * Set the value of property {@code clientHttpRequestFactory}.
@@ -132,7 +127,6 @@ public class PaymentsClient {
 		this.clientHttpRequestFactory = clientHttpRequestFactory;
 	}
 
-
 	/**
 	 * Get the value of property {@code oauth2ClientContext0}.
 	 *
@@ -141,7 +135,6 @@ public class PaymentsClient {
 	public OAuth2ClientContext getOauth2ClientContext0() {
 		return oauth2ClientContext0;
 	}
-
 
 	/**
 	 * Set the value of property {@code oauth2ClientContext0}.
@@ -152,7 +145,6 @@ public class PaymentsClient {
 		this.oauth2ClientContext0 = oauth2ClientContext0;
 	}
 
-
 	/**
 	 * Get the value of property {@code restTemplate0}.
 	 *
@@ -161,7 +153,6 @@ public class PaymentsClient {
 	public OAuth2RestTemplate getRestTemplate0() {
 		return restTemplate0;
 	}
-
 
 	/**
 	 * Set the value of property {@code restTemplate0}.
