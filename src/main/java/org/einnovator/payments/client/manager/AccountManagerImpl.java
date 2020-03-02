@@ -9,6 +9,8 @@ import org.einnovator.payments.client.PaymentsClient;
 import org.einnovator.payments.client.config.PaymentsClientContext;
 import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.Card;
+import org.einnovator.payments.client.modelx.AccountOptions;
+import org.einnovator.util.web.RequestOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -24,50 +26,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 	
 	@Override
-	public URI createUserAccount(Account account, PaymentsClientContext context) {
+	public Account getAccount(String id, AccountOptions options, PaymentsClientContext context) {
 		try {
-			return paymentsClient.createUserAccount(account, context);	
-		} catch (RuntimeException e) {
-			logger.error("createUser:" + e + " " + account);
-			return null;
-		}
-	}
-
-	@Override
-	public Account getUserAccount(PaymentsClientContext context) {
-		try {
-			Account account = paymentsClient.getUserAccount(context);		
-			if (account==null) {
-				logger.error("getUserAccount:");
-			}
-			return account;
-		} catch (HttpStatusCodeException e) {
-			if (e.getStatusCode()!=HttpStatus.NOT_FOUND) {
-				logger.error("getUser:" + e);				
-			}
-			return null;
-		} catch (RuntimeException e) {
-			logger.error("getUser:" + e);
-			return null;
-		}
-	}
-
-
-	@Override
-	public Account updateUserAccount(Account account, PaymentsClientContext context) {
-		try {
-			paymentsClient.updateUserAccount(account, context);	
-			return account;
-		} catch (RuntimeException e) {
-			logger.error("updateUser:" + e + " " + account);
-			return null;
-		}
-	}
-
-	@Override
-	public Account getAccount(String id, PaymentsClientContext context) {
-		try {
-			Account account = paymentsClient.getAccount(id, context);		
+			Account account = paymentsClient.getAccount(id, options, context);		
 			if (account==null) {
 				logger.error("getAccount:" + id);
 			}
@@ -84,9 +45,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public URI createAccount(Account account, PaymentsClientContext context) {
+	public URI createAccount(Account account, RequestOptions options, PaymentsClientContext context) {
 		try {
-			return paymentsClient.createAccount(account, context);	
+			return paymentsClient.createAccount(account, options, context);	
 		} catch (RuntimeException e) {
 			logger.error("createAccount:" + e + " " + account);
 			return null;
@@ -94,9 +55,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public Account updateAccount(Account account, PaymentsClientContext context) {
+	public Account updateAccount(Account account, RequestOptions options, PaymentsClientContext context) {
 		try {
-			paymentsClient.updateAccount(account, context);	
+			paymentsClient.updateAccount(account, options, context);	
 			return account;
 		} catch (RuntimeException e) {
 			logger.error("updateAccount:" + e + " " + account);
@@ -105,9 +66,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public boolean deleteAccount(String id, PaymentsClientContext context) {
+	public boolean deleteAccount(String id, RequestOptions options, PaymentsClientContext context) {
 		try {
-			paymentsClient.deleteAccount(id, context);		
+			paymentsClient.deleteAccount(id, options, context);		
 			return true;
 		}  catch (RuntimeException e) {
 			logger.error("deleteAccount:" + id);
@@ -116,9 +77,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public List<Card> getAccountCards(String accountId, PaymentsClientContext context) {
+	public List<Card> getAccountCards(String accountId, AccountOptions options, PaymentsClientContext context) {
 		try {
-			List<Card> cards = paymentsClient.getAccountCards(accountId, context);		
+			List<Card> cards = paymentsClient.getAccountCards(accountId, options, context);		
 			if (cards==null) {
 				logger.error("getAccountCard:" + accountId);
 			}
@@ -135,9 +96,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public URI addAccountCard(Card card, String accountId, PaymentsClientContext context) {
+	public URI addAccountCard(Card card, String accountId, RequestOptions options, PaymentsClientContext context) {
 		try {
-			return paymentsClient.addAccountCard(card, accountId, context);	
+			return paymentsClient.addAccountCard(card, accountId, options, context);	
 		} catch (RuntimeException e) {
 			logger.error("addUserCard:" + e + " " + card + " " + accountId);
 			return null;
@@ -145,9 +106,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public boolean deleteAccountCard(String accountId, String cardId, PaymentsClientContext context) {
+	public boolean deleteAccountCard(String accountId, String cardId, RequestOptions options, PaymentsClientContext context) {
 		try {
-			paymentsClient.deleteAccountCard(accountId, cardId, context);		
+			paymentsClient.deleteAccountCard(accountId, cardId, options, context);		
 			return true;
 		}  catch (RuntimeException e) {
 			logger.error("deleteUserCard:" + cardId);

@@ -8,6 +8,8 @@ import org.einnovator.payments.client.PaymentsClient;
 import org.einnovator.payments.client.config.PaymentsClientContext;
 import org.einnovator.payments.client.model.Tax;
 import org.einnovator.payments.client.modelx.TaxFilter;
+import org.einnovator.payments.client.modelx.TaxOptions;
+import org.einnovator.util.web.RequestOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,9 +46,9 @@ public class TaxManagerImpl extends ManagerBase implements TaxManager {
 	}
 
 	@Override
-	public Tax getTax(String id, PaymentsClientContext context) {
+	public Tax getTax(String id, TaxOptions options, PaymentsClientContext context) {
 		try {
-			Tax tax = paymentsClient.getTax(id, context);		
+			Tax tax = paymentsClient.getTax(id, options, context);		
 			if (tax==null) {
 				logger.error("getTax:" + id);
 			}
@@ -63,9 +65,9 @@ public class TaxManagerImpl extends ManagerBase implements TaxManager {
 	}
 
 	@Override
-	public URI createTax(Tax tax, PaymentsClientContext context) {
+	public URI createTax(Tax tax, RequestOptions options, PaymentsClientContext context) {
 		try {
-			return paymentsClient.createTax(tax, context);	
+			return paymentsClient.createTax(tax, options, context);	
 		} catch (RuntimeException e) {
 			logger.error("createTax:" + e + " " + tax);
 			return null;
@@ -73,9 +75,9 @@ public class TaxManagerImpl extends ManagerBase implements TaxManager {
 	}
 
 	@Override
-	public Tax updateTax(Tax tax, PaymentsClientContext context) {
+	public Tax updateTax(Tax tax, RequestOptions options, PaymentsClientContext context) {
 		try {
-			paymentsClient.updateTax(tax, context);	
+			paymentsClient.updateTax(tax, options, context);	
 			return tax;
 		} catch (RuntimeException e) {
 			logger.error("updateTax:" + e + " " + tax);
@@ -84,9 +86,9 @@ public class TaxManagerImpl extends ManagerBase implements TaxManager {
 	}
 
 	@Override
-	public boolean deleteTax(String id, PaymentsClientContext context) {
+	public boolean deleteTax(String id, RequestOptions options, PaymentsClientContext context) {
 		try {
-			paymentsClient.deleteTax(id, context);		
+			paymentsClient.deleteTax(id, options, context);		
 			return true;
 		}  catch (RuntimeException e) {
 			logger.error("deleteTax:" + id);

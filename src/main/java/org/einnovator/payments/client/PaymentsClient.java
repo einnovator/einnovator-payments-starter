@@ -1,15 +1,12 @@
 package org.einnovator.payments.client;
 
-import static org.einnovator.util.UriUtils.appendQueryParameters;
 import static org.einnovator.util.UriUtils.encodeId;
 import static org.einnovator.util.UriUtils.makeURI;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -20,11 +17,15 @@ import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.Card;
 import org.einnovator.payments.client.model.Payment;
 import org.einnovator.payments.client.model.Tax;
+import org.einnovator.payments.client.modelx.AccountFilter;
+import org.einnovator.payments.client.modelx.AccountOptions;
 import org.einnovator.payments.client.modelx.PaymentFilter;
+import org.einnovator.payments.client.modelx.PaymentOptions;
 import org.einnovator.payments.client.modelx.TaxFilter;
-import org.einnovator.util.MappingUtils;
 import org.einnovator.util.PageResult;
 import org.einnovator.util.PageUtil;
+import org.einnovator.util.UriUtils;
+import org.einnovator.util.web.RequestOptions;
 import org.einnovator.util.web.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -175,15 +176,17 @@ public class PaymentsClient {
 	// Payments
 	//
 
-	public URI submitPayment(Payment payment, PaymentsClientContext context) {
+	public URI submitPayment(Payment payment, RequestOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.payments(config));
+		uri = processURI(uri, options);
 		RequestEntity<Payment> request = RequestEntity.post(uri).body(payment);
 		ResponseEntity<Void> response = exchange(request, Void.class, context);
 		return response.getHeaders().getLocation();
 	}
 
-	public Payment getPayment(String id, PaymentsClientContext context) {
+	public Payment getPayment(String id, PaymentOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.payment(id, config));
+		uri = processURI(uri, options);
 		RequestEntity<Void> request = RequestEntity.get(uri).build();
 		ResponseEntity<Payment> response = exchange(request, Payment.class, context);
 		return response.getBody();
@@ -192,94 +195,75 @@ public class PaymentsClient {
 	@SuppressWarnings({ "rawtypes"})
 	public Page<Payment> listPayments(PaymentFilter filter, Pageable pageable, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.payments(config));
-		
-		Map<String, String> params = new LinkedHashMap<>();
-		if (pageable != null || filter != null) {
-			if (pageable!=null) {
-				params.putAll(MappingUtils.toMapFormatted(pageable));
-			}
-			if (filter!=null) {
-				params.putAll(MappingUtils.toMapFormatted(filter));				
-			}
-		}
-		
-		uri = appendQueryParameters(uri, params);
+		uri = processURI(uri, filter, pageable);
 		RequestEntity<Void> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
 		ResponseEntity<PageResult> result = exchange(request, PageResult.class, context);
 		return PageUtil.create2(result.getBody(), Payment.class);
 	}
 
 
-	public void updatePayment(Payment payment, PaymentsClientContext context) {
+	public void updatePayment(Payment payment, RequestOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.payment(payment.getUuid(), config));
+		uri = processURI(uri, options);
 		RequestEntity<Void> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).build();
 		exchange(request, Payment.class, context);
 	}
 
-	public void chargePayment(Payment payment, PaymentsClientContext context) {
+	public void chargePayment(Payment payment, RequestOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.charge(payment.getUuid(), config));
+		uri = processURI(uri, options);
 		RequestEntity<Void> request = RequestEntity.post(uri).accept(MediaType.APPLICATION_JSON).build();
 		exchange(request, Payment.class, context);
 	}
-	public void deletePayment(String id, PaymentsClientContext context) {
+	
+	public void deletePayment(String id, RequestOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.payment(id, config));
+		uri = processURI(uri, options);
 		RequestEntity<Void> request = RequestEntity.delete(uri).build();
 		exchange(request, Void.class, context);
 	}
 
-	//
-	// User Account
-	//
-	
-	public URI createUserAccount(Account account, PaymentsClientContext context) {
-		URI uri = makeURI(PaymentsEndpoints.userAccount(config));
-		RequestEntity<Account> request = RequestEntity.post(uri).body(account);
-		ResponseEntity<Void> response = exchange(request, Void.class, context);
-		return response.getHeaders().getLocation();
-	}
 
-	public Account getUserAccount(PaymentsClientContext context) {
-		URI uri = makeURI(PaymentsEndpoints.userAccount(config));
-		RequestEntity<Void> request = RequestEntity.get(uri).build();
-		ResponseEntity<Account> response = exchange(request, Account.class, context);
-		return response.getBody();
-	}
-
-	public void updateUserAccount(Account user, PaymentsClientContext context) {
-		URI uri = makeURI(PaymentsEndpoints.userAccount(config));
-		RequestEntity<Account> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).body(user);
-		exchange(request, Account.class, context);
+	@SuppressWarnings({ "rawtypes"})
+	public Page<Account> listAccounts(AccountFilter filter, Pageable pageable, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.accounts(config));
+		uri = processURI(uri, filter, pageable);
+		RequestEntity<Void> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
+		ResponseEntity<PageResult> result = exchange(request, PageResult.class, context);
+		return PageUtil.create2(result.getBody(), Account.class);
 	}
 
 	//
 	// Account
 	//
 
-	public Account getAccount(String id, PaymentsClientContext context) {
+	public Account getAccount(String id, AccountOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.account(encodeId(id), config));
+		uri = processURI(uri, options);		
 		RequestEntity<Void> request = RequestEntity.get(uri).build();
 		ResponseEntity<Account> response = exchange(request, Account.class, context);
 		return response.getBody();
 	}
 
-	public URI createAccount(Account account, PaymentsClientContext context) {
+	public URI createAccount(Account account, RequestOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.accounts(config));
+		uri = processURI(uri, options);		
 		RequestEntity<Account> request = RequestEntity.post(uri).body(account);
 		ResponseEntity<Void> response = exchange(request, Void.class, context);
 		return response.getHeaders().getLocation();
 	}
 
-	public void updateAccount(Account user, PaymentsClientContext context) {
+	public void updateAccount(Account user, RequestOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.account(user.getId(), config));
+		uri = processURI(uri, options);		
 		RequestEntity<Account> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).body(user);
-
 		exchange(request, Account.class, context);
 	}
 
-	public void deleteAccount(String id, PaymentsClientContext context) {
+	public void deleteAccount(String id, RequestOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.account(id, config));
+		uri = processURI(uri, options);		
 		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
-
 		exchange(request, Void.class, context);
 	}
 
@@ -287,22 +271,25 @@ public class PaymentsClient {
 	// Cards
 	//
 
-	public URI addAccountCard(Card card, String accountId, PaymentsClientContext context) {
+	public List<Card> getAccountCards(String accountId, AccountOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.cards(accountId, config));
+		uri = processURI(uri, options);		
+		RequestEntity<Void> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
+		ResponseEntity<Card[]> response = exchange(request, Card[].class, context);
+		return new ArrayList<>(Arrays.asList(response.getBody()));
+	}
+	
+	public URI addAccountCard(Card card, String accountId, RequestOptions options, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.cards(accountId, config));
+		uri = processURI(uri, options);		
 		RequestEntity<Card> request = RequestEntity.post(uri).body(card);
 		ResponseEntity<Void> response = exchange(request, Void.class, context);
 		return response.getHeaders().getLocation();
 	}
 
-	public List<Card> getAccountCards(String accountId, PaymentsClientContext context) {
-		URI uri = makeURI(PaymentsEndpoints.cards(accountId, config));
-		RequestEntity<Void> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
-		ResponseEntity<Card[]> response = exchange(request, Card[].class, context);
-		return new ArrayList<>(Arrays.asList(response.getBody()));
-	}
-
-	public void deleteAccountCard(String accountId, String cardId, PaymentsClientContext context) {
+	public void deleteAccountCard(String accountId, String cardId, RequestOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.card(accountId, cardId, config));
+		uri = processURI(uri, options);		
 		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
 		exchange(request, Void.class, context);
 	}
@@ -312,52 +299,43 @@ public class PaymentsClient {
 	// Taxes
 	//
 
+	public Tax getTax(String id, RequestOptions options, PaymentsClientContext context) {
+		URI uri = makeURI(PaymentsEndpoints.tax(id, config));
+		uri = processURI(uri, options);		
+		RequestEntity<Void> request = RequestEntity.get(uri).build();
+		ResponseEntity<Tax> response = exchange(request, Tax.class, context);
+		return response.getBody();
+	}
+	
 	@SuppressWarnings({ "rawtypes"})
 	public Page<Tax> listTaxes(TaxFilter filter, Pageable pageable, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.taxes(config));
-		
-		Map<String, String> params = new LinkedHashMap<>();
-		if (pageable != null || filter != null) {
-			if (pageable!=null) {
-				params.putAll(MappingUtils.toMapFormatted(pageable));
-			}
-			if (filter!=null) {
-				params.putAll(MappingUtils.toMapFormatted(filter));				
-			}
-		}
-		
-		uri = appendQueryParameters(uri, params);
+		uri = processURI(uri, filter, pageable);
 		RequestEntity<Void> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
 		ResponseEntity<PageResult> result = exchange(request, PageResult.class, context);
 		return PageUtil.create2(result.getBody(), Tax.class);
 	}
 
 
-	public Tax getTax(String id, PaymentsClientContext context) {
-		URI uri = makeURI(PaymentsEndpoints.tax(id, config));
-		RequestEntity<Void> request = RequestEntity.get(uri).build();
-		ResponseEntity<Tax> response = exchange(request, Tax.class, context);
-		return response.getBody();
-	}
-
-	public URI createTax(Tax tax, PaymentsClientContext context) {
+	public URI createTax(Tax tax, RequestOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.taxes(config));
+		uri = processURI(uri, options);		
 		RequestEntity<Tax> request = RequestEntity.post(uri).body(tax);
 		ResponseEntity<Void> response = exchange(request, Void.class, context);
 		return response.getHeaders().getLocation();
 	}
 
-	public void updateTax(Tax user, PaymentsClientContext context) {
+	public void updateTax(Tax user, RequestOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.tax(user.getId(), config));
+		uri = processURI(uri, options);		
 		RequestEntity<Tax> request = RequestEntity.put(uri).accept(MediaType.APPLICATION_JSON).body(user);
-
 		exchange(request, Tax.class, context);
 	}
 
-	public void deleteTax(String id, PaymentsClientContext context) {
+	public void deleteTax(String id, RequestOptions options, PaymentsClientContext context) {
 		URI uri = makeURI(PaymentsEndpoints.tax(id, config));
+		uri = processURI(uri, options);		
 		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
-
 		exchange(request, Void.class, context);
 	}
 	
@@ -404,6 +382,21 @@ public class PaymentsClient {
 		return restTemplate0;
 	}
 	
+	//
+	// Other
+	//
 
+	/**
+	 * Process URI by adding parameters from properties of specified objectes.
+	 * 
+	 * @param uri the {@code URI}
+	 * @param objs a variadic array of objects
+	 * @return the processed {@code URI}
+	 */
+	private static URI processURI(URI uri, Object... objs) {
+		return UriUtils.appendQueryParameters(uri, objs);
+	}
+	
+	
 
 }

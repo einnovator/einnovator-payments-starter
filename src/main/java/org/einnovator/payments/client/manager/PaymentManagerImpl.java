@@ -8,7 +8,9 @@ import org.einnovator.payments.client.PaymentsClient;
 import org.einnovator.payments.client.config.PaymentsClientContext;
 import org.einnovator.payments.client.model.Payment;
 import org.einnovator.payments.client.modelx.PaymentFilter;
+import org.einnovator.payments.client.modelx.PaymentOptions;
 import org.einnovator.util.UriUtils;
+import org.einnovator.util.web.RequestOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,9 +28,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 	}
 	
 	@Override
-	public URI submitPayment(Payment payment, PaymentsClientContext context) {
+	public URI submitPayment(Payment payment, PaymentOptions options, PaymentsClientContext context) {
 		try {
-			URI uri = paymentsClient.submitPayment(payment, context);
+			URI uri = paymentsClient.submitPayment(payment, options, context);
 			payment.setUuid(UriUtils.extractId(uri));
 			return uri;
 		} catch (RuntimeException e) {
@@ -39,9 +41,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 
 
 	@Override
-	public Payment chargePayment(Payment payment, PaymentsClientContext context) {
+	public Payment chargePayment(Payment payment, RequestOptions options, PaymentsClientContext context) {
 		try {
-			paymentsClient.chargePayment(payment, context);	
+			paymentsClient.chargePayment(payment, options, context);	
 			return payment;
 		} catch (RuntimeException e) {
 			logger.error("chargePayment:" + e + " " + payment);
@@ -50,9 +52,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 	}
 	
 	@Override
-	public Payment getPayment(String id, PaymentsClientContext context) {
+	public Payment getPayment(String id, PaymentOptions options, PaymentsClientContext context) {
 		try {
-			Payment payment = paymentsClient.getPayment(id, context);		
+			Payment payment = paymentsClient.getPayment(id, options, context);		
 			if (payment==null) {
 				logger.error("getPayment:" + id);
 			}
@@ -88,9 +90,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 	}
 
 	@Override
-	public Payment updatePayment(Payment payment, PaymentsClientContext context) {
+	public Payment updatePayment(Payment payment, RequestOptions options, PaymentsClientContext context) {
 		try {
-			paymentsClient.updatePayment(payment, context);	
+			paymentsClient.updatePayment(payment, options, context);	
 			return payment;
 		} catch (RuntimeException e) {
 			logger.error("updatePayment:" + e + " " + payment);
@@ -100,9 +102,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 
 
 	@Override
-	public boolean deletePayment(String id, PaymentsClientContext context) {
+	public boolean deletePayment(String id, RequestOptions options, PaymentsClientContext context) {
 		try {
-			paymentsClient.deletePayment(id, context);		
+			paymentsClient.deletePayment(id, options, context);		
 			return true;
 		} catch (RuntimeException e) {
 			logger.error("deletePayment:" + id + "  " + e);

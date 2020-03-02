@@ -15,7 +15,7 @@ import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.Currency;
 import org.einnovator.payments.client.model.Payable;
 import org.einnovator.payments.client.model.Payment;
-import org.einnovator.sso.client.support.SsoTestHelper;
+import org.einnovator.sso.client.SsoTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +55,8 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 	}
 	
 	private Payment makePayment() {
-		Account buyer = client.getAccount(TEST_BUYER, null);
-		Account seller = client.getAccount(TEST_SELLER, null);
+		Account buyer = client.getAccount(TEST_BUYER, null, null);
+		Account seller = client.getAccount(TEST_SELLER, null, null);
 		return makePayment(buyer, seller);
 	}
 
@@ -103,15 +103,15 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 	public String paymentSubmit() {
 		Payment payment = makePayment();
 		System.out.println(payment);
-		URI uri = client.submitPayment(payment, null);
+		URI uri = client.submitPayment(payment, null, null);
 		String id = extractId(uri);
 		return id;
 	}
 	
 	public String paymentSiteSubmit() {
-		Payment payment = makeSitePayment(client.getAccount(TEST_BUYER, null));
+		Payment payment = makeSitePayment(client.getAccount(TEST_BUYER, null, null));
 		System.out.println(payment);
-		URI uri = client.submitPayment(payment, null);
+		URI uri = client.submitPayment(payment, null, null);
 		String id = extractId(uri);
 		return id;
 	}
@@ -119,7 +119,7 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void getPaymentTest() {
 		String id = paymentSubmit();
-		Payment payment = client.getPayment(id, null);
+		Payment payment = client.getPayment(id, null, null);
 		assertNotNull(payment);
 		assertEquals(id, payment.getId());
 		System.out.println(MappingUtils.toJson(payment));
@@ -128,7 +128,7 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void getPaymentSiteTest() {
 		String id = paymentSiteSubmit();
-		Payment payment = client.getPayment(id, null);
+		Payment payment = client.getPayment(id, null, null);
 		assertNotNull(payment);
 		assertEquals(id, payment.getId());
 		System.out.println(MappingUtils.toJson(payment));
