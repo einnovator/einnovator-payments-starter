@@ -70,8 +70,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.withAddress(address)
 				.withCurrency(Currency.USD)
 				.withEmail(email)
-//				.withVatNumber("12345678")
-//				.withTaxNumber("12345678")
+				.withVatNumber("12345678")
 				;
 		
 		return account;
@@ -155,12 +154,27 @@ public class PaymentsClientTests extends SsoTestHelper {
 			assertNotNull(uri);
 			String uuid = UriUtils.extractId(uri);
 			assertNotNull(uuid);
+			client.chargePayment(payment, null, null);
 		}catch(HttpClientErrorException e)
 		{
 			assertEquals(HttpStatus.NOT_FOUND.value(), e.getRawStatusCode());
 		}
 	}
 
+	@Test
+	public void paymentSubmitAndChargeTest() {
+		try {
+			Payment payment = makePayment();
+			URI uri = client.submitPayment(payment, null, null);
+			assertNotNull(uri);
+			String id = UriUtils.extractId(uri);
+			assertNotNull(id);
+			payment.setUuid(id);
+			client.chargePayment(payment, null, null);
+		}catch(HttpClientErrorException e) {
+		}
+	}
+	
 	@Test
 	public void paymentSubmitWithBadAccountSellerTest() {
 		try {
@@ -257,7 +271,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.withCvc("123")
 				.withNumber("4242424242424242")
 				.withExpirationMonth(11)
-				.withExpirationYear(2017)
+				.withExpirationYear(2020)
 				.withLast4("8765")
 				.withName("name")
 				.withUuid(UUID.randomUUID().toString());
@@ -292,7 +306,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.cvc("123")
 				.number("4000056655665556")
 				.expirationMonth(11)
-				.expirationYear(2017)
+				.expirationYear(2020)
 				.last4("5556")
 				.name("visa-"+UUID.randomUUID().toString())
 				;
@@ -316,7 +330,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.withCvc("123")
 				.withNumber("5555555555554444")
 				.withExpirationMonth(11)
-				.withExpirationYear(2017)
+				.withExpirationYear(2020)
 				.withLast4("4444")
 				.withName("name")
 				.withUuid(UUID.randomUUID().toString());
@@ -338,7 +352,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 					.withCvc("123")
 					.withNumber("4242424242424242")
 					.withExpirationMonth(11)
-					.withExpirationYear(2017)
+					.withExpirationYear(2020)
 					.withLast4("8765")
 					.withName("name")
 					.withUuid(UUID.randomUUID().toString());
@@ -389,7 +403,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.withCvc("123")
 				.withNumber("4000056655665556")
 				.withExpirationMonth(11)
-				.withExpirationYear(2017)
+				.withExpirationYear(2020)
 				.withLast4("4444")
 				.withName("name")
 				.withUuid(UUID.randomUUID().toString());
@@ -411,7 +425,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.withCvc("123")
 				.withNumber("4000056655665556")
 				.withExpirationMonth(11)
-				.withExpirationYear(2017)
+				.withExpirationYear(2020)
 				.withLast4("4444")
 				.withName("name")
 				.withUuid(UUID.randomUUID().toString());
@@ -425,10 +439,6 @@ public class PaymentsClientTests extends SsoTestHelper {
 			assertEquals(HttpStatus.BAD_REQUEST.value(), ex.getRawStatusCode());
 		}
 	}
-	
-	
-	/*@Test
-	public void */
 	
 	
 	
