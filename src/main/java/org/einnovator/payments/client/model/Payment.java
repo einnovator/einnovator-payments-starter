@@ -456,12 +456,15 @@ public class Payment extends EntityBase {
 		this.fees = fees;
 	}
 	
+	//
 	// With
+	//
 	
 	/**
 	 * Set the value of property {@code type}.
 	 *
 	 * @param type the value of property type
+	 * @return this {@code Payment}
 	 */
 	public Payment withType(PaymentType type) {
 		this.type = type;
@@ -472,6 +475,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code status}.
 	 *
 	 * @param status the value of property status
+	 * @return this {@code Payment}
 	 */
 	public Payment withStatus(PaymentStatus status) {
 		this.status = status;
@@ -482,6 +486,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code payable}.
 	 *
 	 * @param payable the value of property payable
+	 * @return this {@code Payment}
 	 */
 	public Payment withPayable(Payable payable) {
 		this.payable = payable;
@@ -492,6 +497,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code currency}.
 	 *
 	 * @param currency the value of property currency
+	 * @return this {@code Payment}
 	 */
 	public Payment withCurrency(Currency currency) {
 		this.currency = currency;
@@ -502,6 +508,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code amount}.
 	 *
 	 * @param amount the value of property amount
+	 * @return this {@code Payment}
 	 */
 	public Payment withAmount(BigDecimal amount) {
 		this.amount = amount;
@@ -512,6 +519,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code discount}.
 	 *
 	 * @param discount the value of property discount
+	 * @return this {@code Payment}
 	 */
 	public Payment withDiscount(BigDecimal discount) {
 		this.discount = discount;
@@ -522,6 +530,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code totalAmount}.
 	 *
 	 * @param totalAmount the value of property totalAmount
+	 * @return this {@code Payment}
 	 */
 	public Payment withTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
@@ -532,6 +541,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code chargedAmount}.
 	 *
 	 * @param chargedAmount the value of property chargedAmount
+	 * @return this {@code Payment}
 	 */
 	public Payment withChargedAmount(BigDecimal chargedAmount) {
 		this.chargedAmount = chargedAmount;
@@ -542,6 +552,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code tax}.
 	 *
 	 * @param tax the value of property tax
+	 * @return this {@code Payment}
 	 */
 	public Payment withTax(BigDecimal tax) {
 		this.tax = tax;
@@ -552,6 +563,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code paymentDate}.
 	 *
 	 * @param paymentDate the value of property paymentDate
+	 * @return this {@code Payment}
 	 */
 	public Payment withPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
@@ -562,6 +574,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code lastTryDate}.
 	 *
 	 * @param lastTryDate the value of property lastTryDate
+	 * @return this {@code Payment}
 	 */
 	public Payment withLastTryDate(Date lastTryDate) {
 		this.lastTryDate = lastTryDate;
@@ -572,6 +585,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code transferDate}.
 	 *
 	 * @param transferDate the value of property transferDate
+	 * @return this {@code Payment}
 	 */
 	public Payment withTransferDate(Date transferDate) {
 		this.transferDate = transferDate;
@@ -582,6 +596,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code startDate}.
 	 *
 	 * @param startDate the value of property startDate
+	 * @return this {@code Payment}
 	 */
 	public Payment withStartDate(Date startDate) {
 		this.startDate = startDate;
@@ -592,6 +607,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code expireDate}.
 	 *
 	 * @param expireDate the value of property expireDate
+	 * @return this {@code Payment}
 	 */
 	public Payment withExpireDate(Date expireDate) {
 		this.expireDate = expireDate;
@@ -602,6 +618,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code statement}.
 	 *
 	 * @param statement the value of property statement
+	 * @return this {@code Payment}
 	 */
 	public Payment withStatement(String statement) {
 		this.statement = statement;
@@ -612,6 +629,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code buyer}.
 	 *
 	 * @param buyer the value of property buyer
+	 * @return this {@code Payment}
 	 */
 	public Payment withBuyer(Account buyer) {
 		this.buyer = buyer;
@@ -622,6 +640,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code documentURI}.
 	 *
 	 * @param documentURI the value of property documentURI
+	 * @return this {@code Payment}
 	 */
 	public Payment withDocumentURI(String documentURI) {
 		this.documentURI = documentURI;
@@ -632,6 +651,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code errorMessage}.
 	 *
 	 * @param errorMessage the value of property errorMessage
+	 * @return this {@code Payment}
 	 */
 	public Payment withErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
@@ -642,6 +662,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code seller}.
 	 *
 	 * @param seller the value of property seller
+	 * @return this {@code Payment}
 	 */
 	public Payment withSeller(Account seller) {
 		this.seller = seller;
@@ -652,6 +673,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code transferStatus}.
 	 *
 	 * @param transferStatus the value of property transferStatus
+	 * @return this {@code Payment}
 	 */
 	public Payment withTransferStatus(PaymentStatus transferStatus) {
 		this.transferStatus = transferStatus;
@@ -662,6 +684,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code transferErrorMessage}.
 	 *
 	 * @param transferErrorMessage the value of property transferErrorMessage
+	 * @return this {@code Payment}
 	 */
 	public Payment withTransferErrorMessage(String transferErrorMessage) {
 		this.transferErrorMessage = transferErrorMessage;
@@ -672,6 +695,7 @@ public class Payment extends EntityBase {
 	 * Set the value of property {@code fees}.
 	 *
 	 * @param fees the value of property fees
+	 * @return this {@code Payment}
 	 */
 	public Payment withFees(List<Fee> fees) {
 		this.fees = fees;

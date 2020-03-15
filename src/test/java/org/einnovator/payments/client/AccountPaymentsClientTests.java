@@ -55,8 +55,8 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 	}
 	
 	private Payment makePayment() {
-		Account buyer = client.getAccount(TEST_BUYER, null, null);
-		Account seller = client.getAccount(TEST_SELLER, null, null);
+		Account buyer = client.getAccount(TEST_BUYER, null);
+		Account seller = client.getAccount(TEST_SELLER, null);
 		return makePayment(buyer, seller);
 	}
 
@@ -103,15 +103,15 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 	public String paymentSubmit() {
 		Payment payment = makePayment();
 		System.out.println(payment);
-		URI uri = client.submitPayment(payment, null, null);
+		URI uri = client.submitPayment(payment, null);
 		String id = extractId(uri);
 		return id;
 	}
 	
 	public String paymentSiteSubmit() {
-		Payment payment = makeSitePayment(client.getAccount(TEST_BUYER, null, null));
+		Payment payment = makeSitePayment(client.getAccount(TEST_BUYER, null));
 		System.out.println(payment);
-		URI uri = client.submitPayment(payment, null, null);
+		URI uri = client.submitPayment(payment, null);
 		String id = extractId(uri);
 		return id;
 	}
@@ -119,7 +119,7 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void getPaymentTest() {
 		String id = paymentSubmit();
-		Payment payment = client.getPayment(id, null, null);
+		Payment payment = client.getPayment(id, null);
 		assertNotNull(payment);
 		assertEquals(id, payment.getId());
 		System.out.println(MappingUtils.toJson(payment));
@@ -128,7 +128,7 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void getPaymentSiteTest() {
 		String id = paymentSiteSubmit();
-		Payment payment = client.getPayment(id, null, null);
+		Payment payment = client.getPayment(id, null);
 		assertNotNull(payment);
 		assertEquals(id, payment.getId());
 		System.out.println(MappingUtils.toJson(payment));
@@ -137,7 +137,7 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void listPaymentsTest() {
 		paymentSubmit();
-		Page<Payment> payments0 = client.listPayments(null, new PageRequest(0, 10), null);
+		Page<Payment> payments0 = client.listPayments(null, new PageRequest(0, 10));
 		assertNotNull(payments0);
 		assertTrue(payments0.getSize() > 0);
 		
@@ -146,7 +146,7 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 			return;
 		}
 		
-		Page<Payment> payments1 = client.listPayments(null, new PageRequest(1, 10), null);
+		Page<Payment> payments1 = client.listPayments(null, new PageRequest(1, 10));
 		
 		assertNotNull(payments1);
 		assertTrue(payments1.getSize() > 0);

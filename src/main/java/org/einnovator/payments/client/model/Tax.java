@@ -30,81 +30,122 @@ public class Tax extends EntityBase {
 	
 	private String countryCode2;
 		
+	/**
+	 * Create instance of {@code Tax}.
+	 *
+	 */
 	public Tax() {
 		
 	}
 	
-	public boolean isFeeTax() {
-		return feeTax;
-	}
 
-	public void setFeeTax(boolean feeTax) {
-		this.feeTax = feeTax;
-	}
-
-	public Boolean getSellerFeeTax() {
-		return sellerFeeTax;
-	}
-
-	public void setSellerFeeTax(Boolean sellerFeeTax) {
-		this.sellerFeeTax = sellerFeeTax;
-	}
-
-	public boolean isBuyerTax() {
-		return buyerTax;
-	}
-
-	public void setBuyerTax(boolean buyerTax) {
-		this.buyerTax = buyerTax;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
+	/**
+	 * Set the value of property {@code name}.
+	 *
+	 * @param name the value of property name
+	 * @return this {@code Tax}
+	 */
+	public Tax withName(String name) {
 		this.name = name;
+		return this;
 	}
 
-	public BigDecimal getAmount() {
-		return amount;
-	}
 
-	public void setAmount(BigDecimal amount) {
+	/**
+	 * Set the value of property {@code amount}.
+	 *
+	 * @param amount the value of property amount
+	 * @return this {@code Tax}
+	 */
+	public Tax withAmount(BigDecimal amount) {
 		this.amount = amount;
+		return this;
 	}
 
-	public Currency getCurrency() {
-		return currency;
-	}
 
-	public void setCurrency(Currency currency) {
+	/**
+	 * Set the value of property {@code currency}.
+	 *
+	 * @param currency the value of property currency
+	 * @return this {@code Tax}
+	 */
+	public Tax withCurrency(Currency currency) {
 		this.currency = currency;
+		return this;
 	}
 
-	public String getComment() {
-		return comment;
-	}
 
-	public void setComment(String comment) {
+	/**
+	 * Set the value of property {@code comment}.
+	 *
+	 * @param comment the value of property comment
+	 * @return this {@code Tax}
+	 */
+	public Tax withComment(String comment) {
 		this.comment = comment;
+		return this;
 	}
 
-	public BigDecimal getPercentage() {
-		return percentage;
+
+	/**
+	 * Set the value of property {@code feeTax}.
+	 *
+	 * @param feeTax the value of property feeTax
+	 * @return this {@code Tax}
+	 */
+	public Tax withFeeTax(boolean feeTax) {
+		this.feeTax = feeTax;
+		return this;
 	}
 
-	public void setPercentage(BigDecimal percentage) {
+
+	/**
+	 * Set the value of property {@code sellerFeeTax}.
+	 *
+	 * @param sellerFeeTax the value of property sellerFeeTax
+	 * @return this {@code Tax}
+	 */
+	public Tax withSellerFeeTax(Boolean sellerFeeTax) {
+		this.sellerFeeTax = sellerFeeTax;
+		return this;
+	}
+
+
+	/**
+	 * Set the value of property {@code percentage}.
+	 *
+	 * @param percentage the value of property percentage
+	 * @return this {@code Tax}
+	 */
+	public Tax withPercentage(BigDecimal percentage) {
 		this.percentage = percentage;
+		return this;
 	}
 
-	public String getCountryCode2() {
-		return countryCode2;
+
+	/**
+	 * Set the value of property {@code buyerTax}.
+	 *
+	 * @param buyerTax the value of property buyerTax
+	 * @return this {@code Tax}
+	 */
+	public Tax withBuyerTax(boolean buyerTax) {
+		this.buyerTax = buyerTax;
+		return this;
 	}
 
-	public void setCountryCode2(String countryCode2) {
+
+	/**
+	 * Set the value of property {@code countryCode2}.
+	 *
+	 * @param countryCode2 the value of property countryCode2
+	 * @return this {@code Tax}
+	 */
+	public Tax withCountryCode2(String countryCode2) {
 		this.countryCode2 = countryCode2;
+		return this;
 	}
+
 
 	@Override
 	public ToStringCreator toString1(ToStringCreator creator) {

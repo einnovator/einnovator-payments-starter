@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.einnovator.payments.client.PaymentsClient;
-import org.einnovator.payments.client.config.PaymentsClientContext;
+
 import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.Card;
 import org.einnovator.payments.client.modelx.AccountOptions;
@@ -26,9 +26,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 	
 	@Override
-	public Account getAccount(String id, AccountOptions options, PaymentsClientContext context) {
+	public Account getAccount(String id, AccountOptions options) {
 		try {
-			Account account = paymentsClient.getAccount(id, options, context);		
+			Account account = paymentsClient.getAccount(id, options);		
 			if (account==null) {
 				logger.error("getAccount:" + id);
 			}
@@ -45,9 +45,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public URI createAccount(Account account, RequestOptions options, PaymentsClientContext context) {
+	public URI createAccount(Account account, RequestOptions options) {
 		try {
-			return paymentsClient.createAccount(account, options, context);	
+			return paymentsClient.createAccount(account, options);	
 		} catch (RuntimeException e) {
 			logger.error("createAccount:" + e + " " + account);
 			return null;
@@ -55,9 +55,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public Account updateAccount(Account account, RequestOptions options, PaymentsClientContext context) {
+	public Account updateAccount(Account account, RequestOptions options) {
 		try {
-			paymentsClient.updateAccount(account, options, context);	
+			paymentsClient.updateAccount(account, options);	
 			return account;
 		} catch (RuntimeException e) {
 			logger.error("updateAccount:" + e + " " + account);
@@ -66,9 +66,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public boolean deleteAccount(String id, RequestOptions options, PaymentsClientContext context) {
+	public boolean deleteAccount(String id, RequestOptions options) {
 		try {
-			paymentsClient.deleteAccount(id, options, context);		
+			paymentsClient.deleteAccount(id, options);		
 			return true;
 		}  catch (RuntimeException e) {
 			logger.error("deleteAccount:" + id);
@@ -77,9 +77,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public List<Card> getAccountCards(String accountId, AccountOptions options, PaymentsClientContext context) {
+	public List<Card> getAccountCards(String accountId, AccountOptions options) {
 		try {
-			List<Card> cards = paymentsClient.getAccountCards(accountId, options, context);		
+			List<Card> cards = paymentsClient.getAccountCards(accountId, options);		
 			if (cards==null) {
 				logger.error("getAccountCard:" + accountId);
 			}
@@ -96,9 +96,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public URI addAccountCard(Card card, String accountId, RequestOptions options, PaymentsClientContext context) {
+	public URI addAccountCard(Card card, String accountId, RequestOptions options) {
 		try {
-			return paymentsClient.addAccountCard(card, accountId, options, context);	
+			return paymentsClient.addAccountCard(card, accountId, options);	
 		} catch (RuntimeException e) {
 			logger.error("addUserCard:" + e + " " + card + " " + accountId);
 			return null;
@@ -106,9 +106,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public boolean deleteAccountCard(String accountId, String cardId, RequestOptions options, PaymentsClientContext context) {
+	public boolean deleteAccountCard(String accountId, String cardId, RequestOptions options) {
 		try {
-			paymentsClient.deleteAccountCard(accountId, cardId, options, context);		
+			paymentsClient.deleteAccountCard(accountId, cardId, options);		
 			return true;
 		}  catch (RuntimeException e) {
 			logger.error("deleteUserCard:" + cardId);

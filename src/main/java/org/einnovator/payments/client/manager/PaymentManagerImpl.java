@@ -5,7 +5,7 @@ import java.net.URI;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.einnovator.payments.client.PaymentsClient;
-import org.einnovator.payments.client.config.PaymentsClientContext;
+
 import org.einnovator.payments.client.model.Payment;
 import org.einnovator.payments.client.modelx.PaymentFilter;
 import org.einnovator.payments.client.modelx.PaymentOptions;
@@ -28,9 +28,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 	}
 	
 	@Override
-	public URI submitPayment(Payment payment, PaymentOptions options, PaymentsClientContext context) {
+	public URI submitPayment(Payment payment, PaymentOptions options) {
 		try {
-			URI uri = paymentsClient.submitPayment(payment, options, context);
+			URI uri = paymentsClient.submitPayment(payment, options);
 			payment.setUuid(UriUtils.extractId(uri));
 			return uri;
 		} catch (RuntimeException e) {
@@ -41,9 +41,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 
 
 	@Override
-	public Payment chargePayment(Payment payment, RequestOptions options, PaymentsClientContext context) {
+	public Payment chargePayment(Payment payment, RequestOptions options) {
 		try {
-			paymentsClient.chargePayment(payment, options, context);	
+			paymentsClient.chargePayment(payment, options);	
 			return payment;
 		} catch (RuntimeException e) {
 			logger.error("chargePayment:" + e + " " + payment);
@@ -52,9 +52,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 	}
 	
 	@Override
-	public Payment getPayment(String id, PaymentOptions options, PaymentsClientContext context) {
+	public Payment getPayment(String id, PaymentOptions options) {
 		try {
-			Payment payment = paymentsClient.getPayment(id, options, context);		
+			Payment payment = paymentsClient.getPayment(id, options);		
 			if (payment==null) {
 				logger.error("getPayment:" + id);
 			}
@@ -71,9 +71,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 	}
 
 	@Override
-	public Page<Payment> listPayments(PaymentFilter filter, Pageable pageable, PaymentsClientContext context) {
+	public Page<Payment> listPayments(PaymentFilter filter, Pageable pageable) {
 		try {
-			Page<Payment> payments = paymentsClient.listPayments(filter, pageable, context);		
+			Page<Payment> payments = paymentsClient.listPayments(filter, pageable);		
 			if (payments==null) {
 				logger.error("listPayments:" + filter + " " + pageable);
 			}
@@ -90,9 +90,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 	}
 
 	@Override
-	public Payment updatePayment(Payment payment, RequestOptions options, PaymentsClientContext context) {
+	public Payment updatePayment(Payment payment, RequestOptions options) {
 		try {
-			paymentsClient.updatePayment(payment, options, context);	
+			paymentsClient.updatePayment(payment, options);	
 			return payment;
 		} catch (RuntimeException e) {
 			logger.error("updatePayment:" + e + " " + payment);
@@ -102,9 +102,9 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 
 
 	@Override
-	public boolean deletePayment(String id, RequestOptions options, PaymentsClientContext context) {
+	public boolean deletePayment(String id, RequestOptions options) {
 		try {
-			paymentsClient.deletePayment(id, options, context);		
+			paymentsClient.deletePayment(id, options);		
 			return true;
 		} catch (RuntimeException e) {
 			logger.error("deletePayment:" + id + "  " + e);

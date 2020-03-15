@@ -1,5 +1,12 @@
 package org.einnovator.payments.client.model;
 
+/**
+ * Enum for {@code Payment} status.
+ *
+ * @see Payment
+ * @author support@einnovator.org
+ *
+ */
 public enum PaymentStatus {
 	SCHEDULED("Scheduled"),
 	SUBMITTED("Submitted"),

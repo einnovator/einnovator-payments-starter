@@ -197,12 +197,15 @@ public class Payable extends EntityBase {
 		this.items = items;
 	}
 
+	//
 	// With
+	//
 	
 	/**
 	 * Set the value of property {@code name}.
 	 *
 	 * @param name the value of property name
+	 * @return this {@code Payable}
 	 */
 	public Payable withName(String name) {
 		this.name = name;
@@ -213,6 +216,7 @@ public class Payable extends EntityBase {
 	 * Set the value of property {@code category}.
 	 *
 	 * @param category the value of property category
+	 * @return this {@code Payable}
 	 */
 	public Payable withCategory(String category) {
 		this.category = category;
@@ -223,6 +227,7 @@ public class Payable extends EntityBase {
 	 * Set the value of property {@code description}.
 	 *
 	 * @param description the value of property description
+	 * @return this {@code Payable}
 	 */
 	public Payable withDescription(String description) {
 		this.description = description;
@@ -233,6 +238,7 @@ public class Payable extends EntityBase {
 	 * Set the value of property {@code img}.
 	 *
 	 * @param img the value of property img
+	 * @return this {@code Payable}
 	 */
 	public Payable withImg(String img) {
 		this.img = img;
@@ -243,6 +249,7 @@ public class Payable extends EntityBase {
 	 * Set the value of property {@code nameCss}.
 	 *
 	 * @param nameCss the value of property nameCss
+	 * @return this {@code Payable}
 	 */
 	public Payable withNameCss(String nameCss) {
 		this.nameCss = nameCss;
@@ -253,6 +260,7 @@ public class Payable extends EntityBase {
 	 * Set the value of property {@code categoryCss}.
 	 *
 	 * @param categoryCss the value of property categoryCss
+	 * @return this {@code Payable}
 	 */
 	public Payable withCategoryCss(String categoryCss) {
 		this.categoryCss = categoryCss;
@@ -263,6 +271,7 @@ public class Payable extends EntityBase {
 	 * Set the value of property {@code imgCss}.
 	 *
 	 * @param imgCss the value of property imgCss
+	 * @return this {@code Payable}
 	 */
 	public Payable withImgCss(String imgCss) {
 		this.imgCss = imgCss;
@@ -273,6 +282,7 @@ public class Payable extends EntityBase {
 	 * Set the value of property {@code descriptionCss}.
 	 *
 	 * @param descriptionCss the value of property descriptionCss
+	 * @return this {@code Payable}
 	 */
 	public Payable withDescriptionCss(String descriptionCss) {
 		this.descriptionCss = descriptionCss;
@@ -283,6 +293,7 @@ public class Payable extends EntityBase {
 	 * Set the value of property {@code items}.
 	 *
 	 * @param items the value of property items
+	 * @return this {@code Payable}
 	 */
 	public Payable withItems(List<Item> items) {
 		this.items = items;

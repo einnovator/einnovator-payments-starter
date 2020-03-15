@@ -78,8 +78,8 @@ public class PaymentsClientTests extends SsoTestHelper {
 	}
 	
 	private Payment makePayment() {
-		Account buyer = client.getAccount(TEST_BUYER, null, null);
-		Account seller = client.getAccount(TEST_SELLER, null, null);
+		Account buyer = client.getAccount(TEST_BUYER, null);
+		Account seller = client.getAccount(TEST_SELLER, null);
 		return makePayment(buyer, seller);
 	}
 
@@ -106,11 +106,11 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void createAndDeleteUserTest() {
 		String username = "tdd-" + UUID.randomUUID().toString();
-		URI uri = client.createAccount(makeAccount(username, username), null, null);
+		URI uri = client.createAccount(makeAccount(username, username), null);
 		assertNotNull(uri);
 		String id = extractId(uri);
 		assertNotNull(id);
-		client.deleteAccount(id, null, null);
+		client.deleteAccount(id, null);
 	}
 	
 	@Test
@@ -122,23 +122,23 @@ public class PaymentsClientTests extends SsoTestHelper {
 		
 		Account buyer1 = null, seller1 = null;
 		try {
-			buyer1 = client.getAccount(buyer0.getName(), null, null);
+			buyer1 = client.getAccount(buyer0.getName(), null);
 		} catch (HttpClientErrorException e) {
-			client.createAccount(buyer0, null, null);
-			buyer1 = client.getAccount(buyer0.getName(), null, null);
+			client.createAccount(buyer0, null);
+			buyer1 = client.getAccount(buyer0.getName(), null);
 		}
 
 		try {
-			seller1 = client.getAccount(seller0.getName(), null, null);
+			seller1 = client.getAccount(seller0.getName(), null);
 		} catch (HttpClientErrorException e) {
-			client.createAccount(seller0, null, null);
-			seller1 = client.getAccount(seller0.getName(), null, null);
+			client.createAccount(seller0, null);
+			seller1 = client.getAccount(seller0.getName(), null);
 		}
 		
 		try {
-			client.getAccount(account.getName(), null, null);
+			client.getAccount(account.getName(), null);
 		} catch (HttpClientErrorException e) {
-			client.createAccount(account, null, null);			
+			client.createAccount(account, null);			
 		}
 
 		assertNotNull(buyer1);
@@ -150,11 +150,11 @@ public class PaymentsClientTests extends SsoTestHelper {
 		try {
 			Payment payment = makePayment();
 			System.out.println(payment);
-			URI uri = client.submitPayment(payment, null, null);
+			URI uri = client.submitPayment(payment, null);
 			assertNotNull(uri);
 			String uuid = UriUtils.extractId(uri);
 			assertNotNull(uuid);
-			client.chargePayment(payment, null, null);
+			client.chargePayment(payment, null);
 		}catch(HttpClientErrorException e)
 		{
 			assertEquals(HttpStatus.NOT_FOUND.value(), e.getRawStatusCode());
@@ -165,12 +165,12 @@ public class PaymentsClientTests extends SsoTestHelper {
 	public void paymentSubmitAndChargeTest() {
 		try {
 			Payment payment = makePayment();
-			URI uri = client.submitPayment(payment, null, null);
+			URI uri = client.submitPayment(payment, null);
 			assertNotNull(uri);
 			String id = UriUtils.extractId(uri);
 			assertNotNull(id);
 			payment.setUuid(id);
-			client.chargePayment(payment, null, null);
+			client.chargePayment(payment, null);
 		}catch(HttpClientErrorException e) {
 		}
 	}
@@ -178,11 +178,11 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void paymentSubmitWithBadAccountSellerTest() {
 		try {
-			Account buyer = client.getAccount(TEST_BUYER, null, null);
+			Account buyer = client.getAccount(TEST_BUYER, null);
 			Account seller = new Account().withUsername(TEST_USER_FAIL);
 			Payment payment = makePayment(buyer, seller);
 			System.out.println(payment);
-			client.submitPayment(payment, null, null);
+			client.submitPayment(payment, null);
 			fail();
 		}catch(HttpClientErrorException e)
 		{
@@ -194,7 +194,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 	public String paymentSubmit() {
 		Payment payment = makePayment();
 		System.out.println(payment);
-		URI uri = client.submitPayment(payment, null, null);
+		URI uri = client.submitPayment(payment, null);
 		String id = extractId(uri);
 		return id;
 	}
@@ -202,7 +202,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void getPaymentTest() {
 		String id = paymentSubmit();
-		Payment payment = client.getPayment(id, null, null);
+		Payment payment = client.getPayment(id, null);
 		assertNotNull(payment);
 		assertEquals(id, payment.getId());
 	}
@@ -211,7 +211,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void getInexistingAccountTest() {
 		try {
-			client.getAccount(UUID.randomUUID().toString(), null, null);
+			client.getAccount(UUID.randomUUID().toString(), null);
 			fail();
 		} catch (HttpClientErrorException e) {
 			assertEquals(HttpStatus.NOT_FOUND.value(), e.getRawStatusCode());
@@ -221,7 +221,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 
 	@Test
 	public void getExistingAccountTest() {
-		Account account = client.getAccount(TEST_SELLER, null, null);
+		Account account = client.getAccount(TEST_SELLER, null);
 		assertNotNull(account);
 		assertEquals(TEST_SELLER, account.getName());
 	}
@@ -229,7 +229,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void updateExistingUserPartialTest() {
 		String username = TEST_SELLER;
-		Account account = client.getAccount(username, null, null);
+		Account account = client.getAccount(username, null);
 		assertNotNull(account);
 		assertEquals(username, account.getName());
 		Address address = new Address();		
@@ -237,8 +237,8 @@ public class PaymentsClientTests extends SsoTestHelper {
 		address.setCity("City-" + UUID.randomUUID().toString());
 		account.setAddress(address);
 		account.setWebsite("http://website.test.org");
-		client.updateAccount(account, null, null);
-		Account account2 = client.getAccount(username, null, null);
+		client.updateAccount(account, null);
+		Account account2 = client.getAccount(username, null);
 		assertNotNull(account2);
 		assertEquals(username, account2.getName());
 		assertEquals(account.getWebsite(), account2.getWebsite());
@@ -248,8 +248,8 @@ public class PaymentsClientTests extends SsoTestHelper {
 		account.setWebsite("http://website2.test.org");
 		account.getAddress().setLine1(null);
 		account.getAddress().setCity("City-" + UUID.randomUUID().toString());
-		client.updateAccount(account, null, null);
-		Account account3 = client.getAccount(username, null, null);
+		client.updateAccount(account, null);
+		Account account3 = client.getAccount(username, null);
 		assertNotNull(account3);
 		assertEquals(username, account3.getName());
 		assertEquals(account.getWebsite(), account3.getWebsite());
@@ -262,7 +262,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void addCard1Test()
 	{
-		Account user = client.getAccount(TEST_BUYER, null, null);
+		Account user = client.getAccount(TEST_BUYER, null);
 		Card card = (Card)new Card()
 				.withAddress(new Address().withCountry("USA").withCity("NY").withState("NY").withPostalCode("12345").withLine1("Line1").withLine2("line2"))
 				.withBrand("visa")
@@ -277,7 +277,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.withUuid(UUID.randomUUID().toString());
 
 
-		URI uri = client.addAccountCard(card,user.getId(), null, null);
+		URI uri = client.addAccountCard(card,user.getId(), null);
 		String id = extractId(uri);
 		assertNotNull(id);
 
@@ -321,7 +321,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void addCard2Test()
 	{
-		Account user = client.getAccount(TEST_SELLER, null, null);
+		Account user = client.getAccount(TEST_SELLER, null);
 		Card card = (Card)new Card()
 				.withAddress(new Address().withCountry("USA").withCity("NY").withState("NY").withPostalCode("12345").withLine1("Line1").withLine2("line2"))
 				.withBrand("visa")
@@ -335,7 +335,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.withName("name")
 				.withUuid(UUID.randomUUID().toString());
 
-		URI uri = client.addAccountCard(card, user.getId(), null, null);
+		URI uri = client.addAccountCard(card, user.getId(), null);
 		String id = extractId(uri);
 		assertNotNull(id);
 
@@ -357,7 +357,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 					.withName("name")
 					.withUuid(UUID.randomUUID().toString());
 
-			URI uri =client.addAccountCard(card, id, null, null);
+			URI uri =client.addAccountCard(card, id, null);
 			assertNotNull(uri);
 			String uriid= extractId(uri);
 			assertNotNull(uriid);
@@ -373,7 +373,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 	public void getNonExistUserCardTest() {
 		try {
 			String id ="tdd"+UUID.randomUUID().toString();
-			List<Card> cardList =client.getAccountCards(id, null, null);
+			List<Card> cardList =client.getAccountCards(id, null);
 			assertNull(cardList);
 			fail();
 		}catch(HttpClientErrorException ex)
@@ -386,10 +386,10 @@ public class PaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void deleteExistingCard() {
 		String accountId ="tdd-"+UUID.randomUUID().toString();
-		List<Card> cards =client.getAccountCards(accountId, null, null);
+		List<Card> cards =client.getAccountCards(accountId, null);
 		assertNotNull(cards);
 		for (Card card: cards) {
-			client.deleteAccountCard(accountId, card.getNumber(), null, null);				
+			client.deleteAccountCard(accountId, card.getNumber(), null);				
 		}
 	}
 	
@@ -407,7 +407,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.withLast4("4444")
 				.withName("name")
 				.withUuid(UUID.randomUUID().toString());
-		URI uri = client.addAccountCard(card, card.getUuid(), null, null);
+		URI uri = client.addAccountCard(card, card.getUuid(), null);
 		String orgCardId = extractId(uri);
 		assertNotNull(orgCardId);
 	}
@@ -416,7 +416,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 	public void addFalseAccountCard() {
 		try {
 			
-		Account user = client.getAccount(TEST_SELLER, null, null);
+		Account user = client.getAccount(TEST_SELLER, null);
 		Card card = (Card)new Card()
 				.withAddress(new Address().withCountry("USA").withCity("NY").withState("NY").withPostalCode("12345").withLine1("Line1").withLine2("line2"))
 				.withBrand("visa")
@@ -431,7 +431,7 @@ public class PaymentsClientTests extends SsoTestHelper {
 				.withUuid(UUID.randomUUID().toString());
 
 
-		URI uri = client.addAccountCard(card, user.getId(), null, null);
+		URI uri = client.addAccountCard(card, user.getId(), null);
 		String orgCardId = extractId(uri);
 		assertNotNull(orgCardId);
 		fail();

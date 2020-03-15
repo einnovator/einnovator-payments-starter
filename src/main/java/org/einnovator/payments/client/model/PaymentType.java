@@ -1,5 +1,12 @@
 package org.einnovator.payments.client.model;
 
+/**
+ * Enum for a {@code Payment} type.
+ *
+ * @see Payment
+ * @author support@einnovator.org
+ *
+ */
 public enum PaymentType {
 
 	SOURCE("Source"),

@@ -256,12 +256,15 @@ public class Item extends EntityBase {
 		this.refundAmount = refundAmount;
 	}
 	
+	//
 	// With
+	//
 	
 	/**
 	 * Set the value of property {@code name}.
 	 *
 	 * @param name the value of property name
+	 * @return this {@code Item}
 	 */
 	public Item withName(String name) {
 		this.name = name;
@@ -272,6 +275,7 @@ public class Item extends EntityBase {
 	 * Set the value of property {@code numberOfUnits}.
 	 *
 	 * @param numberOfUnits the value of property numberOfUnits
+	 * @return this {@code Item}
 	 */
 	public Item withNumberOfUnits(Integer numberOfUnits) {
 		this.numberOfUnits = numberOfUnits;
@@ -282,6 +286,7 @@ public class Item extends EntityBase {
 	 * Set the value of property {@code numberOfUnits2}.
 	 *
 	 * @param numberOfUnits2 the value of property numberOfUnits2
+	 * @return this {@code Item}
 	 */
 	public Item withNumberOfUnits2(Integer numberOfUnits2) {
 		this.numberOfUnits2 = numberOfUnits2;
@@ -292,6 +297,7 @@ public class Item extends EntityBase {
 	 * Set the value of property {@code amountPerUnit}.
 	 *
 	 * @param amountPerUnit the value of property amountPerUnit
+	 * @return this {@code Item}
 	 */
 	public Item withAmountPerUnit(BigDecimal amountPerUnit) {
 		this.amountPerUnit = amountPerUnit;
@@ -302,6 +308,7 @@ public class Item extends EntityBase {
 	 * Set the value of property {@code totalAmount}.
 	 *
 	 * @param totalAmount the value of property totalAmount
+	 * @return this {@code Item}
 	 */
 	public Item withTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
@@ -312,6 +319,7 @@ public class Item extends EntityBase {
 	 * Set the value of property {@code comment}.
 	 *
 	 * @param comment the value of property comment
+	 * @return this {@code Item}
 	 */
 	public Item withComment(String comment) {
 		this.comment = comment;
@@ -322,6 +330,7 @@ public class Item extends EntityBase {
 	 * Set the value of property {@code img}.
 	 *
 	 * @param img the value of property img
+	 * @return this {@code Item}
 	 */
 	public Item withImg(String img) {
 		this.img = img;
@@ -332,6 +341,7 @@ public class Item extends EntityBase {
 	 * Set the value of property {@code tag}.
 	 *
 	 * @param tag the value of property tag
+	 * @return this {@code Item}
 	 */
 	public Item withTag(String tag) {
 		this.tag = tag;
@@ -342,6 +352,7 @@ public class Item extends EntityBase {
 	 * Set the value of property {@code tag2}.
 	 *
 	 * @param tag2 the value of property tag2
+	 * @return this {@code Item}
 	 */
 	public Item withTag2(String tag2) {
 		this.tag2 = tag2;
@@ -352,6 +363,7 @@ public class Item extends EntityBase {
 	 * Set the value of property {@code tag2icon}.
 	 *
 	 * @param tag2icon the value of property tag2icon
+	 * @return this {@code Item}
 	 */
 	public Item withTag2icon(String tag2icon) {
 		this.tag2icon = tag2icon;
@@ -362,6 +374,7 @@ public class Item extends EntityBase {
 	 * Set the value of property {@code fees}.
 	 *
 	 * @param fees the value of property fees
+	 * @return this {@code Item}
 	 */
 	public Item withFees(List<Fee> fees) {
 		this.fees = fees;
@@ -372,6 +385,7 @@ public class Item extends EntityBase {
 	 * Set the value of property {@code refundAmount}.
 	 *
 	 * @param refundAmount the value of property refundAmount
+	 * @return this {@code Item}
 	 */
 	public Item withRefundAmount(BigDecimal refundAmount) {
 		this.refundAmount = refundAmount;
