@@ -17,6 +17,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Account extends EntityBase {
 
+
+	public static final String ROLE_ACCOUNT_MANAGER = "ACCOUNT_MANAGER";
+	public static final String ROLE_ACCOUNT_AUDITOR = "ACCOUNT_AUDITOR";
+	public static final String ROLE_PAYMENTS_MANAGER = "PAYMENTS_MANAGER";
+	public static final String ROLE_PAYMENTS_AUDITOR = "PAYMENTS_AUDITOR";
+	public static final String ROLE_SALES_MANAGER = "SALES_MANAGER";
+	public static final String ROLE_SALES_AUDITOR = "SALES_AUDITOR";
+	
 	private OwnerType type;
 	
 	private String owner;
