@@ -5,12 +5,10 @@ import java.net.URI;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.einnovator.payments.client.PaymentsClient;
-
 import org.einnovator.payments.client.model.Payment;
 import org.einnovator.payments.client.modelx.PaymentFilter;
 import org.einnovator.payments.client.modelx.PaymentOptions;
 import org.einnovator.util.UriUtils;
-import org.einnovator.util.web.RequestOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +39,7 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 
 
 	@Override
-	public Payment chargePayment(Payment payment, RequestOptions options) {
+	public Payment chargePayment(Payment payment, PaymentOptions options) {
 		try {
 			paymentsClient.chargePayment(payment, options);	
 			return payment;
@@ -90,7 +88,7 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 	}
 
 	@Override
-	public Payment updatePayment(Payment payment, RequestOptions options) {
+	public Payment updatePayment(Payment payment, PaymentOptions options) {
 		try {
 			paymentsClient.updatePayment(payment, options);	
 			return payment;
@@ -102,7 +100,7 @@ public class PaymentManagerImpl extends ManagerBase implements PaymentManager {
 
 
 	@Override
-	public boolean deletePayment(String id, RequestOptions options) {
+	public boolean deletePayment(String id, PaymentOptions options) {
 		try {
 			paymentsClient.deletePayment(id, options);		
 			return true;

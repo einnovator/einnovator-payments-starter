@@ -72,7 +72,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code payable}.
 	 *
-	 * @param payable the payable to set
+	 * @param payable the payable
 	 */
 	public void setPayable(Payable payable) {
 		this.payable = payable;
@@ -90,7 +90,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code amount}.
 	 *
-	 * @param amount the amount to set
+	 * @param amount the amount
 	 */
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
@@ -108,7 +108,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code status}.
 	 *
-	 * @param status the status to set
+	 * @param status the status
 	 */
 	public void setStatus(PaymentStatus status) {
 		this.status = status;
@@ -126,7 +126,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code type}.
 	 *
-	 * @param type the type to set
+	 * @param type the type
 	 */
 	public void setType(PaymentType type) {
 		this.type = type;
@@ -144,7 +144,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code currency}.
 	 *
-	 * @param currency the currency to set
+	 * @param currency the currency
 	 */
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
@@ -162,7 +162,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code tax}.
 	 *
-	 * @param tax the tax to set
+	 * @param tax the tax
 	 */
 	public void setTax(BigDecimal tax) {
 		this.tax = tax;
@@ -180,7 +180,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code discount}.
 	 *
-	 * @param discount the discount to set
+	 * @param discount the discount
 	 */
 	public void setDiscount(BigDecimal discount) {
 		this.discount = discount;
@@ -198,7 +198,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code totalAmount}.
 	 *
-	 * @param totalAmount the totalAmount to set
+	 * @param totalAmount the totalAmount
 	 */
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
@@ -216,7 +216,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code chargedAmount}.
 	 *
-	 * @param chargedAmount the chargedAmount to set
+	 * @param chargedAmount the chargedAmount
 	 */
 	public void setChargedAmount(BigDecimal chargedAmount) {
 		this.chargedAmount = chargedAmount;
@@ -234,7 +234,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code transferStatus}.
 	 *
-	 * @param transferStatus the transferStatus to set
+	 * @param transferStatus the transferStatus
 	 */
 	public void setTransferStatus(PaymentStatus transferStatus) {
 		this.transferStatus = transferStatus;
@@ -252,7 +252,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code transferDate}.
 	 *
-	 * @param transferDate the transferDate to set
+	 * @param transferDate the transferDate
 	 */
 	public void setTransferDate(Date transferDate) {
 		this.transferDate = transferDate;
@@ -270,7 +270,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code paymentDate}.
 	 *
-	 * @param paymentDate the paymentDate to set
+	 * @param paymentDate the paymentDate
 	 */
 	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
@@ -288,7 +288,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code startDate}.
 	 *
-	 * @param startDate the startDate to set
+	 * @param startDate the startDate
 	 */
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
@@ -306,7 +306,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code expireDate}.
 	 *
-	 * @param expireDate the expireDate to set
+	 * @param expireDate the expireDate
 	 */
 	public void setExpireDate(Date expireDate) {
 		this.expireDate = expireDate;
@@ -324,7 +324,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code statement}.
 	 *
-	 * @param statement the statement to set
+	 * @param statement the statement
 	 */
 	public void setStatement(String statement) {
 		this.statement = statement;
@@ -342,7 +342,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code buyer}.
 	 *
-	 * @param buyer the buyer to set
+	 * @param buyer the buyer
 	 */
 	public void setBuyer(Account buyer) {
 		this.buyer = buyer;
@@ -360,7 +360,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code seller}.
 	 *
-	 * @param seller the seller to set
+	 * @param seller the seller
 	 */
 	public void setSeller(Account seller) {
 		this.seller = seller;
@@ -378,7 +378,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code documentURI}.
 	 *
-	 * @param documentURI the documentURI to set
+	 * @param documentURI the documentURI
 	 */
 	public void setDocumentURI(String documentURI) {
 		this.documentURI = documentURI;
@@ -396,7 +396,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code errorMessage}.
 	 *
-	 * @param errorMessage the errorMessage to set
+	 * @param errorMessage the errorMessage
 	 */
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
@@ -414,7 +414,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code transferErrorMessage}.
 	 *
-	 * @param transferErrorMessage the transferErrorMessage to set
+	 * @param transferErrorMessage the transferErrorMessage
 	 */
 	public void setTransferErrorMessage(String transferErrorMessage) {
 		this.transferErrorMessage = transferErrorMessage;
@@ -432,7 +432,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code lastTryDate}.
 	 *
-	 * @param lastTryDate the lastTryDate to set
+	 * @param lastTryDate the lastTryDate
 	 */
 	public void setLastTryDate(Date lastTryDate) {
 		this.lastTryDate = lastTryDate;
@@ -450,7 +450,7 @@ public class Payment extends EntityBase {
 	/**
 	 * Set the value of property {@code fees}.
 	 *
-	 * @param fees the fees to set
+	 * @param fees the fees
 	 */
 	public void setFees(List<Fee> fees) {
 		this.fees = fees;

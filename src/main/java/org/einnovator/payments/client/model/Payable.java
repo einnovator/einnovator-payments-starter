@@ -47,7 +47,7 @@ public class Payable extends EntityBase {
 	/**
 	 * Set the value of property {@code name}.
 	 *
-	 * @param name the name to set
+	 * @param name the name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -65,7 +65,7 @@ public class Payable extends EntityBase {
 	/**
 	 * Set the value of property {@code category}.
 	 *
-	 * @param category the category to set
+	 * @param category the category
 	 */
 	public void setCategory(String category) {
 		this.category = category;
@@ -83,7 +83,7 @@ public class Payable extends EntityBase {
 	/**
 	 * Set the value of property {@code description}.
 	 *
-	 * @param description the description to set
+	 * @param description the description
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -101,7 +101,7 @@ public class Payable extends EntityBase {
 	/**
 	 * Set the value of property {@code img}.
 	 *
-	 * @param img the img to set
+	 * @param img the img
 	 */
 	public void setImg(String img) {
 		this.img = img;
@@ -119,7 +119,7 @@ public class Payable extends EntityBase {
 	/**
 	 * Set the value of property {@code nameCss}.
 	 *
-	 * @param nameCss the nameCss to set
+	 * @param nameCss the nameCss
 	 */
 	public void setNameCss(String nameCss) {
 		this.nameCss = nameCss;
@@ -137,7 +137,7 @@ public class Payable extends EntityBase {
 	/**
 	 * Set the value of property {@code categoryCss}.
 	 *
-	 * @param categoryCss the categoryCss to set
+	 * @param categoryCss the categoryCss
 	 */
 	public void setCategoryCss(String categoryCss) {
 		this.categoryCss = categoryCss;
@@ -155,7 +155,7 @@ public class Payable extends EntityBase {
 	/**
 	 * Set the value of property {@code imgCss}.
 	 *
-	 * @param imgCss the imgCss to set
+	 * @param imgCss the imgCss
 	 */
 	public void setImgCss(String imgCss) {
 		this.imgCss = imgCss;
@@ -173,7 +173,7 @@ public class Payable extends EntityBase {
 	/**
 	 * Set the value of property {@code descriptionCss}.
 	 *
-	 * @param descriptionCss the descriptionCss to set
+	 * @param descriptionCss the descriptionCss
 	 */
 	public void setDescriptionCss(String descriptionCss) {
 		this.descriptionCss = descriptionCss;
@@ -191,7 +191,7 @@ public class Payable extends EntityBase {
 	/**
 	 * Set the value of property {@code items}.
 	 *
-	 * @param items the items to set
+	 * @param items the items
 	 */
 	public void setItems(List<Item> items) {
 		this.items = items;

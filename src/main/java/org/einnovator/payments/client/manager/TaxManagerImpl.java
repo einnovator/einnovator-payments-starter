@@ -5,11 +5,9 @@ import java.net.URI;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.einnovator.payments.client.PaymentsClient;
-
 import org.einnovator.payments.client.model.Tax;
 import org.einnovator.payments.client.modelx.TaxFilter;
 import org.einnovator.payments.client.modelx.TaxOptions;
-import org.einnovator.util.web.RequestOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -65,7 +63,7 @@ public class TaxManagerImpl extends ManagerBase implements TaxManager {
 	}
 
 	@Override
-	public URI createTax(Tax tax, RequestOptions options) {
+	public URI createTax(Tax tax, TaxOptions options) {
 		try {
 			return paymentsClient.createTax(tax, options);	
 		} catch (RuntimeException e) {
@@ -75,7 +73,7 @@ public class TaxManagerImpl extends ManagerBase implements TaxManager {
 	}
 
 	@Override
-	public Tax updateTax(Tax tax, RequestOptions options) {
+	public Tax updateTax(Tax tax, TaxOptions options) {
 		try {
 			paymentsClient.updateTax(tax, options);	
 			return tax;
@@ -86,7 +84,7 @@ public class TaxManagerImpl extends ManagerBase implements TaxManager {
 	}
 
 	@Override
-	public boolean deleteTax(String id, RequestOptions options) {
+	public boolean deleteTax(String id, TaxOptions options) {
 		try {
 			paymentsClient.deleteTax(id, options);		
 			return true;

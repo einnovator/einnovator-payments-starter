@@ -56,7 +56,7 @@ public class Fee extends EntityBase {
 	/**
 	 * Set the value of property {@code visibleToBuyer}.
 	 *
-	 * @param visibleToBuyer the visibleToBuyer to set
+	 * @param visibleToBuyer the visibleToBuyer
 	 */
 	public void setVisibleToBuyer(Boolean visibleToBuyer) {
 		this.visibleToBuyer = visibleToBuyer;
@@ -74,7 +74,7 @@ public class Fee extends EntityBase {
 	/**
 	 * Set the value of property {@code visibleToSeller}.
 	 *
-	 * @param visibleToSeller the visibleToSeller to set
+	 * @param visibleToSeller the visibleToSeller
 	 */
 	public void setVisibleToSeller(Boolean visibleToSeller) {
 		this.visibleToSeller = visibleToSeller;
@@ -92,7 +92,7 @@ public class Fee extends EntityBase {
 	/**
 	 * Set the value of property {@code amountToBuyer}.
 	 *
-	 * @param amountToBuyer the amountToBuyer to set
+	 * @param amountToBuyer the amountToBuyer
 	 */
 	public void setAmountToBuyer(BigDecimal amountToBuyer) {
 		this.amountToBuyer = amountToBuyer;
@@ -110,7 +110,7 @@ public class Fee extends EntityBase {
 	/**
 	 * Set the value of property {@code amountToSeller}.
 	 *
-	 * @param amountToSeller the amountToSeller to set
+	 * @param amountToSeller the amountToSeller
 	 */
 	public void setAmountToSeller(BigDecimal amountToSeller) {
 		this.amountToSeller = amountToSeller;
@@ -128,7 +128,7 @@ public class Fee extends EntityBase {
 	/**
 	 * Set the value of property {@code beneficiary}.
 	 *
-	 * @param beneficiary the beneficiary to set
+	 * @param beneficiary the beneficiary
 	 */
 	public void setBeneficiary(String beneficiary) {
 		this.beneficiary = beneficiary;
@@ -146,7 +146,7 @@ public class Fee extends EntityBase {
 	/**
 	 * Set the value of property {@code status}.
 	 *
-	 * @param status the status to set
+	 * @param status the status
 	 */
 	public void setStatus(PaymentStatus status) {
 		this.status = status;
@@ -164,7 +164,7 @@ public class Fee extends EntityBase {
 	/**
 	 * Set the value of property {@code currency}.
 	 *
-	 * @param currency the currency to set
+	 * @param currency the currency
 	 */
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
@@ -182,7 +182,7 @@ public class Fee extends EntityBase {
 	/**
 	 * Set the value of property {@code name}.
 	 *
-	 * @param name the name to set
+	 * @param name the name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -200,7 +200,7 @@ public class Fee extends EntityBase {
 	/**
 	 * Set the value of property {@code description}.
 	 *
-	 * @param description the description to set
+	 * @param description the description
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -218,7 +218,7 @@ public class Fee extends EntityBase {
 	/**
 	 * Set the value of property {@code errorMessage}.
 	 *
-	 * @param errorMessage the errorMessage to set
+	 * @param errorMessage the errorMessage
 	 */
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;

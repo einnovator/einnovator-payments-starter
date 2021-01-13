@@ -52,7 +52,7 @@ public class Item extends EntityBase {
 	/**
 	 * Set the value of property {@code name}.
 	 *
-	 * @param name the name to set
+	 * @param name the name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -70,7 +70,7 @@ public class Item extends EntityBase {
 	/**
 	 * Set the value of property {@code numberOfUnits}.
 	 *
-	 * @param numberOfUnits the numberOfUnits to set
+	 * @param numberOfUnits the numberOfUnits
 	 */
 	public void setNumberOfUnits(Integer numberOfUnits) {
 		this.numberOfUnits = numberOfUnits;
@@ -88,7 +88,7 @@ public class Item extends EntityBase {
 	/**
 	 * Set the value of property {@code numberOfUnits2}.
 	 *
-	 * @param numberOfUnits2 the numberOfUnits2 to set
+	 * @param numberOfUnits2 the numberOfUnits2
 	 */
 	public void setNumberOfUnits2(Integer numberOfUnits2) {
 		this.numberOfUnits2 = numberOfUnits2;
@@ -106,7 +106,7 @@ public class Item extends EntityBase {
 	/**
 	 * Set the value of property {@code amountPerUnit}.
 	 *
-	 * @param amountPerUnit the amountPerUnit to set
+	 * @param amountPerUnit the amountPerUnit
 	 */
 	public void setAmountPerUnit(BigDecimal amountPerUnit) {
 		this.amountPerUnit = amountPerUnit;
@@ -124,7 +124,7 @@ public class Item extends EntityBase {
 	/**
 	 * Set the value of property {@code totalAmount}.
 	 *
-	 * @param totalAmount the totalAmount to set
+	 * @param totalAmount the totalAmount
 	 */
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
@@ -142,7 +142,7 @@ public class Item extends EntityBase {
 	/**
 	 * Set the value of property {@code comment}.
 	 *
-	 * @param comment the comment to set
+	 * @param comment the comment
 	 */
 	public void setComment(String comment) {
 		this.comment = comment;
@@ -160,7 +160,7 @@ public class Item extends EntityBase {
 	/**
 	 * Set the value of property {@code img}.
 	 *
-	 * @param img the img to set
+	 * @param img the img
 	 */
 	public void setImg(String img) {
 		this.img = img;
@@ -178,7 +178,7 @@ public class Item extends EntityBase {
 	/**
 	 * Set the value of property {@code tag}.
 	 *
-	 * @param tag the tag to set
+	 * @param tag the tag
 	 */
 	public void setTag(String tag) {
 		this.tag = tag;
@@ -196,7 +196,7 @@ public class Item extends EntityBase {
 	/**
 	 * Set the value of property {@code tag2}.
 	 *
-	 * @param tag2 the tag2 to set
+	 * @param tag2 the tag2
 	 */
 	public void setTag2(String tag2) {
 		this.tag2 = tag2;
@@ -214,7 +214,7 @@ public class Item extends EntityBase {
 	/**
 	 * Set the value of property {@code tag2icon}.
 	 *
-	 * @param tag2icon the tag2icon to set
+	 * @param tag2icon the tag2icon
 	 */
 	public void setTag2icon(String tag2icon) {
 		this.tag2icon = tag2icon;
@@ -232,7 +232,7 @@ public class Item extends EntityBase {
 	/**
 	 * Set the value of property {@code fees}.
 	 *
-	 * @param fees the fees to set
+	 * @param fees the fees
 	 */
 	public void setFees(List<Fee> fees) {
 		this.fees = fees;
@@ -250,7 +250,7 @@ public class Item extends EntityBase {
 	/**
 	 * Set the value of property {@code refundAmount}.
 	 *
-	 * @param refundAmount the refundAmount to set
+	 * @param refundAmount the refundAmount
 	 */
 	public void setRefundAmount(BigDecimal refundAmount) {
 		this.refundAmount = refundAmount;

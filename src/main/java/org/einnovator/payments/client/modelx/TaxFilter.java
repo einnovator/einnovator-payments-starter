@@ -24,7 +24,7 @@ public class TaxFilter extends TaxOptions {
 	/**
 	 * Set the value of property {@code q}.
 	 *
-	 * @param q the q to set
+	 * @param q the q
 	 */
 	public void setQ(String q) {
 		this.q = q;
@@ -42,7 +42,7 @@ public class TaxFilter extends TaxOptions {
 	/**
 	 * Set the value of property {@code countryCode2}.
 	 *
-	 * @param countryCode2 the countryCode2 to set
+	 * @param countryCode2 the countryCode2
 	 */
 	public void setCountryCode2(String countryCode2) {
 		this.countryCode2 = countryCode2;
