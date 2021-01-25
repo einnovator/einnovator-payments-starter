@@ -1,9 +1,9 @@
 package org.einnovator.payments.client;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.net.URI;
@@ -16,8 +16,8 @@ import org.einnovator.payments.client.model.Currency;
 import org.einnovator.payments.client.model.Payable;
 import org.einnovator.payments.client.model.Payment;
 import org.einnovator.sso.client.SsoTestHelper;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -25,13 +25,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import org.einnovator.util.MappingUtils;
 
 import static org.einnovator.util.UriUtils.extractId;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes= {AccountPaymentsClientTests.TestConfig.class, PaymentsClientConfig.class}, webEnvironment=WebEnvironment.MOCK)
 public class AccountPaymentsClientTests extends SsoTestHelper {
 
@@ -137,7 +138,7 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 	@Test
 	public void listPaymentsTest() {
 		paymentSubmit();
-		Page<Payment> payments0 = client.listPayments(null, new PageRequest(0, 10));
+		Page<Payment> payments0 = client.listPayments(null, PageRequest.of(0, 10));
 		assertNotNull(payments0);
 		assertTrue(payments0.getSize() > 0);
 		
@@ -146,7 +147,7 @@ public class AccountPaymentsClientTests extends SsoTestHelper {
 			return;
 		}
 		
-		Page<Payment> payments1 = client.listPayments(null, new PageRequest(1, 10));
+		Page<Payment> payments1 = client.listPayments(null, PageRequest.of(1, 10));
 		
 		assertNotNull(payments1);
 		assertTrue(payments1.getSize() > 0);
