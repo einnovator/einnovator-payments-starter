@@ -121,7 +121,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code type}.
 	 *
-	 * @param type the type to set
+	 * @param type the type
 	 */
 	public void setType(OwnerType type) {
 		this.type = type;
@@ -139,7 +139,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code owner}.
 	 *
-	 * @param owner the owner to set
+	 * @param owner the owner
 	 */
 	public void setOwner(String owner) {
 		this.owner = owner;
@@ -157,7 +157,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code username}.
 	 *
-	 * @param username the username to set
+	 * @param username the username
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -175,7 +175,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code name}.
 	 *
-	 * @param name the name to set
+	 * @param name the name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -193,7 +193,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code email}.
 	 *
-	 * @param email the email to set
+	 * @param email the email
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -211,7 +211,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code title}.
 	 *
-	 * @param title the title to set
+	 * @param title the title
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -229,7 +229,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code avatar}.
 	 *
-	 * @param avatar the avatar to set
+	 * @param avatar the avatar
 	 */
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
@@ -247,7 +247,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code color}.
 	 *
-	 * @param color the color to set
+	 * @param color the color
 	 */
 	public void setColor(String color) {
 		this.color = color;
@@ -265,7 +265,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code legalName}.
 	 *
-	 * @param legalName the legalName to set
+	 * @param legalName the legalName
 	 */
 	public void setLegalName(String legalName) {
 		this.legalName = legalName;
@@ -283,7 +283,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code legalName2}.
 	 *
-	 * @param legalName2 the legalName2 to set
+	 * @param legalName2 the legalName2
 	 */
 	public void setLegalName2(String legalName2) {
 		this.legalName2 = legalName2;
@@ -301,7 +301,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code legalName3}.
 	 *
-	 * @param legalName3 the legalName3 to set
+	 * @param legalName3 the legalName3
 	 */
 	public void setLegalName3(String legalName3) {
 		this.legalName3 = legalName3;
@@ -319,7 +319,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code description}.
 	 *
-	 * @param description the description to set
+	 * @param description the description
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -337,7 +337,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code phone}.
 	 *
-	 * @param phone the phone to set
+	 * @param phone the phone
 	 */
 	public void setPhone(Phone phone) {
 		this.phone = phone;
@@ -355,7 +355,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code mobilePhone}.
 	 *
-	 * @param mobilePhone the mobilePhone to set
+	 * @param mobilePhone the mobilePhone
 	 */
 	public void setMobilePhone(Phone mobilePhone) {
 		this.mobilePhone = mobilePhone;
@@ -373,7 +373,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code website}.
 	 *
-	 * @param website the website to set
+	 * @param website the website
 	 */
 	public void setWebsite(String website) {
 		this.website = website;
@@ -391,7 +391,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code currency}.
 	 *
-	 * @param currency the currency to set
+	 * @param currency the currency
 	 */
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
@@ -409,7 +409,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code taxNumber}.
 	 *
-	 * @param taxNumber the taxNumber to set
+	 * @param taxNumber the taxNumber
 	 */
 	public void setTaxNumber(String taxNumber) {
 		this.taxNumber = taxNumber;
@@ -427,7 +427,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code ssn}.
 	 *
-	 * @param ssn the ssn to set
+	 * @param ssn the ssn
 	 */
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
@@ -445,7 +445,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code personalIdNumber}.
 	 *
-	 * @param personalIdNumber the personalIdNumber to set
+	 * @param personalIdNumber the personalIdNumber
 	 */
 	public void setPersonalIdNumber(String personalIdNumber) {
 		this.personalIdNumber = personalIdNumber;
@@ -463,7 +463,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code document}.
 	 *
-	 * @param document the document to set
+	 * @param document the document
 	 */
 	public void setDocument(String document) {
 		this.document = document;
@@ -481,7 +481,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code vatNumber}.
 	 *
-	 * @param vatNumber the vatNumber to set
+	 * @param vatNumber the vatNumber
 	 */
 	public void setVatNumber(String vatNumber) {
 		this.vatNumber = vatNumber;
@@ -499,7 +499,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code taxRegistrar}.
 	 *
-	 * @param taxRegistrar the taxRegistrar to set
+	 * @param taxRegistrar the taxRegistrar
 	 */
 	public void setTaxRegistrar(String taxRegistrar) {
 		this.taxRegistrar = taxRegistrar;
@@ -517,7 +517,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code address}.
 	 *
-	 * @param address the address to set
+	 * @param address the address
 	 */
 	public void setAddress(Address address) {
 		this.address = address;
@@ -535,7 +535,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code personalAddress}.
 	 *
-	 * @param personalAddress the personalAddress to set
+	 * @param personalAddress the personalAddress
 	 */
 	public void setPersonalAddress(Address personalAddress) {
 		this.personalAddress = personalAddress;
@@ -553,7 +553,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code address3}.
 	 *
-	 * @param address3 the address3 to set
+	 * @param address3 the address3
 	 */
 	public void setAddress3(Address address3) {
 		this.address3 = address3;
@@ -571,7 +571,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code birthdate}.
 	 *
-	 * @param birthdate the birthdate to set
+	 * @param birthdate the birthdate
 	 */
 	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
@@ -589,7 +589,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code firstName}.
 	 *
-	 * @param firstName the firstName to set
+	 * @param firstName the firstName
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -607,7 +607,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code firstName2}.
 	 *
-	 * @param firstName2 the firstName2 to set
+	 * @param firstName2 the firstName2
 	 */
 	public void setFirstName2(String firstName2) {
 		this.firstName2 = firstName2;
@@ -625,7 +625,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code firstName3}.
 	 *
-	 * @param firstName3 the firstName3 to set
+	 * @param firstName3 the firstName3
 	 */
 	public void setFirstName3(String firstName3) {
 		this.firstName3 = firstName3;
@@ -643,7 +643,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code lastName}.
 	 *
-	 * @param lastName the lastName to set
+	 * @param lastName the lastName
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -661,7 +661,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code lastName2}.
 	 *
-	 * @param lastName2 the lastName2 to set
+	 * @param lastName2 the lastName2
 	 */
 	public void setLastName2(String lastName2) {
 		this.lastName2 = lastName2;
@@ -679,7 +679,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code lastName3}.
 	 *
-	 * @param lastName3 the lastName3 to set
+	 * @param lastName3 the lastName3
 	 */
 	public void setLastName3(String lastName3) {
 		this.lastName3 = lastName3;
@@ -697,7 +697,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code cards}.
 	 *
-	 * @param cards the cards to set
+	 * @param cards the cards
 	 */
 	public void setCards(List<Card> cards) {
 		this.cards = cards;
@@ -715,7 +715,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code bankAccounts}.
 	 *
-	 * @param bankAccounts the bankAccounts to set
+	 * @param bankAccounts the bankAccounts
 	 */
 	public void setBankAccounts(List<BankAccount> bankAccounts) {
 		this.bankAccounts = bankAccounts;
@@ -733,7 +733,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code seller}.
 	 *
-	 * @param seller the seller to set
+	 * @param seller the seller
 	 */
 	public void setSeller(Boolean seller) {
 		this.seller = seller;
@@ -751,7 +751,7 @@ public class Account extends EntityBase {
 	/**
 	 * Set the value of property {@code transferEnabled}.
 	 *
-	 * @param transferEnabled the transferEnabled to set
+	 * @param transferEnabled the transferEnabled
 	 */
 	public void setTransferEnabled(Boolean transferEnabled) {
 		this.transferEnabled = transferEnabled;

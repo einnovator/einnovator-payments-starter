@@ -42,7 +42,7 @@ public class BankAccount extends EntityBase {
 	/**
 	 * Set the value of property {@code holderType}.
 	 *
-	 * @param holderType the holderType to set
+	 * @param holderType the holderType
 	 */
 	public void setHolderType(OwnerType holderType) {
 		this.holderType = holderType;
@@ -60,7 +60,7 @@ public class BankAccount extends EntityBase {
 	/**
 	 * Set the value of property {@code number}.
 	 *
-	 * @param number the number to set
+	 * @param number the number
 	 */
 	public void setNumber(String number) {
 		this.number = number;
@@ -78,7 +78,7 @@ public class BankAccount extends EntityBase {
 	/**
 	 * Set the value of property {@code name}.
 	 *
-	 * @param name the name to set
+	 * @param name the name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -96,7 +96,7 @@ public class BankAccount extends EntityBase {
 	/**
 	 * Set the value of property {@code currency}.
 	 *
-	 * @param currency the currency to set
+	 * @param currency the currency
 	 */
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
@@ -114,7 +114,7 @@ public class BankAccount extends EntityBase {
 	/**
 	 * Set the value of property {@code routingNumber}.
 	 *
-	 * @param routingNumber the routingNumber to set
+	 * @param routingNumber the routingNumber
 	 */
 	public void setRoutingNumber(String routingNumber) {
 		this.routingNumber = routingNumber;
@@ -132,7 +132,7 @@ public class BankAccount extends EntityBase {
 	/**
 	 * Set the value of property {@code bankName}.
 	 *
-	 * @param bankName the bankName to set
+	 * @param bankName the bankName
 	 */
 	public void setBankName(String bankName) {
 		this.bankName = bankName;
@@ -150,7 +150,7 @@ public class BankAccount extends EntityBase {
 	/**
 	 * Set the value of property {@code address}.
 	 *
-	 * @param address the address to set
+	 * @param address the address
 	 */
 	public void setAddress(Address address) {
 		this.address = address;
@@ -168,7 +168,7 @@ public class BankAccount extends EntityBase {
 	/**
 	 * Set the value of property {@code defaultTransferAccount}.
 	 *
-	 * @param defaultTransferAccount the defaultTransferAccount to set
+	 * @param defaultTransferAccount the defaultTransferAccount
 	 */
 	public void setDefaultTransferAccount(Boolean defaultTransferAccount) {
 		this.defaultTransferAccount = defaultTransferAccount;
@@ -186,7 +186,7 @@ public class BankAccount extends EntityBase {
 	/**
 	 * Set the value of property {@code defaultChargeAccount}.
 	 *
-	 * @param defaultChargeAccount the defaultChargeAccount to set
+	 * @param defaultChargeAccount the defaultChargeAccount
 	 */
 	public void setDefaultChargeAccount(Boolean defaultChargeAccount) {
 		this.defaultChargeAccount = defaultChargeAccount;

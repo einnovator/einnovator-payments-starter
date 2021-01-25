@@ -6,11 +6,9 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.einnovator.payments.client.PaymentsClient;
-
 import org.einnovator.payments.client.model.Account;
 import org.einnovator.payments.client.model.Card;
 import org.einnovator.payments.client.modelx.AccountOptions;
-import org.einnovator.util.web.RequestOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -45,7 +43,7 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public URI createAccount(Account account, RequestOptions options) {
+	public URI createAccount(Account account, AccountOptions options) {
 		try {
 			return paymentsClient.createAccount(account, options);	
 		} catch (RuntimeException e) {
@@ -55,7 +53,7 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public Account updateAccount(Account account, RequestOptions options) {
+	public Account updateAccount(Account account, AccountOptions options) {
 		try {
 			paymentsClient.updateAccount(account, options);	
 			return account;
@@ -66,7 +64,7 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public boolean deleteAccount(String id, RequestOptions options) {
+	public boolean deleteAccount(String id, AccountOptions options) {
 		try {
 			paymentsClient.deleteAccount(id, options);		
 			return true;
@@ -96,9 +94,9 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public URI addAccountCard(Card card, String accountId, RequestOptions options) {
+	public URI addAccountCard(String accountId, Card card, AccountOptions options) {
 		try {
-			return paymentsClient.addAccountCard(card, accountId, options);	
+			return paymentsClient.addAccountCard(accountId, card, options);	
 		} catch (RuntimeException e) {
 			logger.error("addUserCard:" + e + " " + card + " " + accountId);
 			return null;
@@ -106,7 +104,7 @@ public class AccountManagerImpl extends ManagerBase implements AccountManager {
 	}
 
 	@Override
-	public boolean deleteAccountCard(String accountId, String cardId, RequestOptions options) {
+	public boolean deleteAccountCard(String accountId, String cardId, AccountOptions options) {
 		try {
 			paymentsClient.deleteAccountCard(accountId, cardId, options);		
 			return true;

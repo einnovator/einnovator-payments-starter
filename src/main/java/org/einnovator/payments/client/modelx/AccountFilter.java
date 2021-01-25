@@ -37,7 +37,7 @@ public class AccountFilter extends AccountOptions {
 	/**
 	 * Set the value of property {@code type}.
 	 *
-	 * @param type the type to set
+	 * @param type the type
 	 */
 	public void setType(OwnerType type) {
 		this.type = type;
@@ -54,7 +54,7 @@ public class AccountFilter extends AccountOptions {
 	/**
 	 * Set the value of property {@code q}.
 	 *
-	 * @param q the q to set
+	 * @param q the q
 	 */
 	public void setQ(String q) {
 		this.q = q;
@@ -72,7 +72,7 @@ public class AccountFilter extends AccountOptions {
 	/**
 	 * Set the value of property {@code group}.
 	 *
-	 * @param group the group to set
+	 * @param group the group
 	 */
 	public void setGroup(String group) {
 		this.group = group;
@@ -92,7 +92,7 @@ public class AccountFilter extends AccountOptions {
 	/**
 	 * Set the value of property {@code groups}.
 	 *
-	 * @param groups the groups to set
+	 * @param groups the groups
 	 */
 	public void setGroups(List<String> groups) {
 		this.groups = groups;
@@ -112,7 +112,7 @@ public class AccountFilter extends AccountOptions {
 	/**
 	 * Set the value of property {@code seller}.
 	 *
-	 * @param seller the seller to set
+	 * @param seller the seller
 	 */
 	public void setSeller(Boolean seller) {
 		this.seller = seller;
@@ -159,7 +159,7 @@ public class AccountFilter extends AccountOptions {
 	/**
 	 * Set the value of property {@code runAs}.
 	 *
-	 * @param runAs the runAs to set
+	 * @param runAs the runAs
 	 * @return this
 	 */
 	public AccountFilter withRunAs(String runAs) {
@@ -170,7 +170,7 @@ public class AccountFilter extends AccountOptions {
 	/**
 	 * Set the value of property {@code admin}.
 	 *
-	 * @param admin the admin to set
+	 * @param admin the admin
 	 * @return this
 	 */
 	public AccountFilter withAdmin(Boolean admin) {
