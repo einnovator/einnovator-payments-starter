@@ -419,7 +419,7 @@ public class PaymentsClient {
 	public void deleteAccount(String id, AccountOptions options) {
 		URI uri = makeURI(PaymentsEndpoints.account(id, config));
 		uri = processURI(uri, options);		
-		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
+		RequestEntity<Void> request = RequestEntity.delete(uri).build();
 		exchange(request, Void.class, options);
 	}
 
@@ -477,7 +477,7 @@ public class PaymentsClient {
 	public void deleteAccountCard(String accountId, String cardId, AccountOptions options) {
 		URI uri = makeURI(PaymentsEndpoints.card(accountId, cardId, config));
 		uri = processURI(uri, options);		
-		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
+		RequestEntity<Void> request = RequestEntity.delete(uri).build();
 		exchange(request, Void.class, options);
 	}
 
@@ -586,7 +586,7 @@ public class PaymentsClient {
 	public void deleteTax(String id, TaxOptions options) {
 		URI uri = makeURI(PaymentsEndpoints.tax(id, config));
 		uri = processURI(uri, options);		
-		RequestEntity<Void> request = RequestEntity.delete(uri).accept(MediaType.APPLICATION_JSON).build();
+		RequestEntity<Void> request = RequestEntity.delete(uri).build();
 		exchange(request, Void.class, options);
 	}
 	
@@ -613,7 +613,7 @@ public class PaymentsClient {
 		try {
 			return exchange(restTemplate, request, responseType);			
 		} catch (RuntimeException e) {
-			if (options!=null && !options.isSingleton()) {
+			if (options!=null && !Boolean.TRUE.equals(options.getSingleton())) {
 				options.setResult(new Result<Object>(e));
 			}
 			throw e;
